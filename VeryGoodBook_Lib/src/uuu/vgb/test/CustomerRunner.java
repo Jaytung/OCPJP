@@ -1,7 +1,5 @@
 package uuu.vgb.test;
 
-import java.time.LocalDate;
-
 import uuu.vgb.entity.Customer;
 
 public class CustomerRunner {
@@ -10,26 +8,26 @@ public class CustomerRunner {
 		int i = 1;
 		
 		Customer customer = new Customer();
-		customer.id="A123123123";
-		customer.name="Henry";
-		customer.password="aa123";
-		customer.birthday=LocalDate.of(2000, 10, 5);
+		customer.setId("A123123123");
+		customer.setName("Henry");
+		customer.setPassword("aa123");
+		customer.setBirthday(2000,10,15);
 
 		//將字串轉為整數,再將整束傳入LocalDate參數內
 		//customer.birthday=LocalDate.of(Integer.parseInt("2000"), Integer.parseInt("10"), Integer.parseInt("5"));
 		
 		//使用字串須留意格式,年4碼,月日都需要2碼
 		//customer.birthday=LocalDate.parse("2002-10-04");
-		customer.gender='M';
+		customer.setGender('M');
 		
-		System.out.println(customer.id);
-		System.out.println(customer.name);
-		System.out.println(customer.password);
-		System.out.println(customer.birthday);//2000-10-05 ISO 8601
-		System.out.println(customer.gender);
-		System.out.println(customer.address);
-		System.out.println(customer.phone);
-		System.out.println(customer.subscribed);//false
+		System.out.println(customer.getId());
+		System.out.println(customer.getName());
+		System.out.println(customer.getPassword());
+		System.out.println(customer.getBirthday());//2000-10-05 ISO 8601
+		System.out.println(customer.getGender());
+		System.out.println(customer.getAddress());
+		System.out.println(customer.getPhone());
+		System.out.println(customer.isSubscribed());//false
 		
 		System.out.println("i: "+i);
 		
