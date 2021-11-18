@@ -2,6 +2,7 @@ package uuu.vgb.entity;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Objects;
 
 public class Customer {
 
@@ -14,7 +15,74 @@ public class Customer {
 	private String address = "";//
 	private String phone = "";//
 	private boolean subscribed = false;//
+	
+	public Customer() {
+		
+	}
+			
+//	@Override
+//	public int hashCode() {
+//		int hash = this.id !=null?id.hashCode():0;
+//		hash = hash*31+name!=null?name.hashCode():0;
+//		hash= hash*31+gender;
+//		return hash;
+//	}
 
+
+//	@Override
+//	public boolean equals(Object obj) {
+//		if(this==obj) return true;
+//		//if(obj!= null && this.getClass()==obj.getClass())
+//		if(obj instanceof Customer) {
+//			Customer other = (Customer)obj;
+//			if((id)!=null && (name)!=null && this.id.equals(other.id) 
+//					&& this.name.equalsIgnoreCase(other.name)) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Customer)) {
+			return false;
+		}
+		Customer other = (Customer) obj;
+		if (id == null) {
+//			if (other.id != null) { //兩個id都為null時會變true,故註解掉
+				return false;
+//			}
+		} else if (!id.equals(other.id)) {
+			return false;
+		}
+		return true;
+	}
+
+	public Customer(String id, String name, String password, String email) {
+		//super();
+		this(id,name,password);//使用下方三個參數的建構子
+		this.setEmail(email);
+	}
+
+	public Customer(String id, String name, String password) {
+		this.setId(id);
+		this.setName(name);
+		this.setPassword(password);
+	}
+	
 	public String getEmail() {
 		return this.email;
 	}
@@ -116,6 +184,7 @@ public class Customer {
 			}
 			int sum = number1 / 10 + number1 % 10 * 9;
 			// 2.將個數字加總
+			//sum+(id(1)-48)*8 +(id(2)-48)*7+(id(3)-48)*6...(id(8)-48)*1 
 			for (int i=1,j=8;i<9;i++,j--){
 				sum= sum+(id.charAt(i)-'0')*j;
 			}
@@ -187,7 +256,6 @@ public class Customer {
 	public int getAge() {
 		return this.getAge(this.birthday);
 	}
-
 	/**
 	 * 計算客戶年齡
 	 * 
@@ -237,5 +305,25 @@ public class Customer {
 		} else {
 			return -1;
 		}
+	}
+//	@Override
+//	public String toString() {
+//		//TODO:
+//		return "ID:" + id  +","+"Name"+name+","+"PassWord"+password;
+//		
+//	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getName()+": \n"
+				+"id= " + id + "\n"
+				+ "name= " + name + "\n"
+				+ "email= " + email + "\n"
+				+ "password= " + password + "\n"
+				+ "birthday= "+ birthday + "("+ "Age:"+getAge()+" years old )\n"
+				+ "gender= " + gender + "\n"
+				+ "address= " + address + "\n"
+				+ "phone= " + phone + "\n"
+				+ "subscribed= "+ subscribed;
 	}
 }

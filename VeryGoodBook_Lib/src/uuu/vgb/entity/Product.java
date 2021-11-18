@@ -13,16 +13,61 @@ public class Product {
 	private LocalDate shelfDate;// 必要,以上架當日為預設值,RW
 	private String photoUrl;
 
+	public Product() {
+		// super();
+	}
+
+	public Product(int id, String name, double unitPrice) {
+		// super();
+		this.setId(id);
+		this.name = name;
+		this.unitPrice = unitPrice;
+	}
+
+	public Product(int id, String name, double unitPrice, int unitDiscount) {
+		this.getDiscountString();
+	}
+//	public Product(int id, String name, double unitPrice, String size) {
+//		this(id, name,unitPrice);
+//		this.setSize(size);
+//	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Product other = (Product) obj;
+		if (id != other.id) {
+			return false;
+		}
+		return true;
+	}
+
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
-		if(id>0) {
+		if (id > 0) {
 			this.id = id;
-		}else {
+		} else {
 			System.err.println("產品編號必需>0");
-			//TODO:第13張 throw Exception
+			// TODO:第13張 throw Exception
 		}
 	}
 
@@ -31,11 +76,11 @@ public class Product {
 	}
 
 	public void setName(String name) {
-		if(name!=null&&name.length()>=2&&name.length()<=20) {
-			this.name = name;			
-		}else {
+		if (name != null && name.length() >= 2 && name.length() <= 20) {
+			this.name = name;
+		} else {
 			System.err.println("name必須輸入,且長度在2~20之間");
-			//TODO:
+			// TODO:
 		}
 	}
 
@@ -47,36 +92,43 @@ public class Product {
 		this.size = size;
 	}
 
+	/**
+	 * //查售價及定價
+	 * 
+	 * @return
+	 */
 	public double getUnitPrice() {
 		return unitPrice;
 	}
 
 	public void setUnitPrice(double unitPrice) {
-		if(unitPrice>0) {
+		if (unitPrice > 0) {
 			this.unitPrice = unitPrice;
-		}else {
+		} else {
 			System.err.println("輸入價格必需>0");
 		}
 	}
 
 	public int getUnitDiscount() {
-		int discountNum = (100 - unitDiscount);
-		if (discountNum % 10 == 0) {
-			this.unitDiscount = (discountNum / 10);
-		} else {
-			this.unitDiscount = discountNum;
-		}
 		return unitDiscount;
 	}
 
 	public void setUnitDiscount(int unitDiscount) {
-		if(unitDiscount<0) {
-			this.unitDiscount=0;
+		if (unitDiscount < 0) {
+			this.unitDiscount = 0;
 			System.err.println("輸入折扣必需>0");
-		}else {
+		} else {
 			this.unitDiscount = unitDiscount;
 		}
 
+	}
+
+	public String getDiscountString() {
+		int discountNum = (100 - unitDiscount);
+		if (discountNum % 10 == 0) {
+			discountNum = (discountNum / 10);
+		}
+		return discountNum + "折";
 	}
 
 	public int getStock() {
@@ -109,6 +161,13 @@ public class Product {
 
 	public void setPhotoUrl(String photoUrl) {
 		this.photoUrl = photoUrl;
+	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getName() + "\n" + "Product id=" + id + "\n" + "name=" + name + "\n" + "size=" + size
+				+ "\n" + "unitPrice=" + unitPrice + "\n" + "on sale: " + unitDiscount + "% off\n" + "stock=" + stock
+				+ "\n" + "description=" + description + "\n" + "shelfDate=" + shelfDate + "\n" + "photoUrl=" + photoUrl;
 	}
 
 }
