@@ -8,9 +8,9 @@ public class CustomerAgeRunner2 {
 		int i = 1;
 		
 		Customer customer = new Customer();
-		customer.setId("A118877730");
+		customer.setId("X120568726");
 		customer.setName(" Henry ");
-		customer.setEmail("aa123www");
+		customer.setEmail("aa123@gmail.com");
 		customer.setPassword("aa123");
 		customer.setGender('B');
 		

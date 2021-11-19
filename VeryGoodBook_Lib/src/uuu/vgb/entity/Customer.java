@@ -2,10 +2,9 @@ package uuu.vgb.entity;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Objects;
 
 public class Customer {
-
+	
 	private String id;// ROC ID,PKey
 	private String name;// required,2~20字元
 	private String email;// required,須符合Email格式
@@ -15,6 +14,18 @@ public class Customer {
 	private String address = "";//
 	private String phone = "";//
 	private boolean subscribed = false;//
+	
+	//客戶血型
+	private  BloodType bloodtype;
+	
+	public BloodType getBloodtype() {
+		return bloodtype;
+	}
+
+	public void setBloodtype(BloodType bloodtype) {
+		this.bloodtype = bloodtype;
+	}
+	
 	
 	public Customer() {
 		
@@ -86,9 +97,10 @@ public class Customer {
 	public String getEmail() {
 		return this.email;
 	}
+	private static final String EMAIL_PATTERN="^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
 
 	public void setEmail(String email) {
-		if (email != null && email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+		if (email != null && email.matches(EMAIL_PATTERN)) {
 			this.email = email;
 		} else {
 			System.err.println("Email輸入格式不正確");
@@ -98,21 +110,26 @@ public class Customer {
 	public char getGender() {
 		return this.gender;
 	}
-
+	
+	public static final char MALE = 'M';
+	public static final char FEMALE = 'F';
+	public static final char OTHER = 'O';
 	public void setGender(char gender) {
-		if (gender == 'M' || gender == 'F' || gender == 'O') {
+		if (gender == MALE || gender == FEMALE || gender == OTHER) {
 			this.gender = gender;
 		} else {
-			System.err.println("性別資料不正確");
+			System.err.printf("性別資料不正確應為男:%s,女:%s,其他:%s",MALE,FEMALE,OTHER);
 		}
 	}
-
+	
+	public static final int MIN_PWD_LENGTH=6;
+	public static final int MAX_PWD_LENGTH=20;
 	public void setPassword(String password) {
 		// TODO:Password檢查
-		if (password != null && password.length() > 6 && password.length() < 20) {
+		if (password != null && password.length() > MIN_PWD_LENGTH && password.length() < MAX_PWD_LENGTH) {
 			this.password = password;
 		} else {
-			System.err.println("密碼長度必須在6~20之間");
+			System.err.printf("密碼長度必須在%d~%d之間",MIN_PWD_LENGTH,MAX_PWD_LENGTH);
 		}
 	}
 
@@ -129,9 +146,10 @@ public class Customer {
 			System.err.println("身分證格式有誤");
 		}
 	}
-
-	public boolean checkId(String id) {
-		if (id != null && id.matches("[A-Z][1289]\\d{8}")) {
+	
+	public static final String ID_CHECK = "[A-Z][1289]\\d{8}";
+	public static boolean checkId(String id) {
+		if (id != null && id.matches(ID_CHECK)) {
 			// 1.將第一碼英文大寫->數字
 			char char1 = id.charAt(0);
 			int number1;
@@ -210,21 +228,24 @@ public class Customer {
 	public String getName() {
 		return name;
 	}
-
+	
+	public static final int MIN_NAME_LENGTH=2;
+	public static final int MAX_NAME_LENGTH=20;
 	public void setName(String name) {
-		if (name != null && (name = name.trim()).length() > 2 && name.length() < 20) {
+		if (name != null && (name = name.trim()).length() >MIN_NAME_LENGTH  && name.length() < MAX_NAME_LENGTH) {
 			this.name = name.trim();
 		} else {
-			System.err.println("輸入姓名必需長度2~20字之間");
+			System.err.printf("輸入姓名必需長度在%d~%d之間",MIN_NAME_LENGTH);
 		}
 	}
 
 	public String getAddress() {
 		return address;
 	}
-
+	
+	public static final int MIN_ADDRESS_LENGTH = 0;
 	public void setAddress(String address) {
-		if (address != null && address.length() > 0) {
+		if (address != null && address.length() > MIN_ADDRESS_LENGTH) {
 			address = address.trim();
 		}
 		this.address = address;
@@ -233,9 +254,10 @@ public class Customer {
 	public String getPhone() {
 		return phone;
 	}
-
+	
+	public static final int MIN_PHONE_LENGTH=0;
 	public void setPhone(String phone) {
-		if (phone != null && phone.length() > 0) {
+		if (phone != null && phone.length() > MIN_PHONE_LENGTH) {
 			this.phone = phone;
 		}
 	}
@@ -262,7 +284,7 @@ public class Customer {
 	 * @param 指定生日birthday
 	 * @return int型態的顧客年齡
 	 */
-	public int getAge(LocalDate birthday) {
+	public static int getAge(LocalDate birthday) {
 		// 計算客戶年齡
 		int thisYear = LocalDate.now().getYear();// 2021
 		if (birthday != null) {
@@ -274,10 +296,11 @@ public class Customer {
 			// TODO:第13張 throw exception物件
 		}
 	}
-
+	
+	public static final int MIN_AGE = 12;
 	public void setBirthday(LocalDate birthday) {
 		if (birthday != null) {
-			if (getAge(birthday) >= 12) {
+			if (getAge(birthday) >= MIN_AGE) {
 				this.birthday = birthday;
 			} else {
 				System.err.println("客戶生日須年滿12歲");
@@ -306,16 +329,10 @@ public class Customer {
 			return -1;
 		}
 	}
-//	@Override
-//	public String toString() {
-//		//TODO:
-//		return "ID:" + id  +","+"Name"+name+","+"PassWord"+password;
-//		
-//	}
 
 	@Override
 	public String toString() {
-		return this.getClass().getName()+": \n"
+		return  "\n"+this.getClass().getName()+": \n"
 				+"id= " + id + "\n"
 				+ "name= " + name + "\n"
 				+ "email= " + email + "\n"
@@ -326,4 +343,6 @@ public class Customer {
 				+ "phone= " + phone + "\n"
 				+ "subscribed= "+ subscribed;
 	}
+
+
 }

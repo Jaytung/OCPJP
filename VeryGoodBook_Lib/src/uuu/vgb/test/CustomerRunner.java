@@ -1,16 +1,18 @@
 package uuu.vgb.test;
 
+import java.time.LocalDate;
+
 import uuu.vgb.entity.Customer;
 
 public class CustomerRunner {
 
 	public static void main(String[] args) {
-		int i = 1;
-		Customer customer1 = new Customer("a123456789","boris",
-				"aaa12345","sdwda@gmail.com");
-		
+//		Customer customer1 = new Customer("X120568726","boris",
+//				"aaa12345","sdwda@gmail.com");
+		System.out.println(Customer.getAge(LocalDate.parse("2010-10-15")));
+		System.out.println(Customer.checkId("A1234567890"));
 		Customer customer = new Customer();
-		customer.setId("A123123123");
+		customer.setId("X120568726");
 		customer.setName("Henry");
 		customer.setEmail("fun215@gmail.com");
 		customer.setPassword("aa12345");
@@ -22,6 +24,7 @@ public class CustomerRunner {
 		customer.setGender('M');
 		customer.setAddress("台北市敦化北路158號");
 		customer.setPhone("0988665202");
+		customer.setSubscribed(true);
 		
 //		System.out.println(customer.getId());
 //		System.out.println(customer.getName());
@@ -31,8 +34,9 @@ public class CustomerRunner {
 //		System.out.println(customer.getAddress());
 //		System.out.println(customer.getPhone());
 //		System.out.println(customer.isSubscribed());//false
-		System.out.println(customer.toString());
-		System.out.println(customer1.toString());
+		System.out.println(customer.toString()+"\n");
+//		System.out.println(customer1.toString());
+		
 //		System.out.println("i: "+i);
 		
 	}
