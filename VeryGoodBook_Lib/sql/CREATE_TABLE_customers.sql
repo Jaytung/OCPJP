@@ -1,3 +1,4 @@
+USE vgb;
 CREATE TABLE `customers` (
   `id` char(10) NOT NULL,
   `name` varchar(20) NOT NULL,
