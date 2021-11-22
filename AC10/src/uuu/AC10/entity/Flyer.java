@@ -4,9 +4,9 @@ public interface Flyer {
 	
 	public static final int i = 0;
 	
-	abstract void takeOff();
+	void takeOff();
 	
-	abstract void fly();
+	void fly();
 	
 	public default void land() {
 		System.out.println("flyer land");

@@ -11,8 +11,8 @@ public class CustomerAgeRunner2 {
 		customer.setId("X120568726");
 		customer.setName(" Henry ");
 		customer.setEmail("aa123@gmail.com");
-		customer.setPassword("aa123");
-		customer.setGender('B');
+		customer.setPassword("aa12345");
+		customer.setGender('M');
 		
 		
 //		customer.birthday=LocalDate.parse("2000-10-05");//字串轉入LocalDate
