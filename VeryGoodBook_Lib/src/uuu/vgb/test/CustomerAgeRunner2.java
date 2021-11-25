@@ -5,7 +5,6 @@ import uuu.vgb.entity.Customer;
 public class CustomerAgeRunner2 {
 
 	public static void main(String[] args) {
-		int i = 1;
 		
 		Customer customer = new Customer();
 		customer.setId("X120568726");
