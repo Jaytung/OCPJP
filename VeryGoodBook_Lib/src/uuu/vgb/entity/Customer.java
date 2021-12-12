@@ -311,6 +311,10 @@ public class Customer {
 	public LocalDate getBirthday() {
 		return birthday;
 	}
+	
+//	public void setBirthday(java.util.Date date) {
+//		this.birthday=date;
+//	}
 
 	public void setBirthday(String date) {
 		this.setBirthday(LocalDate.parse(date));
