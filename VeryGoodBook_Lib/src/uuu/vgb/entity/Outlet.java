@@ -1,9 +1,41 @@
 package uuu.vgb.entity;
 
 public class Outlet extends Product {
+	
+	private int discount;
 
 	public Outlet() {
 		super();
+	}
+	
+	public Outlet(int id, String name, double unitPrice) {
+		super(id, name, unitPrice);
+	}
+	
+	public Outlet(int id, String name, double unitPrice, int stock) {
+		super(id, name, unitPrice, stock);
+	}
+	
+	
+	/**
+	 * 
+	 * @param id
+	 * @param name
+	 * @param unitPrice
+	 * @param stock:庫存
+	 * @param discount:折扣
+	 */
+	public Outlet(int id, String name, double unitPrice, int stock,int discount) {
+		super(id, name, unitPrice, stock);
+		this.discount=discount;
+	}
+
+	public int getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(int discount) {
+		this.discount = discount;
 	}
 
 	@Override
@@ -25,14 +57,7 @@ public class Outlet extends Product {
 		return true;
 	}
 
-	public Outlet(int id, String name, double unitPrice) {
-		super(id, name, unitPrice);
-	}
-
-	public Outlet(int id, String name, double unitPrice, int unitDiscount) {
-		super(id, name, unitPrice);
-		this.getUnitPrice();
-	}
+	
 
 	// 不能接使用Superclass的getUnitPrice,要將父類的unitPrice改為protected,
 	// 以便子類讀取

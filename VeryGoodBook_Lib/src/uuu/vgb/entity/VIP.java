@@ -1,11 +1,7 @@
 package uuu.vgb.entity;
 
 public class VIP extends Customer {
-	private int discount;
-
-	public int getDiscount() {
-		return discount;
-	}
+	private int discount=5;
 
 	public VIP() {
 		super();
@@ -19,26 +15,26 @@ public class VIP extends Customer {
 		super(id, name, password);
 		this.setDiscount(discount);
 	}
+	
+	public int getDiscount() {
+		return discount;
+	}
 
 	public void setDiscount(int discount) {
-		if(discount >=2 && discount<100) {
+		if(discount >=1 && discount<100) {
 			this.discount = discount;
 		}else {
-			System.out.println("discount不正確");
+			System.err.println("discount不正確");
 		}	
 	}
 	
-	public String getDiscountString() {
-		return getUnitDiscount() +"折";
-	}
 
-	public int getUnitDiscount() {
-		int discountNum = (100 - discount);
+	public String getDiscountString() {
+		int discountNum = (100 - this.discount);
 		if (discountNum % 10 == 0) {
-			this.discount = (discountNum / 10);
-		}else {
-			this.discount = discountNum;
-		}return discount;
+			discountNum = (discountNum / 10);
+		}
+		return discountNum+"折";
 	}
 
 	public void setUnitDiscount(int unitDiscount) {
@@ -55,7 +51,7 @@ public class VIP extends Customer {
 	public String toString() {
 		return super.toString()+"\n"
 				+"VIP [product discount:" + getDiscount() +"% off"
-				+ ",折扣= "+ getUnitDiscount() + "折]";
+				+ ",折扣= "+ getDiscountString()+"]";
 	}
 	
 	

@@ -15,7 +15,7 @@ class CustomersDAO {// package-friendly(不能加public)
 	Customer selectCustomerById(String id) {
 		Customer c = null;
 
-		try (Connection connection = RDBConnection.getConnection(); // 1,2 取得連線
+		try (Connection connection = JDBConnection.getConnection(); // 1,2 取得連線
 				PreparedStatement pstmt = connection.prepareStatement(SELECT_customer);
 				) 
 			{//3.1傳入?的值

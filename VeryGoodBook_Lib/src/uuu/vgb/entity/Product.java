@@ -24,13 +24,13 @@ public class Product {
 		this.unitPrice = unitPrice;
 	}
 
-	public Product(int id, String name, double unitPrice, int unitDiscount) {
-		this.getDiscountString();
+	public Product(int id, String name, double unitPrice, int stock) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.unitPrice = unitPrice;
+		this.stock = stock;
 	}
-//	public Product(int id, String name, double unitPrice, String size) {
-//		this(id, name,unitPrice);
-//		this.setSize(size);
-//	}
 
 	@Override
 	public int hashCode() {
