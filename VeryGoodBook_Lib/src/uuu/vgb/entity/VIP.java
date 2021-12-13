@@ -1,7 +1,7 @@
 package uuu.vgb.entity;
 
 public class VIP extends Customer {
-	private int discount=5;
+	private int discount=5;//5% off, 1~90% off
 
 	public VIP() {
 		super();

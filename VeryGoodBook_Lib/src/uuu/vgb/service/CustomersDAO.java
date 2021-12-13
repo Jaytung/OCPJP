@@ -5,6 +5,7 @@ import java.sql.*;
 import uuu.vgb.entity.BloodType;
 import uuu.vgb.entity.Customer;
 import uuu.vgb.entity.VIP;
+import uuu.vgb.exception.DataInvalidException;
 import uuu.vgb.exception.VGBException;
 
 class CustomersDAO {// package-friendly(不能加public)
@@ -16,7 +17,7 @@ class CustomersDAO {// package-friendly(不能加public)
 	Customer selectCustomerById(String id) throws VGBException {
 		Customer c = null;
 
-		try (Connection connection = JDBConnection.getConnection(); // 1,2 取得連線
+		try (Connection connection = RDBConnection.getConnection(); // 1,2 取得連線
 				PreparedStatement pstmt = connection.prepareStatement(SELECT_customer);
 				) 
 			{//3.1傳入?的值
@@ -78,8 +79,18 @@ class CustomersDAO {// package-friendly(不能加public)
 				pstmt.setBoolean(9, c.isSubscribed());
 				pstmt.setString(10, c.getBloodtype()!=null?c.getBloodtype().name():null);
 				int rows = pstmt.executeUpdate(); //4.執行指令
-		} catch (SQLException e) {
-			throw new VGBException("新增客戶失敗",e);
+//				System.out.println(rows);//for test
+		} catch (SQLIntegrityConstraintViolationException e) {
+			System.out.println(e.getErrorCode()+","+e.getMessage());
+			if(e.getMessage().indexOf("PRIMARY")>0) {
+				throw new DataInvalidException("帳號已重複註冊",e);
+			}else if(e.getMessage().indexOf("email_UNIQUE")>0) {
+				throw new DataInvalidException("email以重複註冊",e);
+			}else {
+				throw new VGBException("新增客戶失敗,欄位不得為null",e);
+			}
+		}catch (SQLException e) {
+		throw new VGBException("新增客戶失敗",e);
 		}
 	}
 }

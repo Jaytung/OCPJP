@@ -5,6 +5,7 @@ import java.time.Period;
 
 public class Customer {
 	
+	
 	private String id;// ROC ID,PKey
 	private String name;// required,2~20字元
 	private String email;// required,須符合Email格式

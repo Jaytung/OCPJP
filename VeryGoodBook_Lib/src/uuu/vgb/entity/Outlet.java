@@ -54,6 +54,10 @@ public class Outlet extends Product {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
+		Outlet other = (Outlet) obj;
+		if (discount != other.discount) {
+			return false;
+		}
 		return true;
 	}
 
