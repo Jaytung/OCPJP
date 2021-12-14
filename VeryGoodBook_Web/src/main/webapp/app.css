@@ -1,0 +1,91 @@
+body{
+    background: #f1f1f1;
+    font-family: "Nuntio", sans-serif;
+}
+div h1{
+    color: #483434;
+}
+div h2{
+    color: #6B4F4F;
+}
+.partOne h2{
+    color: #483434;
+    font-weight: 100;
+    font-size: 2rem;
+}
+.partOne p{
+    color: #483434;
+    font-weight: 100;
+    font-size: 1.1rem;
+    line-height: 2;
+}
+.content{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.navbar.scrolled{
+    background: #ffb600;
+    transition: background 500ms;
+}
+#mainNavbar{
+    font-size: 1.5rem;
+    font-weight: 100;
+}
+#mainNavbar .nav-link{ 
+    color: #6B4F4F;
+}
+#mainNavbar .nav-link:hover{
+    color: #00b4d8;
+    transform: scale(1.05);
+    transition: 400ms;
+}
+#mainNavbar .navbar-brand{
+    color: #483434;
+}
+
+#headingGroup span{
+    color: #ea1C2c;
+}
+#headingGroup h1{
+    font-weight: 100;
+    font-size: 4rem;
+}
+.center_div{
+    margin: 10rem auto;
+    width:80%;
+}
+/* #login{
+    margin: 10% auto;
+    width:80%;
+    font-family: "Nuntio", sans-serif;
+    color: #483434;
+} */
+.registerForm{
+    color: #6B4F4F;
+    font-family: "Nuntio", sans-serif;
+}
+/* @media screen and (max-width: 600px){
+    #login{
+        width:60%;
+    }
+}
+@media screen and (min-width: 600px) and (max-width: 1000px){
+    #login{
+        width:50%;
+    }
+}
+@media screen and (min-width: 1000px){
+    #login{
+        width:40%;
+    }
+} */
+
+@media(max-width:1200px) {
+    #headingGroup h1{
+        font-weight: 100;
+        font-size: 3rem;
+    }
+    .partOne{
+        font-size: 2rem;
+    }
+}

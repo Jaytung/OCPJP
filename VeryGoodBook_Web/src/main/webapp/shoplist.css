@@ -1,0 +1,29 @@
+.productList{
+    padding:0px 0px;
+    margin-top: 20px;
+}
+.productList img{
+	width: 400px;
+	margin-top: 30px;
+	/* margin-left:30px; */
+}
+.productList li span{
+	color: #ff0059;
+	font-size: 20px;
+}
+.productList li h2{
+	font-weight: bold;
+	color: #f3b500;
+	margin-bottom: 10px;
+	margin-top: 30px;
+}
+
+.productList li{
+	border: 1px dotted #efc7c1;
+}
+ul {
+    list-style-type: none;
+}
+.addToCart{
+    margin:15px 0px;
+}
