@@ -12,9 +12,9 @@ class CustomersDAO {// package-friendly(不能加public)
 	private static final String SELECT_customer=
 			"SELECT id, name, email, password, birthday, gender, "
 			+ "address, phone, subscribed, blood_type, discount "
-			+ "FROM customers WHERE email=?";
+			+ "FROM customers WHERE email=? OR phone=?";
 
-	Customer selectCustomerById(String email) throws VGBException {
+	Customer selectCustomerByEmailOrPhone(String email) throws VGBException {
 		Customer c = null;
 
 		try (Connection connection = RDBConnection.getConnection(); // 1,2 取得連線
@@ -22,6 +22,7 @@ class CustomersDAO {// package-friendly(不能加public)
 				) 
 			{//3.1傳入?的值
 			pstmt.setString(1, email);
+			pstmt.setString(2, email);
 			try(
 			ResultSet rs = pstmt.executeQuery();
 					){

@@ -12,13 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import uuu.blackcake.entity.Customer;
+import uuu.blackcake.exception.LoginFailException;
 import uuu.blackcake.exception.VGBException;
 import uuu.blackcake.service.CustomerService;
 
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/login.do")
+@WebServlet(name="uuu.blackcake.controller.LoginServlet"
+,urlPatterns = {"/login.do"})
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -33,6 +35,8 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<String> errors = new ArrayList<>();
+		//必須加在取得第一個參數之前
+		request.setCharacterEncoding("utf-8");
 		
 		//1.取得request的Form Data: email,password,captcha		
 		String email = request.getParameter("email");
@@ -59,18 +63,25 @@ public class LoginServlet extends HttpServlet {
 			try {
 				Customer c = cService.login(email,password);
 				//3.1 產生成功回應
-				//response.setContentType("text/html"); 轉交JSP時,會造成JSP無效
-				response.setContentType("text/html");
-				response.setCharacterEncoding("UTF-8");
+
+				response.setContentType("text/html");//轉交JSP時,會造成JSP無效
+				response.setCharacterEncoding("UTF-8");//若未設定,預設iso 8859-1(西歐)
 				try(PrintWriter out = response.getWriter();){
 					out.println("<!DOCTYPE html>");
 					out.println("<html>");
+					out.println("<head>");
+					out.println("<title>登入成功</title>");
+					out.println("</head>");
 					out.println("<body>");
+					out.println("<h1>");
 					out.println("您好"+c.getName()+"登入成功!");
+					out.println("</h1>");
 					out.println("</body>");
 					out.println("</html>");
 				}
 				return;
+			}catch(LoginFailException e){
+				errors.add(e.getMessage());//for user
 			} catch (VGBException e) {
 				this.log("登入失敗", e);//for admin Developer,Tester
 				errors.add(e.getMessage());

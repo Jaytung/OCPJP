@@ -12,7 +12,7 @@ public class CustomerService {
 		if(email==null||email.length()==0||password==null||password.length()==0) {
 			throw new IllegalArgumentException("帳號或密碼必須要有值");
 		}
-		Customer c = dao.selectCustomerById(email);
+		Customer c = dao.selectCustomerByEmailOrPhone(email);
 		if (c != null && c.getPassword() != null && c.getPassword().equals(password)) {
 			return c;
 		}
