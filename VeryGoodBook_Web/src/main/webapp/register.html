@@ -44,6 +44,12 @@
             font-weight: 500;
         }
     </style>
+    <script>
+        function refreshCaptcha() {
+            // alert("refresh Captcha");
+            captchaImg.src = "imgs/reg_captcha.jpg?test=" + parseInt(new Date().getTime / 1000);
+        }
+    </script>
     <title>註冊</title>
 </head>
 
@@ -130,7 +136,20 @@
                         <input type="text" class="form-control" id="address" placeholder="輸入您的地址" name="address"
                             required>
                     </div>
-                    <div class="form-group row col-md-9">
+
+                </div>
+                <div class="form-row justify-content-center">
+                    <div class="form-group col-md-3 ">
+                        <input type="text" class="form-control" name="captcha" placeholder="依圖片輸入驗證碼" required>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <img id="captchaImg" src="imgs/reg_captcha.jpg" alt="驗證碼圖片" class="form-control bg-dark">
+                        <img src="" alt="">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <a href="javascript:refreshCaptcha()">重新產生</a>
+                    </div>
+                    <div class="form-group row col-md-9 ">
                         <div class="form-check" id="subscribed">
                             <input class="form-check-input" type="checkbox" id="isSubscribed" name="sibscribed">
                             <label class="form-check-label" for="isSubscribed">訂閱電子報</label>
@@ -138,12 +157,13 @@
                     </div>
                 </div>
         </div>
-        <div class="form-row justify-content-center">
-            <div class="row col-md-9 justify-content-end">
-                <button type="submit" class="btn btn-primary" id="submitRegister"><span>註冊</span></button>
-            </div>
-            </form>
+    </div>
+    <div class="form-row justify-content-center">
+        <div class="row col-md-9 justify-content-end">
+            <button type="submit" class="btn btn-primary" id="submitRegister"><span>註冊</span></button>
         </div>
+        </form>
+    </div>
     </div>
 
     <!-- Optional JavaScript -->

@@ -1,8 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" version="4.0">
-  <display-name>BlackCake_Web</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
+<!--metadata-complete="true" @webSevlet設定無效,設定拉至xml控制 -->
+<web-app version="4.0" metadata-complete="false"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+	<display-name>BlackCake_Web</display-name>
+
+	<servlet>
+		<description>登入功能驗證碼(4碼)</description>
+		<servlet-name>LoginCaptchaServlet</servlet-name>
+		<servlet-class>uuu.blackcake.view.CaptchaServlet</servlet-class>
+		<init-param>
+		<param-name>len</param-name>
+		<param-value>4</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginCaptchaServlet</servlet-name>
+		<url-pattern>/imgs/captcha.jpg</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>註冊功能驗證碼(預設-6碼)</description>
+		<servlet-name>RegisterCaptchaServlet</servlet-name>
+		<servlet-class>uuu.blackcake.view.CaptchaServlet</servlet-class>
+		
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RegisterCaptchaServlet</servlet-name>
+		<url-pattern>/imgs/reg_captcha.jpg</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
 </web-app>

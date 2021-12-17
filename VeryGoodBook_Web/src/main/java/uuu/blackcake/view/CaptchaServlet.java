@@ -17,20 +17,36 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class CaptchaServlet
  */
-@WebServlet("/imgs/captcha.jpg")
+//@WebServlet("/imgs/captcha.jpg")
 public class CaptchaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CaptchaServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+//    public CaptchaServlet() {
+//        super();
+//   	String servletName = this.getServletName() error code
+//    }
+	
     private int len = 6,  width = 16 * 2 + 12 * len,  height = 20;
     
-    private BufferedImage generateImage(String rand, int width, int height) {
+    @Override
+	public void init() throws ServletException {
+    	
+    	String servletName = this.getServletName();
+    	System.out.println(servletName+"以初始化完成");
+    	
+    	//1.參數必須寫在XML內
+    	//2.抓取xml內定義出的len,並使父類提供的method呼叫
+    	String len = this.getInitParameter("len");
+    	if(len!=null&&len.matches("\\d+")) {
+    		this.len=Integer.parseInt(len);
+    		width = 16 * 2 + 12*this.len;
+    	}
+	}
+
+	private BufferedImage generateImage(String rand, int width, int height) {
         //開始建立圖片
         BufferedImage image =
                 new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);

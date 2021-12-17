@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -62,23 +63,11 @@ public class LoginServlet extends HttpServlet {
 			
 			try {
 				Customer c = cService.login(email,password);
-				//3.1 產生成功回應
-
-				response.setContentType("text/html");//轉交JSP時,會造成JSP無效
-				response.setCharacterEncoding("UTF-8");//若未設定,預設iso 8859-1(西歐)
-				try(PrintWriter out = response.getWriter();){
-					out.println("<!DOCTYPE html>");
-					out.println("<html>");
-					out.println("<head>");
-					out.println("<title>登入成功</title>");
-					out.println("</head>");
-					out.println("<body>");
-					out.println("<h1>");
-					out.println("您好"+c.getName()+"登入成功!");
-					out.println("</h1>");
-					out.println("</body>");
-					out.println("</html>");
-				}
+				//3.1 forward(內部轉交)to view: login_ok.html
+				request.setAttribute("member", c);
+				RequestDispatcher dispatcher = 
+						request.getRequestDispatcher("login_ok.jsp");
+				dispatcher.forward(request, response);
 				return;
 			}catch(LoginFailException e){
 				errors.add(e.getMessage());//for user
@@ -91,16 +80,19 @@ public class LoginServlet extends HttpServlet {
 			}
 		}
 		
-		//3.2 產生失敗回應
-		response.setContentType("text/html");
-		response.setCharacterEncoding("UTF-8");
-		try(PrintWriter out = response.getWriter();){
-			out.println("<!DOCTYPE html>");
-			out.println("<html>");
-			out.println("<body>");
-			out.println("登入失敗: "+errors);
-			out.println("</body>");
-			out.println("</html>");
+		//3.2 forward(內部轉交)to View:login.html(/login,html)產生失敗回應
+		request.setAttribute("errors", errors);
+		RequestDispatcher dispatcher = 
+				request.getRequestDispatcher("login.html");
+		dispatcher.forward(request, response);
+//		response.setContentType("text/html");
+//		response.setCharacterEncoding("UTF-8");
+//		try(PrintWriter out = response.getWriter();){
+//			out.println("<!DOCTYPE html>");
+//			out.println("<html>");
+//			out.println("<body>");
+//			out.println("登入失敗: "+errors);
+//			out.println("</body>");
+//			out.println("</html>");
 		}
 	}
-}
