@@ -1,4 +1,4 @@
-<%@page import="uuu.blackcake.entity.Customer"%>
+<%@ page import="uuu.blackcake.entity.Customer"%>
 <%@ page pageEncoding="UTF-8"%>
     <!DOCTYPE html>
     <html>
@@ -22,6 +22,7 @@
         %>
         <h2>
             <%= c!=null?c.getName():"<b>未</b>"%>登入成功!5秒後回<a href="javascript:callHomePage()">首頁</a>
+            <%  out.print(c!=null?c.getName():"<b>未</b>");%>登入成功!5秒後回<a href="javascript:callHomePage()">首頁</a>
         </h2>
     </body>
 
