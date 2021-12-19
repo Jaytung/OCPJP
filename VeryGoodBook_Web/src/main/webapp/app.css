@@ -64,12 +64,15 @@ div h2{
     color: #6B4F4F;
     font-family: "Nuntio", sans-serif;
 }
-/* @media screen and (max-width: 600px){
-    #login{
-        width:60%;
+ul {
+    list-style-type: none;
+}
+ @media screen and (max-width: 768px){
+    #mainNavbar{
+        background:#ffb600 ;
     }
 }
-@media screen and (min-width: 600px) and (max-width: 1000px){
+/* @media screen and (min-width: 600px) and (max-width: 1000px){
     #login{
         width:50%;
     }
