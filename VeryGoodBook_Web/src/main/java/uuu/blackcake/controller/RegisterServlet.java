@@ -70,10 +70,11 @@ public class RegisterServlet extends HttpServlet {
 				CustomerService cService = new CustomerService();
 				cService.register(c);
 				// TODO:3.1轉交給register.jsp
+				
 			} catch (DataInvalidException e) {
 				errors.add(e.getMessage());
 			}catch(VGBException e) {
-				this.log("註冊失敗",e);
+				this.log("註冊失敗",e);//for admin Dev ,tester
 				errors.add(e.getMessage());
 			}catch(Exception e) {
 				this.log("註冊失敗,發生非預期錯誤");
