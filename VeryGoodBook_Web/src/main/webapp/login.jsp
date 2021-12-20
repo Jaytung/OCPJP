@@ -1,3 +1,5 @@
+<%@ page import="uuu.blackcake.entity.Customer"%>
+<%@ page pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -73,7 +75,13 @@
     </nav>
 
     <div class="container">
+    <article>
+    <%
+    List<String> errors = (List(String)).geAttribute("errors");
+    %>
+    </article>
         <form action="login.do" method="post" class="loginForm  col-md-7 ml-auto mr-auto  border rounded shadow">
+            <p><%=erros!=null?errors:"" %> </p>
             <div class="form-row justify-content-center mt-3">
                 <div class="form-group col-md-6 col-lg-5 ">
                     <label for="inputEmail"><span>帳號</span></label>
@@ -101,7 +109,7 @@
                     <input type="text" class="form-control shadow" name="captcha" placeholder="依圖片輸入驗證碼" required>
                 </div>
                 <div class="form-group col-md-6 col-lg-5 text-start mt-auto mb-auto pr-auto">
-                    <img id="captchaImg" src="imgs/reg_captcha.jpg" alt="驗證碼圖片" class="border shadow rounded">
+                    <img id="captchaImg" src="imgs/captcha.jpg" alt="驗證碼圖片" class="border shadow rounded">
                     <img src="" alt="">
                     <a id="reCaptchaImg" href="javascript:refreshCaptcha()">
                         <i class="fa fa-refresh fa-2x" aria-hidden="true"></i>

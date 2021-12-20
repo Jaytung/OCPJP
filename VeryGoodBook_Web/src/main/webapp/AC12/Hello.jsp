@@ -1,4 +1,6 @@
-<%@ page pageEncoding="UTF-8"%>
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="java.time.LocalDate"%>
+<%@ page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,5 +18,7 @@
 	<% }else{ %>
 	<p>i是一個&lt;10得數字</p>
 	<% } %>
+	<p>今天:<%=LocalDate.now() %>
+	</p>
 </body>
 </html>

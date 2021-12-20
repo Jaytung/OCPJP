@@ -34,6 +34,7 @@ public class LoginServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+    @Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<String> errors = new ArrayList<>();
 		//必須加在取得第一個參數之前
@@ -83,7 +84,7 @@ public class LoginServlet extends HttpServlet {
 		//3.2 forward(內部轉交)to View:login.html(/login,html)產生失敗回應
 		request.setAttribute("errors", errors);
 		RequestDispatcher dispatcher = 
-				request.getRequestDispatcher("login.html");
+				request.getRequestDispatcher("login.jsp");
 		dispatcher.forward(request, response);
 //		response.setContentType("text/html");
 //		response.setCharacterEncoding("UTF-8");

@@ -1,3 +1,5 @@
+<%@ page import="uuu.blackcake.entity.Customer"%>
+<%@ page pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -104,7 +106,7 @@
     <br>
     <div id="formBackground">
         <div class="registerForm">
-            <form method="post" action="" class="col-10 col-md-10 col-lg-9 mr-auto ml-auto">
+            <form method="post" action="register.do" class="col-10 col-md-10 col-lg-9 mr-auto ml-auto">
                 <div class="form-row firstForm justify-content-center">
                     <div class="form-group  col-md-3">
                         <label for="email">Email</label>

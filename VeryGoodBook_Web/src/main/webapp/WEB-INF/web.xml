@@ -23,8 +23,7 @@
 	<servlet>
 		<description>註冊功能驗證碼(預設-6碼)</description>
 		<servlet-name>RegisterCaptchaServlet</servlet-name>
-		<servlet-class>uuu.blackcake.view.CaptchaServlet</servlet-class>
-		
+		<servlet-class>uuu.blackcake.view.CaptchaServlet</servlet-class>	
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>RegisterCaptchaServlet</servlet-name>
