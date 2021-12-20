@@ -77,7 +77,7 @@
     <div class="container">
     <article>
     <%
-    List<String> errors = (List(String)).geAttribute("errors");
+    List<String> errors = (List<String>)request.getAttribute("errors");
     %>
     </article>
         <form action="login.do" method="post" class="loginForm  col-md-7 ml-auto mr-auto  border rounded shadow">
