@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@ page import="uuu.blackcake.entity.Customer"%>
 <%@ page pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -67,13 +68,37 @@
                 margin-left: 0vw;
             }
         }
+        
     </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
     <script>
         function refreshCaptcha() {
             // alert("refresh Captcha");
             captchaImg.src = "imgs/reg_captcha.jpg?test=" + parseInt(new Date().getTime() / 1000);
         }
-    </script>
+        $(document).ready(init);
+               
+        function init() {
+                repopulationForm();
+        }
+        function repopulationForm() {
+			<%if("POST".equals(request.getMethod())){ %>
+            // alert("post");
+            $("input[name='email']").val('<%= request.getParameter("email")%>');
+            $("input[name='password']").val('<%= request.getParameter("password")%>');
+            $("input[name='passwordCheck']").val('<%= request.getParameter("passwordCheck")%>');
+            $("input[name='name']").val('<%= request.getParameter("name")%>');
+            $(".gender[value='<%= request.getParameter("gender")%>']").prop('checked',true);
+            $("input[name='phone']").val('<%= request.getParameter("phone")%>');
+            $("input[name='id']").val('<%= request.getParameter("id")%>');
+            $("input[name='birthday']").val('<%= request.getParameter("birthday")%>');
+            $("input[name='address']").val('<%= request.getParameter("address")%>');
+            $("input[name='subscribed']").prop('checked',<%= request.getParameter("subscribed")%>);
+            <%}%>
+        }
+        </script>
     <title>註冊</title>
 </head>
 
@@ -87,10 +112,10 @@
         <div class="collapse navbar-collapse" id="navLinks">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a href="index.html" class="nav-link">首頁</a>
+                    <a href="index.jsp" class="nav-link">首頁</a>
                 </li>
                 <li class="nav-item">
-                    <a href="shoplist.html" class="nav-link">商品</a>
+                    <a href="shoplist.jsp" class="nav-link">商品</a>
                 </li>
                 <li class="nav-item">
                     <a href="" class="nav-link">關於</a>
@@ -98,15 +123,29 @@
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="login.html">登入</a>
+                    <a class="nav-link" href="login.jsp">登入</a>
                 </li>
             </ul>
         </div>
     </nav>
+    <% 
+    List<String> errors = (List<String>)request.getAttribute("errors"); 
+    %>
     <br>
     <div id="formBackground">
         <div class="registerForm">
             <form method="post" action="register.do" class="col-10 col-md-10 col-lg-9 mr-auto ml-auto">
+                      <p><%=errors!=null?errors:"" %> </p>
+                     <ul class="errors">
+<%--             <% if(errors!=null&&errors.size()!=0){           	 --%>
+<!--             	 for(int i =0;i<errors.size();i++){  -->
+<!--             	 String msg = (String)errors.get(i); -->
+<!--             %> -->
+<%--             	<li><%=msg %></li> --%>
+            
+<%--             	<%} --%>
+<!--              }%> -->
+            </ul>
                 <div class="form-row firstForm justify-content-center">
                     <div class="form-group  col-md-3">
                         <label for="email">Email</label>
@@ -116,7 +155,7 @@
                     <div class="form-group col-md-3">
                         <label for="password">密碼Password</label>
                         <input type="password" class="form-control shadow" id="password" placeholder="Password"
-                            name="password" required>
+                            name="password"  maxlength="<%=Customer.MAX_PWD_LENGTH%>" minlength="<% %>" required>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="passwordCheck">確認密碼</label>
@@ -211,10 +250,8 @@
         integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
         crossorigin="anonymous"></script>
 
-
+    
     <script>
-
-
         $(function () {
             $(document).scroll(function () {
                 var $nav = $("#mainNavbar");

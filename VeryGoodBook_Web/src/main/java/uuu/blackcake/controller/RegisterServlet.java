@@ -1,9 +1,12 @@
 package uuu.blackcake.controller;
 
 import java.io.IOException;
+import java.text.CollationElementIterator;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +21,8 @@ import uuu.blackcake.service.CustomerService;
 /**
  * Servlet implementation class RegisterServlet
  */
-@WebServlet("/RegisterServlet")
+@WebServlet(name="uuu.blackcake.controller.RegisterServlet"
+,urlPatterns = {"/register.do"})
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -48,16 +52,29 @@ public class RegisterServlet extends HttpServlet {
 		String phone = request.getParameter("phone");
 		String id = request.getParameter("id");
 		String birthday = request.getParameter("birthday");
-		String address = request.getParameter("address ");
+		String address = request.getParameter("address");
+		String subscribed = request.getParameter("subscribed");
 		if (email == null || email.length() == 0) {
 			errors.add("必須輸入Email");
 		}
 		if (password == null || password.length() == 0 || !password.equals(passwordCheck)) {
 			errors.add("必須輸入一致的密碼");
 		}
-		if (email == null || email.length() == 0) {
-			errors.add("必須輸入Email");
+		if (name == null || name.length() == 0) {
+			errors.add("必須輸入姓名");
 		}
+		if (gender == null || gender.length() == 0) {
+			errors.add("必須選擇性別");
+		}
+		if (phone == null || phone.length() == 0) {
+			errors.add("必須輸入電話");
+		}
+		if (id == null || id.length() == 0) {
+			errors.add("必須輸入身分證");
+		}
+		
+		
+		
 		// TODO:剩餘項目檢查
 
 		// TODO:2.若無誤則呼叫商業邏輯
@@ -67,10 +84,22 @@ public class RegisterServlet extends HttpServlet {
 				c.setEmail(email);
 				c.setName(name);
 				c.setPassword(password);
+				c.setBirthday(birthday);
+				c.setGender(gender.charAt(0));
+				c.setPhone(phone);
+				c.setId(id);
+				c.setAddress(address);
+				c.setSubscribed(subscribed!=null);
 				CustomerService cService = new CustomerService();
 				cService.register(c);
-				// TODO:3.1轉交給register.jsp
 				
+				
+				// TODO:3.1轉交給register_ok.jsp
+				request.setAttribute("member", c);
+				RequestDispatcher dispatcher=
+						request.getRequestDispatcher("register_ok.jsp");
+				dispatcher.forward(request, response);
+				return;
 			} catch (DataInvalidException e) {
 				errors.add(e.getMessage());
 			}catch(VGBException e) {
@@ -82,6 +111,10 @@ public class RegisterServlet extends HttpServlet {
 			}
 		}
 		// TODO:3.2轉交到register.jsp
+		request.setAttribute("errors", errors);
+		RequestDispatcher dispatcher = 
+				request.getRequestDispatcher("register.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }

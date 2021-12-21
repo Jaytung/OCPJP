@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
 
@@ -25,34 +26,7 @@
 </head>
 
 <body>
-  <nav id="mainNavbar" class="navbar navbar-light navbar-expand-md py-0 fixed-top">
-    <a href=" #" class="navbar-brand">CAKE</a>
-    <button class="navbar-toggler" data-toggle="collapse" data-target="#navLinks" arir-label="Toggle navigation">
-      <span class="navbar-toggler-icon">
-      </span>
-    </button>
-    <div class="collapse navbar-collapse" id="navLinks">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a href="index.html" class="nav-link">首頁</a>
-        </li>
-        <li class="nav-item">
-          <a href="shoplist.html" class="nav-link">商品</a>
-        </li>
-        <li class="nav-item">
-          <a href="" class="nav-link">關於</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="register.jsp">註冊</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="login.jsp">登入</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+<jsp:include page="subviews/header.jsp"/>
   <section class="container-fluid px-0">
     <div class="row align-items-center">
       <div class="col-lg-6">
@@ -162,11 +136,7 @@
   </div>
   <hr>
   <br>
-  <footer class="footer">
-    <div class="container text-center">
-      COPYRIGHT © 鮮字版權所有請尊重智慧財產權門市地址台北市松山區復興北路99號12樓至14樓TEL:(02)2514-9191
-    </div>
-  </footer>
+	<%@ include file='subviews/footer.jsp' %>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"

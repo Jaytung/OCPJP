@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@ page import="uuu.blackcake.entity.Customer"%>
 <%@ page pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -57,10 +58,10 @@
         <div class="collapse navbar-collapse" id="navLinks">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a href="index.html" class="nav-link">首頁</a>
+                    <a href="index.jsp" class="nav-link">首頁</a>
                 </li>
                 <li class="nav-item">
-                    <a href="shoplist.html" class="nav-link">商品</a>
+                    <a href="shoplist.jsp" class="nav-link">商品</a>
                 </li>
                 <li class="nav-item">
                     <a href="" class="nav-link">關於</a>
@@ -68,20 +69,29 @@
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="register.html">註冊</a>
+                    <a class="nav-link" href="register.jsp">註冊</a>
                 </li>
             </ul>
         </div>
     </nav>
-
-    <div class="container">
-    <article>
-    <%
-    List<String> errors = (List<String>)request.getAttribute("errors");
+    <% 
+    List<String> errors = (List<String>)request.getAttribute("errors"); 
     %>
-    </article>
+    <div class="container">
         <form action="login.do" method="post" class="loginForm  col-md-7 ml-auto mr-auto  border rounded shadow">
-            <p><%=erros!=null?errors:"" %> </p>
+    <article>
+<%--             <p><%=errors!=null?errors:"" %> </p> --%>
+            <ul class="errors">
+            <% if(errors!=null&&errors.size()>0){           	
+            	 for(int i =0;i<errors.size();i++){ 
+            	 String msg = (String)errors.get(i);
+            %>
+            	<li><%=msg %></li>
+            
+            	<%}
+             }%>
+            </ul>
+    </article>
             <div class="form-row justify-content-center mt-3">
                 <div class="form-group col-md-6 col-lg-5 ">
                     <label for="inputEmail"><span>帳號</span></label>

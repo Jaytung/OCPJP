@@ -21,8 +21,8 @@
         Customer c = (Customer)request.getAttribute("member");
         %>
         <h2>
-            <%= c!=null?c.getName():"<b>未</b>"%>登入成功!5秒後回<a href="javascript:callHomePage()">首頁</a>
-            <%-- <%  out.print(c!=null?c.getName():"<b>未</b>");%>登入成功!5秒後回<a href="javascript:callHomePage()">首頁</a> --%>
+            <%= c!=null?c.getName():"<b>未</b>"%>註冊成功!5秒後回<a href="javascript:callHomePage()">首頁</a>
+<%--             <%  out.print(c!=null?c.getName():"<b>未</b>");%>登入成功!5秒後回<a href="javascript:callHomePage()">首頁</a> --%>
         </h2>
     </body>
 
