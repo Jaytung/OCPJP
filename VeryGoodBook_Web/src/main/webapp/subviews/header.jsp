@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <!--header.jsp start-->
- <nav id="mainNavbar" class="navbar navbar-light navbar-expand-md py-0 fixed-top">
-    <a href=" #" class="navbar-brand">CAKE</a>
+ <nav id="mainNavbar" class="navbar navbar-light navbar-expand-md py-0 fixed-top rounded-down">
+    <a href=" #" class="navbar-brand">鮮記</a>
     <button class="navbar-toggler" data-toggle="collapse" data-target="#navLinks" arir-label="Toggle navigation">
       <span class="navbar-toggler-icon">
       </span>

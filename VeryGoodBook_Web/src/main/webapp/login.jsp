@@ -20,16 +20,6 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="app.css">
     <style>
-        .loginForm {
-            margin-top: 18vh;
-        }
-
-        #captchaImg {
-            height: 40px;
-            width: 130;
-            max-width: 400px;
-            /* maintain aspect ratio */
-        }
     </style>
     <script>
         function changePwdDisplay() {

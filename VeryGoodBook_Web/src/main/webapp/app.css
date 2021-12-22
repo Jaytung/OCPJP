@@ -24,23 +24,25 @@ div h2{
     margin-bottom: 10px;
 }
 .navbar.scrolled{
-    background: #ffb600;
+    background: #bb8765;
     transition: background 500ms;
+}
+.navbar-brand{
+    font-size: 2rem;
 }
 #mainNavbar{
     font-size: 1.5rem;
-    font-weight: 100;
+    font-weight: 600;
 }
 #mainNavbar .nav-link{ 
-    color: #6B4F4F;
+    color: #353535;
 }
 #mainNavbar .nav-link:hover{
-    color: #00b4d8;
-    transform: scale(1.05);
+    color: #ea1C2c;
     transition: 400ms;
 }
 #mainNavbar .navbar-brand{
-    color: #483434;
+    color: #e63946;
 }
 
 #headingGroup span{
@@ -54,34 +56,40 @@ div h2{
     margin: 10rem auto;
     width:80%;
 }
-/* #login{
-    margin: 10% auto;
-    width:80%;
-    font-family: "Nuntio", sans-serif;
-    color: #483434;
-} */
 .registerForm{
     color: #6B4F4F;
     font-family: "Nuntio", sans-serif;
+}
+.loginForm {
+    margin-top: 18vh;
+}
+.loginForm {
+    margin-top: 18vh;
+}
+
+#captchaImg {
+    height: 40px;
+    width: 130;
+    max-width: 400px;
+    /* maintain aspect ratio */
+}
+.carousel-control-next-icon, .carousel-control-prev-icon {
+	filter: invert(1);
+}
+#captchaImg {
+    height: 40px;
+    width: 130;
+    max-width: 400px;
+    /* maintain aspect ratio */
 }
 ul {
     list-style-type: none;
 }
  @media screen and (max-width: 768px){
     #mainNavbar{
-        background:#ffb600 ;
+        background:#bb8765;
     }
 }
-/* @media screen and (min-width: 600px) and (max-width: 1000px){
-    #login{
-        width:50%;
-    }
-}
-@media screen and (min-width: 1000px){
-    #login{
-        width:40%;
-    }
-} */
 
 @media(max-width:1200px) {
     #headingGroup h1{

@@ -3,6 +3,8 @@ package uuu.blackcake.entity;
 import java.time.LocalDate;
 import java.time.Period;
 
+import uuu.blackcake.exception.DataInvalidException;
+
 public class Customer {
 	
 	
@@ -104,7 +106,10 @@ public class Customer {
 		if (email != null && email.matches(EMAIL_PATTERN)) {
 			this.email = email;
 		} else {
-			System.err.println("Email輸入格式不正確");
+//			System.err.println("Email輸入格式不正確");
+			String msg = String.format("email必須輸入且符合格式");
+			//throw Exception
+			throw new DataInvalidException(msg);
 		}
 	}
 
@@ -119,7 +124,10 @@ public class Customer {
 		if (gender == MALE || gender == FEMALE || gender == OTHER) {
 			this.gender = gender;
 		} else {
-			System.err.printf("性別資料不正確應為男:%s,女:%s,其他:%s",MALE,FEMALE,OTHER);
+//			System.err.printf("性別資料不正確應為男:%s,女:%s,其他:%s",MALE,FEMALE,OTHER);
+			String msg = String.format("性別資料不正確，應為男:%s,女:%s,其他:%s", 
+					MALE,FEMALE,OTHER);
+			throw new DataInvalidException(msg);
 		}
 	}
 	
@@ -127,10 +135,13 @@ public class Customer {
 	public static final int MAX_PWD_LENGTH=20;
 	public void setPassword(String password) {
 		// TODO:Password檢查
-		if (password != null && password.length() > MIN_PWD_LENGTH && password.length() < MAX_PWD_LENGTH) {
+		if (password != null && password.length() >= MIN_PWD_LENGTH && password.length() <= MAX_PWD_LENGTH) {
 			this.password = password;
 		} else {
-			System.err.printf("密碼長度必須在%d~%d之間",MIN_PWD_LENGTH,MAX_PWD_LENGTH);
+//			System.err.printf("密碼長度必須在%d~%d之間",MIN_PWD_LENGTH,MAX_PWD_LENGTH);
+			String msg = String.format("密碼必須輸入且長度在%d~%d之間",
+					MIN_PWD_LENGTH,MAX_PWD_LENGTH);
+			throw new DataInvalidException(msg);
 		}
 	}
 
@@ -144,7 +155,8 @@ public class Customer {
 		if (checkId(id)) {
 			this.id = id;
 		} else {
-			System.err.println("身分證格式有誤");
+//			System.err.println("身分證格式有誤");
+			throw new DataInvalidException("身分證號格式不正確");
 		}
 	}
 	
@@ -236,7 +248,11 @@ public class Customer {
 		if (name != null && (name = name.trim()).length() >MIN_NAME_LENGTH  && name.length() < MAX_NAME_LENGTH) {
 			this.name = name.trim();
 		} else {
-			System.err.printf("輸入姓名必需長度在%d~%d之間",MIN_NAME_LENGTH);
+//			System.err.printf("輸入姓名必需長度在%d~%d之間",MIN_NAME_LENGTH);
+			String msg = String.format("客戶姓名必須輸入且長度在%d~%d之間",
+					MIN_NAME_LENGTH,MAX_NAME_LENGTH);
+			//throw Exception
+			throw new DataInvalidException(msg);
 		}
 	}
 
@@ -285,18 +301,21 @@ public class Customer {
 	 * @param 指定生日birthday
 	 * @return int型態的顧客年齡
 	 */
+
 	public static int getAge(LocalDate birthday) {
-		// 計算客戶年齡
-		int thisYear = LocalDate.now().getYear();// 2021
-		if (birthday != null) {
-			int birthYear = birthday.getYear();// 2000//this抓自己類別中的屬性
-			int age = thisYear - birthYear;
-			return age;
-		} else {
+		int thisYear = LocalDate.now().getYear();
+		if(birthday!=null) {
+//			int birthYear = birthday.getYear(); 
+//			int age = thisYear-birthYear;
+//			System.out.println(
+//					Period.between(birthday, LocalDate.now())); //for test
+			int age = Period.between(birthday, LocalDate.now()).getYears();
+			return age;		
+		}else {
 			return -1;
-			// TODO:第13張 throw exception物件
+			//TODO:第13章 改(拋出)throw exception物件
 		}
-	}
+	}	
 	
 	public static final int MIN_AGE = 12;
 	public void setBirthday(LocalDate birthday) {
@@ -304,7 +323,9 @@ public class Customer {
 			if (getAge(birthday) >= MIN_AGE) {
 				this.birthday = birthday;
 			} else {
-				System.err.println("客戶生日須年滿12歲");
+//				System.err.println("客戶生日須年滿12歲");
+				String msg = String.format("客戶生日必須輸入且年滿%d歲",MIN_AGE);
+				throw new DataInvalidException(msg);
 			}
 		}
 	}

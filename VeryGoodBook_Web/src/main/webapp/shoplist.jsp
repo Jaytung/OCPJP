@@ -18,6 +18,14 @@
     <link rel="stylesheet" href="shoplist.css">
     <style>
     </style>
+       <script>
+        $(function () {
+            $(document).scroll(function () {
+                var $nav = $("#mainNavbar");
+                $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
+            })
+        })
+    </script>
     <title>商品清單</title>
 </head>
 
