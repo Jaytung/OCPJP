@@ -40,7 +40,7 @@
 <body>
     <!-- style="background-color: #EED6C4; -->
     <nav id="mainNavbar" class="navbar navbar-light navbar-expand-md py-0 fixed-top">
-        <a href="#" class="navbar-brand">CAKE</a>
+        <a href="#" class="navbar-brand">鮮記</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navLinks" arir-label="Toggle navigation">
             <span class="navbar-toggler-icon">
             </span>

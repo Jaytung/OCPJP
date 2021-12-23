@@ -22,7 +22,9 @@
 <!-- Custom CSS -->
 <link rel="stylesheet" href="app.css">
 <style>
-
+section{
+	margin-top: 5vh;
+}
 </style>
 <title>澎湖名產</title>
 </head>
@@ -52,7 +54,7 @@
 					<div class="carousel-inner">
 						<div class="carousel-item active" data-interval="4000">
 							<a href="#blackCake"> <img src="imgs/slide1.png"
-								class="d-block w-100" a	lt="黑糖糕"></a>
+								class="d-block w-100" alt="黑糖糕"></a>
 						</div>
 						<div class="carousel-item" data-interval="5000">
 							<a href="#小管片"> <img src="imgs/slide2.png"
@@ -63,13 +65,13 @@
 								class="d-block w-100" alt="XO醬"></a>
 						</div>
 					</div>
-					<button class="carousel-control-prev" type="button"
+					<button class="carousel-control-prev bg-dark col-1 rounded" type="button"
 						data-target="#carousel" data-slide="prev">
 
 						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 						<span class="sr-only">Previous</span>
 					</button>
-					<button class="carousel-control-next" type="button"
+					<button class="carousel-control-next bg-dark col-1  rounded" type="button"
 						data-target="#carousel" data-slide="next">
 
 						<span class="carousel-control-next-icon" aria-hidden="true"></span>

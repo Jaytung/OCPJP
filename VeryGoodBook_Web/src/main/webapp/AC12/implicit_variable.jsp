@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@page import="java.util.Random"%>
 <%@ page pageEncoding="UTF-8" isErrorPage="true" autoFlush="false"%>
 <%
@@ -61,6 +62,10 @@
 	<hr>
 	<h3 id="session">session</h3>
 	<p>session.getId(): <%= session.getId() %></p>
+	<p>getMaxInactiveInterval():<%=session.getMaxInactiveInterval() %> sec</p>
+	<p>getCreationTime():<%=new Date(session.getCreationTime()) %></p>
+	<p>getLastAccessedTime():<%=new Date(session.getLastAccessedTime())%></p>
+	<p></p>
 	<hr>
 	<h3 id="application">applicaton</h3>
 	<p>getContextPath:<%=application.getContextPath() %> </p>

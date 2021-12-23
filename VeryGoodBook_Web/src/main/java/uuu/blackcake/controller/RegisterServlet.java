@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import uuu.blackcake.entity.Customer;
 import uuu.blackcake.exception.DataInvalidException;
@@ -41,6 +42,7 @@ public class RegisterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
 		List<String> errors = new ArrayList<>();
 		// 1.取得request中的FormData:email,password,passwordCheck,
 		// name,gender,phone,id,birthday,address
@@ -54,6 +56,7 @@ public class RegisterServlet extends HttpServlet {
 		String birthday = request.getParameter("birthday");
 		String address = request.getParameter("address");
 		String subscribed = request.getParameter("subscribed");
+		String captcha = request.getParameter("captcha");
 		if (email == null || email.length() == 0) {
 			errors.add("必須輸入Email");
 		}
@@ -72,7 +75,15 @@ public class RegisterServlet extends HttpServlet {
 		if (id == null || id.length() == 0) {
 			errors.add("必須輸入身分證");
 		}
-		
+		if(captcha==null||captcha.length()==0) {
+			errors.add("必須輸入驗證碼");
+		}else {
+			String oldCaptcha = (String)session.getAttribute("RegisterCaptchaServlet");
+			if(!captcha.equalsIgnoreCase(oldCaptcha)) {
+				errors.add("驗證碼不正確");
+			}
+		}
+		session.removeAttribute("LoginCaptchaServlet");
 		
 		
 		// TODO:剩餘項目檢查

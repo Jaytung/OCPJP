@@ -24,51 +24,8 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="registerCss.css">
     <style>
-        .form-control {
-            margin-bottom: 10px;
-        }
-
-        .registerForm {
-            margin: 10vh 0px;
-        }
-
-        .firstForm {
-            margin-top: 4em;
-        }
-
-        form {
-            background: #e0dedc;
-            padding: 20px;
-            border: 1px solid wheat;
-            border-radius: 1%;
-        }
-
-        span {
-            font-size: 1.4rem;
-            font-weight: 500;
-        }
-
-        #subscribed {
-            margin-left: 9vw;
-        }
-
-        #captchaImg {
-            width: 160px;
-            height: auto;
-        }
-
-        #reCaptchaImg {
-            padding-left: 5px;
-            align-self: flex-end
-        }
-
-        @media screen and (max-width: 769px) {
-            #subscribed {
-                margin-left: 0vw;
-            }
-        }
-        
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
@@ -90,7 +47,9 @@
             $("input[name='password']").val('<%= request.getParameter("password")%>');
             $("input[name='passwordCheck']").val('<%= request.getParameter("passwordCheck")%>');
             $("input[name='name']").val('<%= request.getParameter("name")%>');
-            $(".gender[value='<%= request.getParameter("gender")%>']").prop('checked',true);
+            $("input[name='gender']").prop('selected',<%= request.getParameter("gender")%>);
+            
+            // $(".gender[value='<%= request.getParameter("gender")%>']").prop('selected',true);
             $("input[name='phone']").val('<%= request.getParameter("phone")%>');
             $("input[name='id']").val('<%= request.getParameter("id")%>');
             $("input[name='birthday']").val('<%= request.getParameter("birthday")%>');
@@ -104,7 +63,7 @@
 
 <body>
     <nav id="mainNavbar" class="navbar navbar-light  navbar-expand-md py-0 fixed-top">
-        <a href=" #" class="navbar-brand">CAKE</a>
+        <a href=" #" class="navbar-brand">鮮記</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navLinks" arir-label="Toggle navigation">
             <span class="navbar-toggler-icon">
             </span>
@@ -222,7 +181,7 @@
                 </div>
                 <div class="custom-control custom-checkbox form-group row">
                     <div class="form-check" id="subscribed">
-                        <input class="custom-control-input" type="checkbox" id="isSubscribed" name="sibscribed">
+                        <input class="custom-control-input" type="checkbox" id="isSubscribed" name="subscribed">
                         <label class="custom-control-label" for="isSubscribed">訂閱電子報</label>
                     </div>
                 </div>

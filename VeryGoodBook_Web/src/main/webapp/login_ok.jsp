@@ -18,7 +18,7 @@
     <body>
         <!-- 秒數倒數新增js -->
         <%
-        Customer c = (Customer)request.getAttribute("member");
+        Customer c = (Customer)session.getAttribute("member");
         %>
         <h2>
             <%= c!=null?c.getName():"<b>未</b>"%>登入成功!5秒後回<a href="javascript:callHomePage()">首頁</a>

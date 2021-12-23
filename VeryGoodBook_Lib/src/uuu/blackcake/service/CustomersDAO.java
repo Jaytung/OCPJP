@@ -14,15 +14,15 @@ class CustomersDAO {// package-friendly(不能加public)
 			+ "address, phone, subscribed, blood_type, discount "
 			+ "FROM customers WHERE email=? OR phone=?";
 
-	Customer selectCustomerByEmailOrPhone(String email) throws VGBException {
+	Customer customerLogin(String account) throws VGBException {
 		Customer c = null;
 
 		try (Connection connection = RDBConnection.getConnection(); // 1,2 取得連線
 				PreparedStatement pstmt = connection.prepareStatement(SELECT_customer);
 				) 
 			{//3.1傳入?的值
-			pstmt.setString(1, email);
-			pstmt.setString(2, email);
+			pstmt.setString(1, account);
+			pstmt.setString(2, account);
 			try(
 			ResultSet rs = pstmt.executeQuery();
 					){
@@ -84,11 +84,11 @@ class CustomersDAO {// package-friendly(不能加public)
 		} catch (SQLIntegrityConstraintViolationException e) {
 			System.out.println(e.getErrorCode()+","+e.getMessage());
 			if(e.getMessage().indexOf("PRIMARY")>0) {
-				throw new DataInvalidException("Email已重複註冊",e);
-			}else if(e.getMessage().indexOf("phone_UNIQUE")>0) {
-				throw new DataInvalidException("電話以重複註冊",e);
-			}else if(e.getMessage().indexOf("id_UNIQUE")>0) {
 				throw new DataInvalidException("身分證已重複註冊",e);
+			}else if(e.getMessage().indexOf("email_UNIQUE")>0) {
+				throw new DataInvalidException("email以重複註冊",e);
+			}else if(e.getMessage().indexOf("phone_UNIQUE")>0) {
+				throw new DataInvalidException("電話已重複註冊",e);
 				
 			}else {
 				throw new VGBException("新增客戶失敗,欄位不得為null",e);

@@ -52,6 +52,10 @@ div h2{
     font-weight: 100;
     font-size: 4rem;
 }
+#loginName{
+	
+	color:black;
+}
 .center_div{
     margin: 10rem auto;
     width:80%;
@@ -62,19 +66,9 @@ div h2{
 }
 .loginForm {
     margin-top: 18vh;
-}
-.loginForm {
-    margin-top: 18vh;
-}
 
-#captchaImg {
-    height: 40px;
-    width: 130;
-    max-width: 400px;
-    /* maintain aspect ratio */
-}
 .carousel-control-next-icon, .carousel-control-prev-icon {
-	filter: invert(1);
+/* 	filter: invert(1); */
 }
 #captchaImg {
     height: 40px;

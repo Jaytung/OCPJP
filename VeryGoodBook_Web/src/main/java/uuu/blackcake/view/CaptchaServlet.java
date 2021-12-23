@@ -13,11 +13,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class CaptchaServlet
  */
-//@WebServlet("/imgs/captcha.jpg")
+//@WebServlet("urlPatterns="/imgs/captcha.jpg")url: /blackcake/imgs/captcha.jpg 改到web.xml
 public class CaptchaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -98,10 +99,12 @@ public class CaptchaServlet extends HttpServlet {
 		for(int i=0;i<len;i++) {
 			int data = random.nextInt(36);//0-35: 0~9,A~Z
 			char ch = (char)(data<10?data+'0':data+'A'-10);
-			System.out.println(ch);
+//			System.out.println(ch);//for test
 			captcha+=ch;
 		}
-		System.out.println(captcha);
+		HttpSession session = request.getSession();
+		session.setAttribute(this.getServletName(), captcha);
+		System.out.println(captcha);//for test
 		
 		//繪製成image
 		BufferedImage image = generateImage(captcha, width, height);
