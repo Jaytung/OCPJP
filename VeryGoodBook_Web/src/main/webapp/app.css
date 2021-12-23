@@ -20,8 +20,8 @@ div h2{
     line-height: 2;
 }
 .content{
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 100px;
+    margin-bottom: 100px;
 }
 .navbar.scrolled{
     background: #bb8765;
@@ -38,7 +38,7 @@ div h2{
     color: #353535;
 }
 #mainNavbar .nav-link:hover{
-    color: #ea1C2c;
+    color: #ea1C22;
     transition: 400ms;
 }
 #mainNavbar .navbar-brand{
@@ -66,19 +66,19 @@ div h2{
 }
 .loginForm {
     margin-top: 18vh;
-
-.carousel-control-next-icon, .carousel-control-prev-icon {
-/* 	filter: invert(1); */
 }
+/* .carousel-control-next-icon, .carousel-control-prev-icon { */
+/* 	filter: invert(1); */
+
 #captchaImg {
     height: 40px;
     width: 130;
     max-width: 400px;
-    /* maintain aspect ratio */
+/*     maintain aspect ratio */
 }
 ul {
     list-style-type: none;
-}
+
  @media screen and (max-width: 768px){
     #mainNavbar{
         background:#bb8765;
