@@ -20,6 +20,11 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="app.css">
     <style>
+    #captchaImg{
+    height: 40px;
+    width: 130;
+    max-width: 400px;
+    }
     </style>
     <script>
         function changePwdDisplay() {
@@ -84,9 +89,9 @@
     </article>
             <div class="form-row justify-content-center mt-3">
                 <div class="form-group col-md-6 col-lg-5 ">
-                    <label for="inputEmail"><span>帳號</span></label>
-                    <input type="text" class="form-control shadow" id="inputEmail" placeholder="輸入Email或電話" name="email"
-                        required>
+                    <label for="inputAccount"><span>帳號</span></label>
+                    <input type="text" class="form-control shadow" id="inputAccount" name="account" placeholder="輸入Email或電話" required
+                    value="${(empty param.account)?(cookie.account.value):(param.account)}">
                 </div>
                 <div class="form-group col-md-6 col-lg-5">
                     <label for="inputPassword"><span>密碼</span></label>
@@ -108,9 +113,8 @@
                     <br>
                     <input type="text" class="form-control shadow" name="captcha" placeholder="依圖片輸入驗證碼" required>
                 </div>
-                <div class="form-group col-md-6 col-lg-5 text-start mt-auto mb-auto pr-auto">
-                    <img id="captchaImg" src="imgs/captcha.jpg" alt="驗證碼圖片" class="border shadow rounded">
-                    <img src="" alt="">
+                <div class="form-group col-md-6 col-lg-5 text-center mt-auto mb-auto pr-auto">
+                    <img id="captchaImg" src="imgs/captcha.jpg" alt="驗證碼圖片" class="border shadow rounded" style="vertical-align: bottom;">
                     <a id="reCaptchaImg" href="javascript:refreshCaptcha()">
                         <i class="fa fa-refresh fa-2x" aria-hidden="true"></i>
                     </a>
@@ -122,7 +126,7 @@
             <div class="form-row justify-content-center text-center">
                 <div class="custom-control custom-checkbox form-group col-md-3">
                     <div class="form-check">
-                        <input class="custom-control-input" type="checkbox" id="remberMe">
+                        <input class="custom-control-input" type="checkbox" id="remberMe" name="remberMe" value="on" ${cookie.remberMe.value}>
                         <label class="custom-control-label" for="remberMe">
                             記住帳號
                         </label>
@@ -133,7 +137,7 @@
                 <div class=" custom-control custom-checkbox form-group col-md-3 ">
                     <div class="form-check">
                         <input class="custom-control-input" type="checkbox" id="keepLogin">
-                        <label class="custom-control-label" for="keepLogin">
+                        <label class="custom-control-label" for="keepLogin"> 
                             保持登入
                         </label>
                     </div>

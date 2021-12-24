@@ -26,6 +26,12 @@
     <link rel="stylesheet" href="app.css">
     <link rel="stylesheet" href="registerCss.css">
     <style>
+    #captchaImg {
+    height: 40px;
+    width: 130;
+    max-width: 400px;
+/*     maintain aspect ratio */
+}
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
@@ -88,7 +94,7 @@
         </div>
     </nav>
     <% 
-    List<String> errors = (List<String>)request.getAttribute("errors"); 
+    List<String> errors = (List<String>)request.getAttribute("errors");  
     %>
     <br>
     <div id="formBackground">
@@ -168,10 +174,10 @@
                         <br>
                         <input type="text" class="form-control shadow" name="captcha" placeholder="依圖片輸入驗證碼" required>
                     </div>
-                    <div class="form-group col-md-3 text-start mt-auto mb-auto pr-auto">
-                        <img id="captchaImg" src="imgs/reg_captcha.jpg" alt="驗證碼圖片" class="border shadow rounded">
+                    <div class="form-group col-md-3 text-center mt-auto mb-auto pr-0">
+                        <img id="captchaImg" src="imgs/reg_captcha.jpg" alt="驗證碼圖片" class="border shadow rounded" style="vertical-align: bottom;">
                         <img src="" alt="">
-                        <a id="reCaptchaImg" href="javascript:refreshCaptcha()">
+                        <a class="text-start" id="reCaptchaImg" href="javascript:refreshCaptcha()">
                             <i class="fa fa-refresh fa-2x" aria-hidden="true"></i>
                         </a>
                     </div>

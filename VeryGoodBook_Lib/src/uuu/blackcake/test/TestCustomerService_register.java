@@ -4,7 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import uuu.blackcake.entity.Customer;
-import uuu.blackcake.exception.VGBException;
+import uuu.blackcake.exception.BlackCakeException;
 import uuu.blackcake.service.CustomerService;
 
 public class TestCustomerService_register {
@@ -22,7 +22,7 @@ public class TestCustomerService_register {
 		try {
 			cService.register(c);
 			System.out.println("註冊成功!");
-		} catch (VGBException e) {
+		} catch (BlackCakeException e) {
 			Logger.getLogger("測試註冊會員").log(Level.SEVERE,e.getMessage(), e);
 			e.printStackTrace();
 		}

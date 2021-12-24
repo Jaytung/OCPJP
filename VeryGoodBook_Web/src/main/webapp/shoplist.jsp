@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@page import="uuu.blackcake.entity.Product"%>
+<%@page import="uuu.blackcake.service.ProductService"%>
 <%@ page pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,71 +42,85 @@
         <h1 class="text-center">商品清單</h1>
     </div>
     <div class="productList row col-12 justify-content-center">
+        <%
+        ProductService pService=new ProductService(); 
+        List<Product>list = pService.getAllProducts();
+        if(list!=null&&list.size()>0){
+        %>
+       
         <ul class="row text-center">
-            <li class="col-sm-6 col-md-4" id=" 1">
-                <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt="">
-                <h2>A產品</h2>
-                <span>$200</span>
+           <%for(int i =0;i<list.size();i++){
+        	  Product p = list.get(i);
+        	%>
+            <li class="col-md-6 col-lg-4" id=" 1">
+                <img src='<%=p.getPhotoUrl() %>' class="img-fluid rounded" alt="">
+                <h2><%=p.getName() %></h2>
+                <span><%=p.getUnitPrice() %></span>
                 <br>
-                <button type="button" class="btn btn-primary addToCart">加到購物車</button>
+                <button type="button" class="btn btn-primary addToCart">加到購物車</button>                
             </li>
-            <li class="col-sm-6 col-md-4" id=" 2">
-                <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt="">
-                <h2>A產品</h2>
-                <span>$200</span>
-                <br>
-                <button type="button" class="btn btn-primary addToCart">加到購物車</button>
-            </li>
-            <li class="col-sm-6 col-md-4" id=" 3">
-                <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt="">
-                <h2>A產品</h2>
-                <span>$200</span>
-                <br>
-                <button type="button" class="btn btn-primary addToCart">加到購物車</button>
-            </li>
-            <li class="col-sm-6 col-md-4" id=" 4">
-                <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt="">
-                <h2>A產品</h2>
-                <span>$200</span>
-                <br>
-                <button type="button" class="btn btn-primary addToCart">加到購物車</button>
-            </li>
-            <li class="col-sm-6 col-md-4" id=" 5">
-                <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt="">
-                <h2>A產品</h2>
-                <span>$200</span>
-                <br>
-                <button type="button" class="btn btn-primary addToCart">加到購物車</button>
-            </li>
-            <li class="col-sm-6 col-md-4" id=" 6">
-                <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt="">
-                <h2>A產品</h2>
-                <span>$200</span>
-                <br>
-                <button type="button" class="btn btn-primary addToCart">加到購物車</button>
-            </li>
-            <li class="col-sm-6 col-md-4" id=" 7">
-                <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt="">
-                <h2>A產品</h2>
-                <span>$200</span>
-                <br>
-                <button type="button" class="btn btn-primary addToCart">加到購物車</button>
-            </li>
-            <li class="col-sm-6 col-md-4" id=" 8">
-                <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt="">
-                <h2>A產品</h2>
-                <span>$200</span>
-                <br>
-                <button type="button" class="btn btn-primary addToCart">加到購物車</button>
-            </li>
-            <li class="col-sm-6 col-md-4" id=" 9">
-                <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt="">
-                <h2>A產品</h2>
-                <span>$200</span>
-                <br>
-                <button type="button" class="btn btn-primary addToCart">加到購物車</button>
-            </li>
-        </ul>
+                <%} %>
+         	</ul>
+         	<% }else{ %>
+            <p>查無此產品</p>
+			<% } %>
+<!--             <li class="col-md-6 col-lg-4 " id=" 2"> -->
+<!--                 <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt=""> -->
+<!--                 <h2>A產品</h2> -->
+<!--                 <span>$200</span> -->
+<!--                 <br> -->
+<!--                 <button type="button" class="btn btn-primary addToCart">加到購物車</button> -->
+<!--             </li> -->
+<!--             <li class="col-md-6 col-lg-4" id=" 3"> -->
+<!--                 <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt=""> -->
+<!--                 <h2>A產品</h2> -->
+<!--                 <span>$200</span> -->
+<!--                 <br> -->
+<!--                 <button type="button" class="btn btn-primary addToCart">加到購物車</button> -->
+<!--             </li> -->
+<!--             <li class="col-md-6 col-lg-4" id=" 4"> -->
+<!--                 <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt=""> -->
+<!--                 <h2>A產品</h2> -->
+<!--                 <span>$200</span> -->
+<!--                 <br> -->
+<!--                 <button type="button" class="btn btn-primary addToCart">加到購物車</button> -->
+<!--             </li> -->
+<!--             <li class="col-md-6 col-lg-4" id=" 5"> -->
+<!--                 <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt=""> -->
+<!--                 <h2>A產品</h2> -->
+<!--                 <span>$200</span> -->
+<!--                 <br> -->
+<!--                 <button type="button" class="btn btn-primary addToCart">加到購物車</button> -->
+<!--             </li> -->
+<!--             <li class="col-md-6 col-lg-4" id=" 6"> -->
+<!--                 <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt=""> -->
+<!--                 <h2>A產品</h2> -->
+<!--                 <span>$200</span> -->
+<!--                 <br> -->
+<!--                 <button type="button" class="btn btn-primary addToCart">加到購物車</button> -->
+<!--             </li> -->
+<!--             <li class="col-md-6 col-lg-4" id=" 7"> -->
+<!--                 <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt=""> -->
+<!--                 <h2>A產品</h2> -->
+<!--                 <span>$200</span> -->
+<!--                 <br> -->
+<!--                 <button type="button" class="btn btn-primary addToCart">加到購物車</button> -->
+<!--             </li> -->
+<!--             <li class="col-md-6 col-lg-4" id=" 8"> -->
+<!--                 <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt=""> -->
+<!--                 <h2>A產品</h2> -->
+<!--                 <span>$200</span> -->
+<!--                 <br> -->
+<!--                 <button type="button" class="btn btn-primary addToCart">加到購物車</button> -->
+<!--             </li> -->
+<!--             <li class="col-md-6 col-lg-4" id=" 9"> -->
+<!--                 <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt=""> -->
+<!--                 <h2>A產品</h2> -->
+<!--                 <span>$200</span> -->
+<!--                 <br> -->
+<!--                 <button type="button" class="btn btn-primary addToCart">加到購物車</button> -->
+<!--             </li>          -->
+<!--         </ul> -->
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -1,6 +1,6 @@
 package uuu.blackcake.exception;
 
-public class LoginFailException extends VGBException {
+public class LoginFailException extends BlackCakeException {
 
 	public LoginFailException() {
 		super("登入失敗，帳號或密碼不正確");		

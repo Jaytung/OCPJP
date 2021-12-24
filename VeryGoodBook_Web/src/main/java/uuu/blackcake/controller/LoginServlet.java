@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import uuu.blackcake.entity.Customer;
 import uuu.blackcake.exception.LoginFailException;
-import uuu.blackcake.exception.VGBException;
+import uuu.blackcake.exception.BlackCakeException;
 import uuu.blackcake.service.CustomerService;
 
 /**
@@ -42,16 +43,16 @@ public class LoginServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		//1.取得request的Form Data: email,password,captcha		
-		String email = request.getParameter("email");
+		String account = request.getParameter("account");
 		String password = request.getParameter("password");
 		String captcha = request.getParameter("captcha");
-		System.out.println("Account: "+ email);
+		System.out.println("Account: "+ account);
 		System.out.println("Password: "+ password);
 		System.out.println("Captcha: "+ captcha);
 		
 		//檢查:
-		if(email==null||email.length()==0) {
-			errors.add("必須輸入Email");
+		if(account==null||account.length()==0) {
+			errors.add("必須輸入帳號");
 		}
 		if(password==null||password.length()==0) {
 			errors.add("必須輸入密碼");
@@ -70,11 +71,28 @@ public class LoginServlet extends HttpServlet {
 			CustomerService cService = new CustomerService();
 			
 			try {
-				Customer c = cService.login(email,password);
+				Customer c = cService.login(account,password);
 				//3.1 forward(內部轉交)to view: login_ok.jsp(/login_ok.jsp)
 				//request.setAttribute("member",c); 改用session來記錄會員
 				session.setAttribute("member", c);
 //				session.setMaxInactiveInterval(10*60);//連線逾時時間設為10分鐘
+				
+				//add cookies(account,remberMe)
+				String remberMe = request.getParameter("remberMe");
+				Cookie AcCookie = new Cookie("account",account);
+				Cookie autoCookie = new Cookie("remberMe","checked");
+				
+				if(remberMe==null) {
+					AcCookie.setMaxAge(0);//秒數0表示刪除此Cookie
+					autoCookie.setMaxAge(0);//秒數0表示刪除此Cookie
+				}else {					
+					AcCookie.setMaxAge(7*24*60*60);//秒數為單位
+					autoCookie.setMaxAge(7*24*60*60);//秒數為單位
+				}
+				
+				response.addCookie(AcCookie);
+				response.addCookie(autoCookie);
+				
 //				3. 作法1:(內部)轉交給login_ok.jsp
 				RequestDispatcher dispatcher = 
 						request.getRequestDispatcher("login_ok.jsp");
@@ -85,7 +103,7 @@ public class LoginServlet extends HttpServlet {
 				return;
 			}catch(LoginFailException e){
 				errors.add(e.getMessage());//for user
-			} catch (VGBException e) {
+			} catch (BlackCakeException e) {
 				this.log("登入失敗", e);//for admin Developer,Tester
 				errors.add(e.getMessage());
 			}catch(Exception e){

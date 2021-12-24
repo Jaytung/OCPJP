@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import uuu.blackcake.entity.Customer;
 import uuu.blackcake.exception.DataInvalidException;
-import uuu.blackcake.exception.VGBException;
+import uuu.blackcake.exception.BlackCakeException;
 import uuu.blackcake.service.CustomerService;
 
 /**
@@ -113,7 +113,7 @@ public class RegisterServlet extends HttpServlet {
 				return;
 			} catch (DataInvalidException e) {
 				errors.add(e.getMessage());
-			}catch(VGBException e) {
+			}catch(BlackCakeException e) {
 				this.log("註冊失敗",e);//for admin Dev ,tester
 				errors.add(e.getMessage());
 			}catch(Exception e) {

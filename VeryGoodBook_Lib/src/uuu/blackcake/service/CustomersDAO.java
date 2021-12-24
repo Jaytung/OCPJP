@@ -6,7 +6,7 @@ import uuu.blackcake.entity.BloodType;
 import uuu.blackcake.entity.Customer;
 import uuu.blackcake.entity.VIP;
 import uuu.blackcake.exception.DataInvalidException;
-import uuu.blackcake.exception.VGBException;
+import uuu.blackcake.exception.BlackCakeException;
 
 class CustomersDAO {// package-friendly(不能加public)
 	private static final String SELECT_customer=
@@ -14,7 +14,7 @@ class CustomersDAO {// package-friendly(不能加public)
 			+ "address, phone, subscribed, blood_type, discount "
 			+ "FROM customers WHERE email=? OR phone=?";
 
-	Customer customerLogin(String account) throws VGBException {
+	Customer customerLogin(String account) throws BlackCakeException {
 		Customer c = null;
 
 		try (Connection connection = RDBConnection.getConnection(); // 1,2 取得連線
@@ -54,7 +54,7 @@ class CustomersDAO {// package-friendly(不能加public)
 			}
 			
 		} catch (SQLException e) {
-			throw new VGBException("用查詢客戶失敗", e);
+			throw new BlackCakeException("用查詢客戶失敗", e);
 		}
 
 		return c;
@@ -64,7 +64,7 @@ class CustomersDAO {// package-friendly(不能加public)
 			+ " gender, address, phone, subscribed, blood_type)"
 			+ "VALUES(?,?,?,?,?,?,?,?,?,?)";
 	
-	void insert(Customer c) throws VGBException {
+	void insert(Customer c) throws BlackCakeException {
 		try(
 				Connection connection = RDBConnection.getConnection();//1,2.取得連線
 				PreparedStatement pstmt = connection.prepareStatement(INSERT_CUSTOMER);//3.準備指令
@@ -91,10 +91,10 @@ class CustomersDAO {// package-friendly(不能加public)
 				throw new DataInvalidException("電話已重複註冊",e);
 				
 			}else {
-				throw new VGBException("新增客戶失敗,欄位不得為null",e);
+				throw new BlackCakeException("新增客戶失敗,欄位不得為null",e);
 			}
 		}catch (SQLException e) {
-		throw new VGBException("新增客戶失敗",e);
+		throw new BlackCakeException("新增客戶失敗",e);
 		}
 	}
 }
