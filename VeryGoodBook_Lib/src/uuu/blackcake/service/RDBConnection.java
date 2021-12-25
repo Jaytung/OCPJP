@@ -5,9 +5,9 @@ import java.sql.*;
 //不要宣告成public 預設只有同package可看到
 class RDBConnection {
 	private static final String driver = "com.mysql.cj.jdbc.Driver";
-	private static final String url="jdbc:mysql://localhost:3306/vgb";
+	private static final String url="jdbc:mysql://localhost:3306/blackcake";
 	private static final String userId="root";
-	private static final String pwd="opqopq8238";
+	private static final String pwd="Opqopq8238";
 	
 	static Connection getConnection() {
 		try {

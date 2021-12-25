@@ -25,9 +25,14 @@
 section{
 	margin-top: 5vh;
 }
-.row {
-    margin-right: 0px !important;
-}
+/*   body{ */
+/*   	background-image: url("imgs/background\ logo.jpg"); */
+/*   	background-repeat: round; */
+/* 	background: */
+/*   } */
+/*  .row { */
+/*      margin-right: 0px !important; */
+/* } */
 </style>
 <title>澎湖名產</title>
 </head>
@@ -87,18 +92,14 @@ section{
 	<section class="container-fluid px-0">
 		<div class="row align-items-center content" id="blackCake">
 			<div class="col-md-6 order-2 order-md-1">
-				<img src="imgs/黑糖糕.png" alt="" class="img-fluid rounded">
+				<img src="imgs/黑糖糕1000X1000.png" alt="" class="img-fluid rounded">
 			</div>
 			<div class="col-md-6 text-center order-1 order-md-2">
 				<div class="row justify-content-center">
 					<div class="col-10 mb-5 mb-md-0 partOne">
 						<h2>黑糖糕</h2>
 						<img src="imgs/lolli_icon.png" alt="" class="d-none d-lg-inline">
-						<p class="lead">Lorem ipsum dolor sit amet consectetur
-							adipisicing elit. Earum temporibus natus, adipisci labore
-							repellat sed enim totam facilis architecto suscipit consectetur,
-							sapiente debitis. Nihil iusto ipsa libero eligendi amet
-							inventore.</p>
+						<p class="lead">不添加防腐劑的澎湖黑糖糕！黑糖味又濃又Ｑ，真的是台灣島絕！對！找不到的美味，使用上等黑糖、麵粉製成，不僅黑糖原料本身及製作過程不添加香料、焦糖色素及防腐劑外，也不會添加提升黑糖糕Q彈的添加物。源利軒黑糖糕老店堅持讓顧客品嘗到最原始的好味道、好口感。</p>
 					</div>
 				</div>
 			</div>
@@ -108,34 +109,26 @@ section{
 				<div class="row justify-content-center">
 					<div class="col-10 mb-5 mb-md-0 partOne">
 						<h2>小管片</h2>
-						<img src="imgs/lolli_icon.png" alt="" class="d-none d-lg-inline">
-						<p class="lead">Lorem ipsum dolor sit amet consectetur
-							adipisicing elit. Earum temporibus natus, adipisci labore
-							repellat sed enim totam facilis architecto suscipit consectetur,
-							sapiente debitis. Nihil iusto ipsa libero eligendi amet
-							inventore.</p>
+						<img src="imgs/lolli_icon.png" alt="" class="d-none d-lg-inline px-4 ">
+						<p class="lead">澎湖七美小管片採用當地澎湖現撈小管製成每一片皆由一隻小管，經手工處理、曬乾、烘烤而成製作過程繁瑣但原料使用簡單，保留小管最原有的嚼勁與甜味是最道地最澎湖味的名產，澎湖人最愛！</p>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-6 col-lg-6" id="小管片">
-				<img src="imgs/小館片01.png" alt="" class="img-fluid rounded">
+				<img src="imgs/小管片1000X1000.png" alt="" class="img-fluid rounded">
 			</div>
 		</div>
 
 		<div class="row align-items-center content">
 			<div class="col-md-6 order-2 order-md-1" id="XO醬">
-				<img src="imgs/XO醬01.png" alt="" class="img-fluid rounded">
+				<img src="imgs/干貝醬1000X1000.png" alt="" class="img-fluid rounded">
 			</div>
 			<div class="col-md-6 text-center order-1 order-md-2">
 				<div class="row justify-content-center">
 					<div class="col-10 mb-5 mb-md-0 partOne">
 						<h2>海鮮XO醬</h2>
 						<img src="imgs/lolli_icon.png" alt="" class="d-none d-lg-inline">
-						<p class="lead">Lorem ipsum dolor sit amet consectetur
-							adipisicing elit. Earum temporibus natus, adipisci labore
-							repellat sed enim totam facilis architecto suscipit consectetur,
-							sapiente debitis. Nihil iusto ipsa libero eligendi amet
-							inventore.</p>
+						<p class="lead">使用新鮮丁香、干貝、蝦米，是澎湖最經典暢銷的XO醬！除了適合拌麵、拌飯，料理時也能添加提味，百搭醬品！此款另售有小辣、中辣</p>
 					</div>
 				</div>
 			</div>
@@ -201,6 +194,7 @@ section{
 				})
 	})
 	</script>
+
 </body>
 
 </html>

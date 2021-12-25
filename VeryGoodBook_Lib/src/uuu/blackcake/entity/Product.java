@@ -7,7 +7,6 @@ public class Product {
 	private String name;// 必要, UNIQUE INDEX,RW
 	private String size;
 	private double unitPrice;// 必要>0,RW
-	private int unitDiscount;
 	private int stock;// 必要>0,RW
 	private String description;
 	private LocalDate shelfDate;// 必要,以上架當日為預設值,RW
@@ -109,28 +108,6 @@ public class Product {
 		}
 	}
 
-	public int getUnitDiscount() {
-		return unitDiscount;
-	}
-
-	public void setUnitDiscount(int unitDiscount) {
-		if (unitDiscount < 0) {
-			this.unitDiscount = 0;
-			System.err.println("輸入折扣必需>0");
-		} else {
-			this.unitDiscount = unitDiscount;
-		}
-
-	}
-
-	public String getDiscountString() {
-		int discountNum = (100 - unitDiscount);
-		if (discountNum % 10 == 0) {
-			discountNum = (discountNum / 10);
-		}
-		return discountNum + "折";
-	}
-
 	public int getStock() {
 		return stock;
 	}
@@ -166,7 +143,7 @@ public class Product {
 	@Override
 	public String toString() {
 		return this.getClass().getName() + "\n" + "Product id=" + id + "\n" + "name=" + name + "\n" + "size=" + size
-				+ "\n" + "unitPrice=" + unitPrice + "\n" + "on sale: " + unitDiscount + "% off\n" + "stock=" + stock
+				+ "\n" + "unitPrice=" + unitPrice + "\n" + "on sale: " + "% off\n" + "stock=" + stock
 				+ "\n" + "description=" + description + "\n" + "shelfDate=" + shelfDate + "\n" + "photoUrl=" + photoUrl;
 	}
 

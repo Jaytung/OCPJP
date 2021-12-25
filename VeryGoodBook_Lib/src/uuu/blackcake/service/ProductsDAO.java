@@ -30,7 +30,7 @@ class ProductsDAO {
 				int unitDiscount =rs.getInt("unit_Discount");
 				if(unitDiscount>0) {
 					p = new Outlet();
-					((Outlet)p).setDiscount(unitDiscount);
+					((Outlet)p).setUnitDiscount(unitDiscount);
 				}else {
 					p=new Product();
 				}

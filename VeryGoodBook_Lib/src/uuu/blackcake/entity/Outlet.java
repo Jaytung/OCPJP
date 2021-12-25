@@ -2,7 +2,7 @@ package uuu.blackcake.entity;
 
 public class Outlet extends Product {
 	
-	private int discount;
+	private int unitDiscount;
 
 	public Outlet() {
 		super();
@@ -25,22 +25,34 @@ public class Outlet extends Product {
 	 * @param stock:庫存
 	 * @param discount:折扣
 	 */
-	public Outlet(int id, String name, double unitPrice, int stock,int discount) {
+	public Outlet(int id, String name, double unitPrice, int stock,int unitDiscount) {
 		super(id, name, unitPrice, stock);
-		this.discount=discount;
+		this.setUnitDiscount(unitDiscount);
 	}
 
-	public int getDiscount() {
-		return discount;
+	public int getUnitDiscount() {
+		return unitDiscount;
 	}
 
-	public void setDiscount(int discount) {
-		this.discount = discount;
+	public void setUnitDiscount(int unitDiscount) {
+		this.unitDiscount = unitDiscount;
+	}
+	
+	public String getDiscountString() {//10% off:9折,15% off:85折
+		int discount = 100-this.unitDiscount;
+		if (discount%10==0) {
+			discount = discount/10;
+		}
+		
+		return discount+"折"; 
 	}
 
 	@Override
 	public int hashCode() {
-		return super.hashCode();
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + unitDiscount;
+		return result;
 	}
 
 	@Override
@@ -55,7 +67,7 @@ public class Outlet extends Product {
 			return false;
 		}
 		Outlet other = (Outlet) obj;
-		if (discount != other.discount) {
+		if (unitDiscount != other.unitDiscount) {
 			return false;
 		}
 		return true;
@@ -74,7 +86,7 @@ public class Outlet extends Product {
 
 	@Override
 	public double getUnitPrice() {
-		return super.getUnitPrice() * (100 - this.getUnitDiscount()) / 100;
+		return super.getUnitPrice() * (100d - unitDiscount) / 100;
 	}
 
 	/**
@@ -85,5 +97,13 @@ public class Outlet extends Product {
 	public double getListPrice() {
 		return super.getUnitPrice();
 	}
+	
+	@Override
+	public String toString() {
+		return  super.toString() 
+				+"折扣:" + unitDiscount + "% off, 即為" + getDiscountString() 
+				+ ",\n 售價: "+ getUnitPrice();
+	}
 
 }
+

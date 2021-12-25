@@ -1,3 +1,4 @@
+<%@page import="uuu.blackcake.entity.Outlet"%>
 <%@page import="java.util.List"%>
 <%@page import="uuu.blackcake.entity.Product"%>
 <%@page import="uuu.blackcake.service.ProductService"%>
@@ -55,7 +56,8 @@
             <li class="col-md-6 col-lg-4" id=" 1">
                 <img src='<%=p.getPhotoUrl() %>' class="img-fluid rounded" alt="">
                 <h2><%=p.getName() %></h2>
-                <span><%=p.getUnitPrice() %></span>
+                <span>優惠價:<%= p instanceof Outlet?((Outlet)p).getDiscountString():"" %> 
+					<%= Math.round(p.getUnitPrice()) %>元</span>
                 <br>
                 <button type="button" class="btn btn-primary addToCart">加到購物車</button>                
             </li>
@@ -64,63 +66,7 @@
          	<% }else{ %>
             <p>查無此產品</p>
 			<% } %>
-<!--             <li class="col-md-6 col-lg-4 " id=" 2"> -->
-<!--                 <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt=""> -->
-<!--                 <h2>A產品</h2> -->
-<!--                 <span>$200</span> -->
-<!--                 <br> -->
-<!--                 <button type="button" class="btn btn-primary addToCart">加到購物車</button> -->
-<!--             </li> -->
-<!--             <li class="col-md-6 col-lg-4" id=" 3"> -->
-<!--                 <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt=""> -->
-<!--                 <h2>A產品</h2> -->
-<!--                 <span>$200</span> -->
-<!--                 <br> -->
-<!--                 <button type="button" class="btn btn-primary addToCart">加到購物車</button> -->
-<!--             </li> -->
-<!--             <li class="col-md-6 col-lg-4" id=" 4"> -->
-<!--                 <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt=""> -->
-<!--                 <h2>A產品</h2> -->
-<!--                 <span>$200</span> -->
-<!--                 <br> -->
-<!--                 <button type="button" class="btn btn-primary addToCart">加到購物車</button> -->
-<!--             </li> -->
-<!--             <li class="col-md-6 col-lg-4" id=" 5"> -->
-<!--                 <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt=""> -->
-<!--                 <h2>A產品</h2> -->
-<!--                 <span>$200</span> -->
-<!--                 <br> -->
-<!--                 <button type="button" class="btn btn-primary addToCart">加到購物車</button> -->
-<!--             </li> -->
-<!--             <li class="col-md-6 col-lg-4" id=" 6"> -->
-<!--                 <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt=""> -->
-<!--                 <h2>A產品</h2> -->
-<!--                 <span>$200</span> -->
-<!--                 <br> -->
-<!--                 <button type="button" class="btn btn-primary addToCart">加到購物車</button> -->
-<!--             </li> -->
-<!--             <li class="col-md-6 col-lg-4" id=" 7"> -->
-<!--                 <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt=""> -->
-<!--                 <h2>A產品</h2> -->
-<!--                 <span>$200</span> -->
-<!--                 <br> -->
-<!--                 <button type="button" class="btn btn-primary addToCart">加到購物車</button> -->
-<!--             </li> -->
-<!--             <li class="col-md-6 col-lg-4" id=" 8"> -->
-<!--                 <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt=""> -->
-<!--                 <h2>A產品</h2> -->
-<!--                 <span>$200</span> -->
-<!--                 <br> -->
-<!--                 <button type="button" class="btn btn-primary addToCart">加到購物車</button> -->
-<!--             </li> -->
-<!--             <li class="col-md-6 col-lg-4" id=" 9"> -->
-<!--                 <img src="raw imgs/XO醬商品01.jpg" class="img-fluid rounded" alt=""> -->
-<!--                 <h2>A產品</h2> -->
-<!--                 <span>$200</span> -->
-<!--                 <br> -->
-<!--                 <button type="button" class="btn btn-primary addToCart">加到購物車</button> -->
-<!--             </li>          -->
-<!--         </ul> -->
+
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
