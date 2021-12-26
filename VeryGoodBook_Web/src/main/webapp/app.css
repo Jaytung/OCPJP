@@ -56,6 +56,16 @@ div h2{
 	
 	color:black;
 }
+#product{
+    margin-top: 10vh;
+/*     margin-bottom: 5vh; */
+}
+#product img{
+        display: block;
+        max-width: 100%;
+        height: auto;
+        justify-content: center;
+}
 .center_div{
     margin: 10rem auto;
     width:80%;
@@ -84,7 +94,11 @@ ul {
         background:#bb8765;
     }
 }
-
+@media screen and (min-width: 300px)and (max-width: 992px){
+    #addToCart{
+        margin-top: 5px;
+    }
+}
 @media(max-width:1200px) {
     #headingGroup h1{
         font-weight: 100;

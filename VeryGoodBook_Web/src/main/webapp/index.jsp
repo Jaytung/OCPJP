@@ -39,7 +39,7 @@ section{
 
 <body>
 	<jsp:include page="subviews/header.jsp" />
-	<section class="container-fluid px-0">
+	<section class="container-fulid px-0">
 		<div class="row align-items-center">
 			<div class="col-lg-6">
 				<div id="headingGroup" class="text-center d-none d-lg-block mt-5">
