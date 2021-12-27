@@ -22,11 +22,15 @@
         <li class="nav-item">
           <a href="" class="nav-link">關於</a>
         </li>
+        <li>
+         <form class="" action='shoplist.jsp' method="get">
+	  <input type="search" name="keyword" placeholder="SEARCH" class="" value="${param.keyword}">
+	  <input type="submit" value="搜尋" class="btn btn-primary rounded">
+	  </form>
+        </li>
       </ul>
       
-      
       <ul class="navbar-nav">
-
       <!-- 尚未登入 -->
       <%if(member==null) {%>
         <li class="nav-item">

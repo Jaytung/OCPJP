@@ -21,7 +21,16 @@
     <link rel="stylesheet" href="app.css">
     <link rel="stylesheet" href="shoplist.css">
     <style>
+    
     </style>
+     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
+    <script>
+	 function getImg(theImg) {
+// 		 if(!theImg.src) theImg=this;
+			 theImg.src='imgs/fishlogo1.png';
+			 theImg.onerror=null;
+	}
     </script>
     <title>商品清單</title>
 </head>
@@ -32,13 +41,29 @@
  	</jsp:include>
     <br>
     <br>
+    <!-- 		<aside> -->
+<!--  	<a href="shoplist.jsp">全部</a> -->
+<%--  	<a href="<%=request.getRequestURI()%>?name=黑糖糕">黑糖糕</a> --%>
+<%--  	<a href="<%=request.getRequestURI()%>?name=XO">罐醬類</a> --%>
+<!--  	</aside> -->
     <div class="header">
         <h1 class="text-center">商品清單</h1>
     </div>
     <div class="productList row col-12 justify-content-center">
         <%
+        //1.取得requst的form data
+        String keyword = request.getParameter("keyword");
+        //TODO:加上分類查詢
+        //2.呼叫商業邏輯
+        
         ProductService pService=new ProductService(); 
-        List<Product>list = pService.getAllProducts();
+        List<Product>list;
+        if(keyword!=null&&keyword.length()>0){
+        	list = pService.selectProductByName(keyword);
+        }else{
+			list = pService.getAllProducts();//改成查詢新品
+        }        	
+        	
         if(list!=null&&list.size()>0){
         %>
        
@@ -47,9 +72,10 @@
         	  Product p = list.get(i);
         	%>
             <li class="col-md-6 col-lg-4" id=" 1">
-                <img src='<%=p.getPhotoUrl() %>' class="img-fluid rounded" alt="">
+            <a href="Product.jsp?productId=<%=p.getId()%>">
+                <img src='<%=p.getPhotoUrl() %>' onerror='getImg(this)' class="productList img-fluid rounded">
                 <h2><%=p.getName() %></h2>
-                <span>優惠價:<%= p instanceof Outlet?((Outlet)p).getDiscountString():"" %> 
+                <span>優惠價:<%= p instanceof Outlet?((Outlet)p).getDiscountString():""%> 
 					<%= Math.round(p.getUnitPrice()) %>元</span>
                 <br>
                 <button type="button" class="btn btn-primary addToCart">加到購物車</button>                

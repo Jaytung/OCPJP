@@ -13,13 +13,8 @@ import javax.servlet.annotation.WebFilter;
 /**
  * Servlet Filter implementation class CharsetFilter
  */
-@WebFilter(
-		dispatcherTypes = {DispatcherType.REQUEST }
-					, 
-		urlPatterns = { 
-				"*.jsp", 
-				"*.do"
-		})
+@WebFilter(urlPatterns = { "*.jsp", "*.do"},
+	dispatcherTypes = {DispatcherType.REQUEST,DispatcherType.ERROR})
 public class CharsetFilter implements Filter {
 
     /**

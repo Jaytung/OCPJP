@@ -101,8 +101,8 @@ public class Outlet extends Product {
 	@Override
 	public String toString() {
 		return  super.toString() 
-				+"折扣:" + unitDiscount + "% off, 即為" + getDiscountString() 
-				+ ",\n 售價: "+ getUnitPrice();
+				+"\n"+"折扣:" + unitDiscount + "% off," + getDiscountString() 
+				+ " 售價: "+ getUnitPrice();
 	}
 
 }

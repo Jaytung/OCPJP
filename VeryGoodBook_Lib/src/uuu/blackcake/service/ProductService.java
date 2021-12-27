@@ -10,4 +10,7 @@ public class ProductService {
 	public List<Product> getAllProducts() throws BlackCakeException {
 		return dao.selsectAllProducts();
 	}
+	public List<Product> selectProductByName(String keyWord) throws BlackCakeException {
+		return dao.selectProductByName(keyWord);
+	}
 }

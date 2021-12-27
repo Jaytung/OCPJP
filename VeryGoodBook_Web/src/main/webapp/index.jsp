@@ -38,6 +38,7 @@ section{
 </head>
 
 <body>
+
 	<jsp:include page="subviews/header.jsp" />
 	<section class="container-fulid px-0">
 		<div class="row align-items-center">

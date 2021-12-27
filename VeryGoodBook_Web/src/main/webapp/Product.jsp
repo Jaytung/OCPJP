@@ -45,7 +45,7 @@
         <div class="container ">
             <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-6 photo rounded">
-                    <img src="imgs/常溫食品.png" class="" alt="">
+                    <img src="imgs/XO醬01.png" class="rounded" alt="">
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-6">
                     <div class="text-center">
@@ -70,19 +70,20 @@
                 </div>
                 <div class="col-6">
                 </div>
-                <form action="POST" class="col-sm-12 col-md-6 px-1">
+                <form action="GET" class="col-sm-12 col-md-6 ">
+                <input type="hidden" value="1" name="prodcutId">
                     <div class="text-center">
                         <span class="">數量:</span>
                         <div class="input-group justify-content-center">
                             <span class="input-group-addon">
-                                <button class="btn btn-primary btn-lg rounded rounded-pill cartBtn" type="button"
+                                <button class="btn btn-primary btn-lg rounded rounded cartBtn" type="button"
                                     id="minus">-
                                 </button>
                             </span>
-                            <input type="text" class="form-control form-control-lg text-center rounded" aria-label=""
-                                value="0" id="quantity">
+                            <input type="text" class="form-control form-control-lg text-center rounded col-sm-12 col-md-4 col-lg-3" aria-label=""
+                                value="0" id="quantity" name="quantity">
                             <span class="input-group-addon">
-                                <button class="btn btn-primary btn-lg rounded rounded-pill cartBtn" type="button"
+                                <button class="btn btn-primary btn-lg rounded rounded cartBtn" type="button"
                                     id="plus">+
                                 </button>
                             </span>
