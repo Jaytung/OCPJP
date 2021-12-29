@@ -34,7 +34,8 @@
             background-color: white;
         }
     </style>
-
+    <script>
+    </script>
     <title>澎湖名產</title>
 </head>
 
@@ -70,7 +71,7 @@
                 <div id="headingGroup" class="text-center d-none d-lg-block mt-5">
                     <h1 class="display-2">澎湖<span>/</span>名產</h1>
                     <h2>黑糖糕</h2>
-                    <h2>XO醬</h2>   
+                    <h2>XO醬</h2>
                     <h2>海味名產</h2>
                 </div>
             </div>
@@ -221,6 +222,12 @@
                 $(document).scroll(function () {
                     var $nav = $("#mainNavbar");
                     $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
+                })
+            })
+            $(function () {
+                $(document).scroll(function () {
+                    var $nav = $("#mainNavbar");
+                    $nav.toggleClass("notScrolled", $(this).scrollTop() < $nav.height());
                 })
             })
         </script>

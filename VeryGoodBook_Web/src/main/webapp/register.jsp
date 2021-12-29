@@ -9,7 +9,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Required meta tags -->
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Google Font -->
@@ -23,8 +22,8 @@
 
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="app.css">
     <link rel="stylesheet" href="registerCss.css">
+    <link rel="stylesheet" href="app.css">
     <style>
     #captchaImg {
     height: 40px;
@@ -68,36 +67,12 @@
 </head>
 
 <body>
-    <nav id="mainNavbar" class="navbar navbar-light  navbar-expand-md py-0 fixed-top">
-        <a href=" #" class="navbar-brand">鮮記</a>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navLinks" arir-label="Toggle navigation">
-            <span class="navbar-toggler-icon">
-            </span>
-        </button>
-        <div class="collapse navbar-collapse" id="navLinks">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a href="index.jsp" class="nav-link">首頁</a>
-                </li>
-                <li class="nav-item">
-                    <a href="shoplist.jsp" class="nav-link">商品</a>
-                </li>
-                <li class="nav-item">
-                    <a href="" class="nav-link">關於</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="login.jsp">登入</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
     <% 
     List<String> errors = (List<String>)request.getAttribute("errors");  
     %>
-    <br>
-    <div id="formBackground">
+	<jsp:include page="subviews/header.jsp" />
+	<div class="container">
+     <div id="formBackground">
         <div class="registerForm">
             <form method="post" action="register.do" class="col-10 col-md-10 col-lg-9 mr-auto ml-auto">
                       <p><%=errors!=null?errors:"" %> </p>
@@ -112,29 +87,29 @@
 <!--              }%> -->
             </ul>
                 <div class="form-row firstForm justify-content-center">
-                    <div class="form-group  col-md-3">
+                    <div class="form-group  col-md-4">
                         <label for="email">Email</label>
                         <input type="email" class="form-control shadow" id="email" placeholder="Email" name="email"
                             required>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-4">
                         <label for="password">密碼Password</label>
                         <input type="password" class="form-control shadow" id="password" placeholder="Password"
                             name="password"  maxlength="<%=Customer.MAX_PWD_LENGTH%>" minlength="<% %>" required>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-4">
                         <label for="passwordCheck">確認密碼</label>
                         <input type="password" class="form-control shadow" id="passwordCheck"
                             placeholder="PasswordCheck" name="passwordCheck" required>
                     </div>
                 </div>
                 <div class="form-row justify-content-center">
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-4">
                         <label for="name">姓名</label>
                         <input type="text" class="form-control shadow" id="name" placeholder="輸入您的姓名" name="name"
                             required>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-4">
                         <div class="input-group-prepend">
                             <label for="gender">性別Gender</label>
                         </div>
@@ -145,24 +120,24 @@
                             <option value="O">其他(Other)</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-4">
                         <label for="phone">電話</label>
                         <input type="tel" class="form-control shadow" id="phone" placeholder="輸入您的電話" name="phone"
                             required>
                     </div>
                 </div>
                 <div class="form-row justify-content-center">
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-4">
                         <label for="id">身分證字號</label>
                         <input type="text" class="form-control shadow" id="id" placeholder="輸入您的身分證" name="id"
                             pattern="[A-Z][1289][0-9]{8}" required>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-4">
                         <label for="birthday">生日/西元</label>
                         <input type="date" class="form-control shadow" id="birthday" placeholder="1990-11-25"
                             name="birthday" required>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-4">
                         <label for="address">地址Address</label>
                         <input type="text" class="form-control shadow" id="address" placeholder="輸入您的地址" name="address"
                             required>
@@ -170,18 +145,18 @@
 
                 </div>
                 <div class="form-row justify-content-center">
-                    <div class="form-group col-md-3 ">
+                    <div class="form-group col-md-4 ">
                         <br>
                         <input type="text" class="form-control shadow" name="captcha" placeholder="依圖片輸入驗證碼" required>
                     </div>
-                    <div class="form-group col-md-3 text-center mt-auto mb-auto pr-0">
+                    <div class="form-group col-md-4 text-center mt-auto mb-auto pr-0">
                         <img id="captchaImg" src="imgs/reg_captcha.jpg" alt="驗證碼圖片" class="border shadow rounded" style="vertical-align: bottom;">
                         <img src="" alt="">
                         <a class="text-start" id="reCaptchaImg" href="javascript:refreshCaptcha()">
                             <i class="fa fa-refresh fa-2x" aria-hidden="true"></i>
                         </a>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-4">
                         <br>
                     </div>
                 </div>
@@ -198,6 +173,7 @@
                 </div>
             </form>
         </div>
+     </div>
     </div>
 
 

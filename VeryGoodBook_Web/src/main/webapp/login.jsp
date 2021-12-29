@@ -44,31 +44,7 @@
 
 <body>
     <!-- style="background-color: #EED6C4; -->
-    <nav id="mainNavbar" class="navbar navbar-light navbar-expand-md py-0 fixed-top">
-        <a href="#" class="navbar-brand">鮮記</a>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navLinks" arir-label="Toggle navigation">
-            <span class="navbar-toggler-icon">
-            </span>
-        </button>
-        <div class="collapse navbar-collapse" id="navLinks">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a href="index.jsp" class="nav-link">首頁</a>
-                </li>
-                <li class="nav-item">
-                    <a href="shoplist.jsp" class="nav-link">商品</a>
-                </li>
-                <li class="nav-item">
-                    <a href="" class="nav-link">關於</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="register.jsp">註冊</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+	<jsp:include page="subviews/header.jsp" />
     <% 
     List<String> errors = (List<String>)request.getAttribute("errors"); 
     %>

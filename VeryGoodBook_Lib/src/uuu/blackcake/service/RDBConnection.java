@@ -7,7 +7,7 @@ class RDBConnection {
 	private static final String driver = "com.mysql.cj.jdbc.Driver";
 	private static final String url="jdbc:mysql://localhost:3306/blackcake";
 	private static final String userId="root";
-	private static final String pwd="opqopq8238";
+	private static final String pwd="Opqopq8238";
 	
 	static Connection getConnection() {
 		try {

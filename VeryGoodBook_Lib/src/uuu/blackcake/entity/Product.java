@@ -11,6 +11,7 @@ public class Product {
 	private String description;
 	private LocalDate shelfDate;// 必要,以上架當日為預設值,RW
 	private String photoUrl;
+	private String category;
 
 	public Product() {
 		// super();
@@ -140,11 +141,19 @@ public class Product {
 		this.photoUrl = photoUrl;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+	
+	public void setCategory(String category) {
+		this.category = category;
+	}
 	@Override
 	public String toString() {
 		return this.getClass().getName() + "\n" + "Product id=" + id + "\n" + "name=" + name + "\n" + "size=" + size
 				+ "\n" + "unitPrice=" + unitPrice + "\n" + "on sale: " + "% off\n" + "stock=" + stock
-				+ "\n" + "description=" + description + "\n" + "shelfDate=" + shelfDate + "\n" + "photoUrl=" + photoUrl;
+				+ "\n" + "description=" + description + "\n" + "shelfDate=" + shelfDate + "\n" + "photoUrl=" + photoUrl + "\n"+"Category ="+category;
 	}
+
 
 }

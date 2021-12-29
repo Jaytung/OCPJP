@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="app.css">
 <style>
 section{
-	margin-top: 5vh;
+	margin-top: 6vh;
 }
 /*   body{ */
 /*   	background-image: url("imgs/background\ logo.jpg"); */

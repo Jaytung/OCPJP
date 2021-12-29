@@ -27,6 +27,10 @@ div h2{
     background: #bb8765;
     transition: background 500ms;
 }
+/* .navbar.notScrolled{
+    background:#bb8765;
+    transition: background 500ms;
+} */
 .navbar-brand{
     font-size: 2rem;
 }
@@ -88,6 +92,10 @@ div h2{
 }
 ul {
     list-style-type: none;
+}
+.dropdown-menu{
+	background: #cfcbcb;
+    font-family: "Nuntio", sans-serif;
 }
  @media screen and (max-width: 768px){
     #mainNavbar{

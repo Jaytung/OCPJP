@@ -16,6 +16,19 @@ public class TestProductService {
 			Logger.getLogger("產品測試查詢").log(
 			Level.SEVERE,e.getMessage(),e);
 		}
+//		ProductService pService = new ProductService();
+//		try {
+//			System.out.print(pService.selectProductByName());
+//		}catch(BlackCakeException e){
+//			Logger.getLogger("產品測試查詢").log(
+//			Level.SEVERE,e.getMessage(),e);
+//		}
+//		ProductService pService = new ProductService();
+//		try {
+//			System.out.print(pService.selectProductByCategory());
+//		}catch(BlackCakeException e){
+//			Logger.getLogger("產品測試查詢").log(
+//			Level.SEVERE,e.getMessage(),e);
+//		}
 	}
-
 }
