@@ -16,4 +16,7 @@ public class ProductService {
 	public List<Product> selectProductByCategory(String category) throws BlackCakeException {
 		return dao.selectProductByCategory(category);
 	}
+	public Product selectProductById(String id) throws BlackCakeException {
+		return dao.selectProductById(id);
+}
 }
