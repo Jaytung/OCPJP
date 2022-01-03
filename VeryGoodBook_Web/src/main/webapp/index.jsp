@@ -25,6 +25,7 @@
 section{
 	margin-top: 6vh;
 }
+
 /*   body{ */
 /*   	background-image: url("imgs/background\ logo.jpg"); */
 /*   	background-repeat: round; */

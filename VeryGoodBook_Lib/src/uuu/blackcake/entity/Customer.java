@@ -18,17 +18,7 @@ public class Customer {
 	private String phone = "";//
 	private boolean subscribed = false;//
 	
-	//客戶血型
-	private  BloodType bloodtype;
-	
-	public BloodType getBloodtype() {
-		return bloodtype;
-	}
 
-	public void setBloodtype(BloodType bloodtype) {
-		this.bloodtype = bloodtype;
-	}
-	
 	
 	public Customer() {
 		

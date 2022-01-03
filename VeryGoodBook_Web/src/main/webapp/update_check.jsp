@@ -25,6 +25,9 @@
     width: 130;
     max-width: 400px;
     }
+    #updateAC{
+    display: none;
+    }
     </style>
     <script>
         function changePwdDisplay() {
@@ -50,7 +53,7 @@
     %>
      <%Customer member = (Customer)session.getAttribute("member");%>
     <div class="container">
-        <form action="login.do" method="post" class="loginForm  col-md-7 ml-auto mr-auto  border rounded shadow">
+        <form action="update.jsp" method="post" class="loginForm  col-md-7 ml-auto mr-auto  border rounded shadow">
     <article>
 <%--             <p><%=errors!=null?errors:"" %> </p> --%>
             <ul class="errors">
@@ -64,65 +67,36 @@
              }%>
             </ul>
     </article>
-            <div class="form-row justify-content-center mt-3">
+            <div class="form-row mt-3" id="updateAC" >
                 <div class="form-group col-md-6 col-lg-5 ">
                     <label for="inputAccount"><span>帳號</span></label>
                     <input type="text" class="form-control shadow" id="inputAccount" name="account" placeholder="輸入Email或電話" required
-                    value="${(empty param.account)?(cookie.account.value):(param.account)}">
-                </div>
-                <div class="form-group col-md-6 col-lg-5">
-                    <label for="inputPassword"><span>密碼</span></label>
-                    <input type="password" class="form-control shadow" id="inputPassword" placeholder="Password"
-                        name="password" required>
+                    value="<%=member!=null?member.getEmail():""%>">
                 </div>
             </div>
-            <div class="form-row justify-content-end">
-                <div class="form-group col-md-6 col-lg-6">
-                    <div class="custom-control custom-switch">
+            <div class="form-row justify-content-center">
+            <h2>請輸入密碼確認身分</h2>
+            </div>
+            <div class="form-row justify-content-center">
+                <div class="form-group col-md-6 col-lg-5">
+                    <input type="password" class="form-control shadow" id="inputPassword" placeholder="輸入您的密碼"
+                        name="password" required>
+                </div>                
+                </div>
+                <div class="form-group col-md-6 col-lg-6 text-start ml-auto mr-auto">
+                    <div class="custom-control custom-switch ml-3">
                         <input type="checkbox" class="custom-control-input" id="displayPwd"
                             onchange="changePwdDisplay()">
                         <label class="custom-control-label" for="displayPwd">顯示密碼</label>
                     </div>
                 </div>
             </div>
-            <div class="form-row justify-content-center">
-                <div class="form-group col-md-6 col-lg-5 ">
-                    <br>
-                    <input type="text" class="form-control shadow" name="captcha" placeholder="依圖片輸入驗證碼" required>
-                </div>
-                <div class="form-group col-md-6 col-lg-5 text-center mt-auto mb-auto pr-auto">
-                    <img id="captchaImg" src="imgs/captcha.jpg" alt="驗證碼圖片" class="border shadow rounded" style="vertical-align: bottom;">
-                    <a id="reCaptchaImg" href="javascript:refreshCaptcha()">
-                        <i class="fa fa-refresh fa-2x" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </div>
             <br>
             <br>
             <br>
-            <div class="form-row justify-content-center text-center">
-                <div class="custom-control custom-checkbox form-group col-md-3">
-                    <div class="form-check">
-                        <input class="custom-control-input" type="checkbox" id="remberMe" name="remberMe" value="on" ${cookie.remberMe.value}>
-                        <label class="custom-control-label" for="remberMe">
-                            記住帳號
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row justify-content-center text-center">
-                <div class=" custom-control custom-checkbox form-group col-md-3 ">
-                    <div class="form-check">
-                        <input class="custom-control-input" type="checkbox" id="keepLogin">
-                        <label class="custom-control-label" for="keepLogin"> 
-                            保持登入
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row justify-content-center mb-3">
+            <div class="form-row justify-content-center mb-3 col-md-6 col-lg-4 mr-auto ml-auto">
                 <div class="col-12 col-md-10 col-lg-8 col-xl-6">
-                    <button type="submit" class="btn btn-lg btn-primary btn-block">登入</button>
+                    <button type="submit" class="btn btn-lg btn-primary btn-block">確認</button>
                 </div>
             </div>
         </form>

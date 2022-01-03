@@ -39,8 +39,22 @@ public class UpdateServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		List<String> errors = new ArrayList<>();
+//		Customer member =(Customer)session.getAttribute("member");
+//		String id =request.getParameter("id");
+//		String password = request.getParameter("password");
+//		if(member==null) {
+//			
+//		}
+//		if (id != null || id.equals(member.getId())) {
+//			errors.add("不得竄改ID");
+//		}
+//		//
+//		if (password == null || password.equals(member.getPassword())) {
+//			errors.add("必須輸入一致的密碼");
+//		}
 		// 1.取得request中的FormData:email,password,passwordCheck,
 		// name,gender,phone,id,birthday,address
+		//其他欄位的檢查
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String passwordCheck = request.getParameter("passwordCheck");
@@ -51,7 +65,7 @@ public class UpdateServlet extends HttpServlet {
 		String birthday = request.getParameter("birthday");
 		String address = request.getParameter("address");
 		String subscribed = request.getParameter("subscribed");
-		if (email == null || email.length() == 0) {
+		if (id != null || email.length() == 0) {
 			errors.add("必須輸入Email");
 		}
 		if (password == null || password.length() == 0 || !password.equals(passwordCheck)) {

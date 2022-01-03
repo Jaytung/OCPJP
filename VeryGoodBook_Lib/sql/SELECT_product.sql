@@ -14,11 +14,14 @@ WHERE name LIKE '?' ;
  SELECT id, name, unit_price, stock, photo_url, description, size, shelf_date, unit_Discount FROM blackcake.product
 WHERE name LIKE '?' OR description LIKE '?';
 
- SELECT id, name, unit_price, stock, photo_url, description, size, shelf_date, unit_Discount,category FROM blackcake.product
-WHERE category LIKE '糕點';
-
 SELECT id, name, unit_price, stock, photo_url, description, size, shelf_date, unit_Discount FROM blackcake.product ORDER BY shelf_date DESC LIMIT 2;
 SELECT id, name, unit_price, stock, photo_url, description, size, shelf_date, unit_Discount FROM blackcake.product ORDER BY shelf_date ASC LIMIT 3;
 
 SELECT id, name, unit_price, stock, photo_url, description, size, shelf_date, unit_Discount FROM blackcake.product 
-WHERE unit_price BETWEEN 100 AND 500 ORDER BY unit_price DESC;
+WHERE unit_price BETWEEN 100 AND 500 ORDER BY unit_price ASC;
+
+
+SELECT id, name, unit_price, stock, photo_url, description, size, shelf_date, unit_Discount FROM blackcake.product 
+WHERE id=1;
+
+SELECT * FROM black_cake_product;

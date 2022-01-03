@@ -2,7 +2,6 @@ package uuu.blackcake.service;
 
 import java.sql.*;
 
-import uuu.blackcake.entity.BloodType;
 import uuu.blackcake.entity.Customer;
 import uuu.blackcake.entity.VIP;
 import uuu.blackcake.exception.DataInvalidException;

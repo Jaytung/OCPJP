@@ -1,0 +1,1 @@
+SELECT *FROM blackcake.products_sizes;
