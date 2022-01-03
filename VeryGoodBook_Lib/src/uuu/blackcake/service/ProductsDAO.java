@@ -108,7 +108,7 @@ class ProductsDAO {
 				
 				) {
 			//3.1傳入?的值
-			pstmt.setString(1, '%'+category+'%');
+			pstmt.setString(1,category);
 			//4.
 			try(
 					ResultSet rs = pstmt.executeQuery();//4.執行指令					

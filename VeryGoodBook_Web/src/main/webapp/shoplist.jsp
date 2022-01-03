@@ -53,6 +53,7 @@
         <%
         //1.取得requst的form data
         String keyword = request.getParameter("keyword");
+        String category = request.getParameter("category");
         //TODO:加上分類查詢
         //2.呼叫商業邏輯
         
@@ -60,6 +61,8 @@
         List<Product>list;
         if(keyword!=null&&keyword.length()>0){
         	list = pService.selectProductByName(keyword);
+        }else if(category!=null&&category.length()>0){
+        	list = pService.selectProductByCategory(category);
         }else{
 			list = pService.getAllProducts();//改成查詢新品
         }        	

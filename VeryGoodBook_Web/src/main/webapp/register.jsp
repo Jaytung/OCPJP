@@ -95,7 +95,7 @@
                     <div class="form-group col-md-4">
                         <label for="password">密碼Password</label>
                         <input type="password" class="form-control shadow" id="password" placeholder="Password"
-                            name="password"  maxlength="<%=Customer.MAX_PWD_LENGTH%>" minlength="<% %>" required>
+                            name="password"  maxlength="<%=Customer.MAX_PWD_LENGTH%>" minlength="<%=Customer.MIN_PWD_LENGTH %>" required>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="passwordCheck">確認密碼</label>

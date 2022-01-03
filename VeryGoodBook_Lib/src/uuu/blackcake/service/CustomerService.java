@@ -25,4 +25,10 @@ public class CustomerService {
 		}
 		dao.insert(c);
 	}
+	public void update(Customer c) throws BlackCakeException {
+		if(c==null) {
+			throw new IllegalArgumentException("修改customer物件不得為null");
+		}
+		dao.update(c);
+	}
 }

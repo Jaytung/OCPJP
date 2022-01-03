@@ -19,9 +19,9 @@
           </a>
           <form>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          	<a class="dropdown-item" href="#">糕點類</a>
+          	<a class="dropdown-item" href="<%=request.getContextPath()%>/shoplist.jsp?category=糕點">糕點類</a>
           	<div class="dropdown-divider"></div>
-          	<a class="dropdown-item" href="#">罐醬類</a>
+          	<a class="dropdown-item" href="<%=request.getContextPath()%>/shoplist.jsp?category=罐醬">罐醬類</a>
           	<div class="dropdown-divider"></div>
           	<a class="dropdown-item" href="#">海鮮類</a>
           </div>
