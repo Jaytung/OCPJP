@@ -11,7 +11,7 @@ public class TestProductService_getProductByName {
 	public static void main(String[] args) {
 		ProductService pService = new ProductService();
 		try {
-			System.out.print(pService.selectProductById("7"));
+			System.out.print(pService.selectProductByName("黑糖糕"));
 		}catch(BlackCakeException e){
 			Logger.getLogger("產品測試查詢").log(
 			Level.SEVERE,e.getMessage(),e);

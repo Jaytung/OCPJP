@@ -1,6 +1,9 @@
 package uuu.blackcake.entity;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Product {
 	private int id;// 必要. PKey, auto increment,RW(>0)
@@ -12,6 +15,37 @@ public class Product {
 	private LocalDate shelfDate;// 必要,以上架當日為預設值,RW
 	private String photoUrl;
 	private String category;
+	private Map<String,Size> sizeMap=new HashMap<>();
+	
+	
+	//accessors(getter)for sizeMap
+	public Size getsize(String sizeName) {
+		if(sizeName==null)throw new IllegalArgumentException("產品大小不得為null");		
+		Size size = sizeMap.get(sizeName);
+		//TODO:加檢查
+		
+		return size;
+	}
+	
+	//mutators(setter)for sizeMap
+	public void add(Size size) {
+		if(size==null) 
+			throw new IllegalArgumentException("產品大小不得為null");
+		sizeMap.put(size.getName(), size);
+	}
+	
+	
+	public int getSizeMapSize() {
+		return sizeMap.size();
+	}
+
+	public boolean isSizeMapEmpty() {
+		return sizeMap.isEmpty();
+	}
+
+	public Collection<Size> getSizes() {
+		return sizeMap.values();
+	}
 
 	public Product() {
 		// super();
@@ -150,9 +184,10 @@ public class Product {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getName() + "\n" + "Product id=" + id + "\n" + "name=" + name + "\n" + "size=" + size
-				+ "\n" + "unitPrice=" + unitPrice + "\n" + "on sale: " + "% off\n" + "stock=" + stock
-				+ "\n" + "description=" + description + "\n" + "shelfDate=" + shelfDate + "\n" + "photoUrl=" + photoUrl + "\n"+"Category ="+category;
+		return this.getClass().getName() + "\n" + "Product id=" + id + "\n" + "name=" + name + "\n"
+		+ "size=" + size+ "\n" + "unitPrice=" + unitPrice + "\n" + "on sale: " + "% off\n" 
+		+ "stock=" + stock+ "\n" + "description=" + description + "\n" + "shelfDate=" + shelfDate 
+		+ "\n" + "photoUrl=" + photoUrl + "\n"+"Category ="+category+ "\n"+"SizeMap:"+sizeMap;
 	}
 
 

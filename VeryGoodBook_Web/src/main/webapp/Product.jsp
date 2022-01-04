@@ -1,3 +1,7 @@
+<%@page import="uuu.blackcake.entity.Size"%>
+<%@page import="uuu.blackcake.entity.Outlet"%>
+<%@page import="uuu.blackcake.entity.Product"%>
+<%@page import="uuu.blackcake.service.ProductService"%>
 <%@ page pageEncoding="UTF-8" %>
     <!DOCTYPE html>
     <html lang="en">
@@ -17,6 +21,9 @@
             .cartBtn {
                 width: 60px;
             }
+            .iconImg{
+            	width:80px;
+            }
         </style>
         <script src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -34,43 +41,79 @@
             }
             function plusHandler() {
                 var quantitiyValue = parseInt($("#quantity").val());
+
                 $("#quantity").val(quantitiyValue + 1);
             }
+//             function changeDate(object) {
+// 				this.
+// 			}
         </script>
         <title>產品詳細</title>
     </head>
 
     <body id="product">
+    <%
+    String productId = request.getParameter("productId");
+    Product p = null;
+    	if(productId!=null){
+    		ProductService pService = new ProductService();
+    		p=pService.selectProductById(productId);
+ 			
+    	}
+    	if(p==null){
+    %>
+    <p>
+    查無此商品(id=<%=productId %>)
+    </p>
+    <%}else{ %>
+    
         <jsp:include page="subviews/header.jsp" />
         <div class="container ">
             <div class="row">
-                <div class="col-sm-12 col-md-6 col-lg-6 photo rounded">
-                    <img src="imgs/XO醬01.png" class="rounded" alt="">
+                <div class="col-sm-12 col-md-6 col-lg-6 photo rounded ">
+                    <img src="<%=p.getPhotoUrl() %>" class="rounded" alt="">
                 </div>
-                <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="col-sm-12 col-md-6 col-lg-6 order-2 order-md-1">
                     <div class="text-center">
                         <hr>
                         <h2>
-                            干貝醬
+                            <%=p.getName() %>
                         </h2>
                         <hr>
                         <h3>產品敘述:</h3>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias ad praesentium explicabo
-                            dolore aut reprehenderit vero fugiat iure? Earum quasi qui autem odio sapiente adipisci quae
-                            sequi. Quasi, dolorem earum.
+                           <%=p.getDescription() %>
                         </p>
                         <hr>
-                        <h3>價格:</h3>
+                        <h3>折扣價:</h3>
                         <p>
-                            200NT
+                            <%=p instanceof Outlet?((Outlet)p).getDiscountString():""%>
+                        </p>
+                        <h4>定價:</h3>
+                        <p>
+                            <%=p.getUnitPrice() %>
+                        </p>
+                        <hr>
+                        <h3>庫存:</h3>
+                        <p>
+                        <%=p.getStock() %>
                         </p>
                         <hr>
                     </div>
                 </div>
-                <div class="col-6">
-                </div>
-                <form action="GET" class="col-sm-12 col-md-6 ">
+
+                <div class="col-md-6 col-lg-6 order-1 order-md-2">
+                <%if(p.getSizeMapSize()>0) %>
+                <label>大小:</label>
+                <%for(Size size:p.getSizes()){ %>
+                <label>
+                <input type="radio" name="size" value="<%=size.getName() %>" required="required">
+                <img class="iconImg" src="<%=size.getPhotoURL() %>" class="rounded" alt="">
+                </label>
+                <%} %>
+		<%} %>
+
+                <form action="GET" class="col-sm-12 col-md-6 order-3 order-md-1">
                 <input type="hidden" value="1" name="prodcutId">
                     <div class="text-center">
                         <span class="">數量:</span>
@@ -101,8 +144,9 @@
         <br>
         <br>
         <br>
-        <%@ include file='subviews/footer.jsp' %>
+        
 
+                <%@ include file='subviews/footer.jsp' %>
             <!-- Optional JavaScript -->
             <!-- jQuery first, then Popper.js, then Bootstrap JS -->
             <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"

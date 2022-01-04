@@ -36,9 +36,9 @@
         $("value[name='password']").val('<%= request.getParameter("password")%>');
         $("value[name='passwordCheck']").val('<%= request.getParameter("passwordCheck")%>');
         $("value[name='name']").val('<%= request.getParameter("name")%>');
-        $("value[name='gender']").prop('selected',<%= request.getParameter("gender")%>);
+        $("value[name='gender']").val(<%= request.getParameter("gender")%>);
         
-        // $(".gender[value='<%= request.getParameter("gender")%>']").prop('selected',true);
+        $(".gender[value='<%= request.getParameter("gender")%>']").val('gender');
         $("value[name='phone']").val('<%= request.getParameter("phone")%>');
         $("value[name='id']").val('<%= request.getParameter("id")%>');
         $("value[name='birthday']").val('<%= request.getParameter("birthday")%>');
@@ -99,7 +99,7 @@
                         <div class="input-group-prepend">
                             <label for="gender">性別Gender</label>
                         </div>
-                        <select id="gender" class="form-control shadow" name="gender" value="<%=member!=null?member.getGender():"" %>" required>
+                        <select id="gender" class="form-control shadow" name="gender" required>
                             <option value="">選擇</option>
                             <option value="M">男(Male)</option>
                             <option value="F">女(Female)</option>

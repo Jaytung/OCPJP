@@ -17,9 +17,6 @@
             .cartBtn {
                 width: 60px;
             }
-            .iconImg{
-            	width:80px;
-            }
         </style>
         <script src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -39,9 +36,6 @@
                 var quantitiyValue = parseInt($("#quantity").val());
                 $("#quantity").val(quantitiyValue + 1);
             }
-//             function changeDate(object) {
-// 				this.
-// 			}
         </script>
         <title>產品詳細</title>
     </head>
@@ -50,14 +44,14 @@
         <jsp:include page="subviews/header.jsp" />
         <div class="container ">
             <div class="row">
-                <div class="col-sm-12 col-md-6 col-lg-6 photo rounded ">
+                <div class="col-sm-12 col-md-6 col-lg-6 photo rounded">
                     <img src="imgs/XO醬01.png" class="rounded" alt="">
                 </div>
-                <div class="col-sm-12 col-md-6 col-lg-6 order-2 order-md-1">
+                <div class="col-sm-12 col-md-6 col-lg-6">
                     <div class="text-center">
                         <hr>
                         <h2>
-                            黑糖糕
+                            干貝醬
                         </h2>
                         <hr>
                         <h3>產品敘述:</h3>
@@ -67,35 +61,16 @@
                             sequi. Quasi, dolorem earum.
                         </p>
                         <hr>
-                        <h3>折扣價:</h3>
+                        <h3>價格:</h3>
                         <p>
-                            80NT
-                        </p>
-                        <h4>定價:</h3>
-                        <p>
-                            100NT
-                        </p>
-                        <hr>
-                        <h3>庫存:</h3>
-                        <p>
-                        56盒
+                            200NT
                         </p>
                         <hr>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-6 order-1 order-md-2">
-                <label>大盒</label>
-                <label>
-                <input type="radio" name="size" value="大盒" required="required">
-                <img class="iconImg" src="imgs/blackcake.jpg" class="rounded" alt="">
-                </label>
-                <label>小盒</label>
-                <label>
-                <input type="radio" name="size" value="小盒" required="required">
-                <img class="iconImg" src="imgs/36.jpg" class="rounded" alt="">
-                </label>
+                <div class="col-6">
                 </div>
-                <form action="GET" class="col-sm-12 col-md-6 order-3">
+                <form action="GET" class="col-sm-12 col-md-6 ">
                 <input type="hidden" value="1" name="prodcutId">
                     <div class="text-center">
                         <span class="">數量:</span>

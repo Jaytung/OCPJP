@@ -8,10 +8,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.cj.xdevapi.Result;
-
 import uuu.blackcake.entity.Outlet;
 import uuu.blackcake.entity.Product;
+import uuu.blackcake.entity.Size;
 import uuu.blackcake.exception.BlackCakeException;
 
 class ProductsDAO {
@@ -140,12 +139,14 @@ class ProductsDAO {
 		return list;
 	}
 	private static final String SELECT_PRODUCT_BY_ID=
-		"SELECT id, name, unit_price, product.stock, product.photo_url, description, size, shelf_date, unit_Discount, category, brand,\r\n"
-		+ "product_id, size_name, products_sizes.photo_url, icon_url, products_sizes.stock\r\n"
-		+ "FROM product LEFT JOIN products_sizes ON id=product_id\r\n"
-		+ "WHERE  id= ?";
+		"SELECT id, name, unit_price,  description, size, shelf_date, unit_Discount, category, brand, "
+		+ "product_id, size_name, icon_url, "
+		+ "product.stock,products_sizes.stock AS size_stock, "
+		+ "product.photo_url,products_sizes.photo_url AS photo_url "
+		+ "FROM product LEFT JOIN products_sizes ON product.id=product_id "
+		+ "WHERE  id= ?;";
 	public Product selectProductById(String id)throws BlackCakeException {
-		Product p = new Product();
+		Product p = null;
 		try(
 				Connection connection = RDBConnection.getConnection();//1,2.取得連線
 				PreparedStatement pstmt = connection.prepareStatement(SELECT_PRODUCT_BY_ID);//3.準備連線
@@ -158,6 +159,9 @@ class ProductsDAO {
 					ResultSet rs = pstmt.executeQuery();//4.執行指令					
 				) {	
 				while(rs.next()) {
+					//讀取第一筆才需要建立Producet物件,並讀取產品資料指派給屬性
+					if(p==null) {
+						
 					int unitDiscount =rs.getInt("unit_Discount");
 					if(unitDiscount>0) {
 						p = new Outlet();
@@ -174,11 +178,21 @@ class ProductsDAO {
 					p.setSize(rs.getString("size"));
 					p.setShelfDate(LocalDate.parse(rs.getString("shelf_date")));
 					p.setCategory(rs.getString("category"));
+					}
 					
-					System.out.println(rs.getString("size_name"));
-					System.out.println(rs.getString("product.stock"));
-					System.out.println(rs.getString("product.photo_url"));
-					System.out.println(rs.getString("icon_url"));
+					
+					//讀取大小資料並加入產品p中
+					String sizeName=rs.getString("size_name");
+					if(sizeName!=null) {						
+					Size size = new Size();				
+					size.setName(sizeName);
+					size.setStock((rs.getInt("size_stock")));
+					size.setPhotoURL(rs.getString("photo_url"));
+					size.setIconURL(rs.getString("icon_url"));
+					System.out.println(size);
+					p.add(size);
+					}
+					System.out.println(p);
 				}
 			}
 		} catch (SQLException e) {

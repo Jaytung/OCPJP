@@ -53,8 +53,7 @@
             $("input[name='passwordCheck']").val('<%= request.getParameter("passwordCheck")%>');
             $("input[name='name']").val('<%= request.getParameter("name")%>');
             $("input[name='gender']").prop('selected',<%= request.getParameter("gender")%>);
-            
-            // $(".gender[value='<%= request.getParameter("gender")%>']").prop('selected',true);
+            $(".gender[value='<%= request.getParameter("gender")%>']").val('gender');
             $("input[name='phone']").val('<%= request.getParameter("phone")%>');
             $("input[name='id']").val('<%= request.getParameter("id")%>');
             $("input[name='birthday']").val('<%= request.getParameter("birthday")%>');
