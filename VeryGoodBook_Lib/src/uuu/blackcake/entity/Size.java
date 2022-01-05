@@ -3,10 +3,10 @@ package uuu.blackcake.entity;
 import uuu.blackcake.exception.DataInvalidException;
 
 public class Size {
+	private String name;//PKey
 	private String photoURL;
 	private String iconURL;
 	private int stock;
-	private String name;//PKet
 	
 	public String getName() {
 		return name;
@@ -15,17 +15,18 @@ public class Size {
 	public void setName(String name) {
 			this.name = name;			
 	}
-	public String getPhotoURL() {
-		return photoURL;
-	}
+
 	public void setPhotoURL(String photoURL) {
 		this.photoURL = photoURL;
 	}
-	public String getIconURL() {
+	public String getPhotoURL() {
 		return iconURL;
 	}
 	public void setIconURL(String iconURL) {
 		this.iconURL = iconURL;
+	}
+	public String getIconURL() {
+		return iconURL;
 	}
 	public int getStock() {
 		return stock;

@@ -47,18 +47,16 @@
         }
         function repopulationForm() {
 			<%if("POST".equals(request.getMethod())){ %>
-            // alert("post");
             $("input[name='email']").val('<%= request.getParameter("email")%>');
             $("input[name='password']").val('<%= request.getParameter("password")%>');
             $("input[name='passwordCheck']").val('<%= request.getParameter("passwordCheck")%>');
             $("input[name='name']").val('<%= request.getParameter("name")%>');
-            $("input[name='gender']").prop('selected',<%= request.getParameter("gender")%>);
-            $(".gender[value='<%= request.getParameter("gender")%>']").val('gender');
             $("input[name='phone']").val('<%= request.getParameter("phone")%>');
             $("input[name='id']").val('<%= request.getParameter("id")%>');
             $("input[name='birthday']").val('<%= request.getParameter("birthday")%>');
             $("input[name='address']").val('<%= request.getParameter("address")%>');
-            $("input[name='subscribed']").prop('checked',<%= request.getParameter("subscribed")%>);
+            $("input[name='subscribed']").prop('checked', <%= request.getParameter("subscribed")!=null%>);
+            $("select[name='gender']").val('<%= request.getParameter("gender")%>');
             <%}%>
         }
         </script>
@@ -112,7 +110,7 @@
                         <div class="input-group-prepend">
                             <label for="gender">性別Gender</label>
                         </div>
-                        <select id="gender" class="form-control shadow" name="gender" required>
+                        <select id="gender" class="form-control shadow gender" name="gender" required>
                             <option value="">選擇</option>
                             <option value="M">男(Male)</option>
                             <option value="F">女(Female)</option>

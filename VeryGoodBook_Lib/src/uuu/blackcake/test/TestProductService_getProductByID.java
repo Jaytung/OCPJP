@@ -17,7 +17,6 @@ public class TestProductService_getProductByID {
 			Product p = pService.selectProductById("5");
 			System.out.println(p);
 			
-			System.out.println(p.getSize());
 			
 			Collection<Size> collection = p.getSizes();
 			System.out.println(collection);
@@ -31,7 +30,7 @@ public class TestProductService_getProductByID {
 //			Size large = new Size();
 //			large.setName("中");
 //			p.add(large);
-			System.out.println(p.getSize());
+			System.out.println(p.getSizes());
 		}catch(BlackCakeException e){
 			Logger.getLogger("產品測試查詢").log(
 			Level.SEVERE,e.getMessage(),e);

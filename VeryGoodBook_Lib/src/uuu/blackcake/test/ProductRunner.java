@@ -10,7 +10,6 @@ public class ProductRunner {
 		Product product = new Product();
 		product.setId(1);
 		product.setName("一號");
-		product.setSize("大");
 		product.setUnitPrice(100);
 		product.setStock(3);
 		product.setPhotoUrl("https://i2.momoshop.com.tw/1626948065/goodsimg/0009/140/702/9140702_R.webp");

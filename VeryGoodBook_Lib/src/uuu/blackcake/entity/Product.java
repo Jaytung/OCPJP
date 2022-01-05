@@ -8,7 +8,6 @@ import java.util.Map;
 public class Product {
 	private int id;// 必要. PKey, auto increment,RW(>0)
 	private String name;// 必要, UNIQUE INDEX,RW
-	private String size;
 	private double unitPrice;// 必要>0,RW
 	private int stock;// 必要>0,RW
 	private String description;
@@ -20,7 +19,9 @@ public class Product {
 	
 	//accessors(getter)for sizeMap
 	public Size getsize(String sizeName) {
-		if(sizeName==null)throw new IllegalArgumentException("產品大小不得為null");		
+		if(sizeName==null)
+			throw new IllegalArgumentException("產品大小不得為null");		
+		
 		Size size = sizeMap.get(sizeName);
 		//TODO:加檢查
 		
@@ -29,7 +30,7 @@ public class Product {
 	
 	//mutators(setter)for sizeMap
 	public void add(Size size) {
-		if(size==null) 
+		if(size==null||size.getName()==null) 
 			throw new IllegalArgumentException("產品大小不得為null");
 		sizeMap.put(size.getName(), size);
 	}
@@ -118,13 +119,6 @@ public class Product {
 		}
 	}
 
-	public String getSize() {
-		return size;
-	}
-
-	public void setSize(String size) {
-		this.size = size;
-	}
 
 	/**
 	 * //查售價及定價
@@ -144,6 +138,13 @@ public class Product {
 	}
 
 	public int getStock() {
+		if(sizeMap!=null&&sizeMap.size()>0) {
+			int sum = 0;
+			for(Size size:sizeMap.values()) {
+				sum+=size.getStock();
+			}
+			return sum;
+		}
 		return stock;
 	}
 
@@ -185,7 +186,7 @@ public class Product {
 	@Override
 	public String toString() {
 		return this.getClass().getName() + "\n" + "Product id=" + id + "\n" + "name=" + name + "\n"
-		+ "size=" + size+ "\n" + "unitPrice=" + unitPrice + "\n" + "on sale: " + "% off\n" 
+		+ "size=" + "\n" + "unitPrice=" + unitPrice + "\n" + "on sale: " + "% off\n" 
 		+ "stock=" + stock+ "\n" + "description=" + description + "\n" + "shelfDate=" + shelfDate 
 		+ "\n" + "photoUrl=" + photoUrl + "\n"+"Category ="+category+ "\n"+"SizeMap:"+sizeMap;
 	}

@@ -22,8 +22,37 @@
                 width: 60px;
             }
             .iconImg{
-            	width:80px;
+            	width:300px;
             }
+			#album{
+				width:250px;
+				height:auto;
+				border:none;
+				padding:10px;
+ 				background:#F0ECE3;
+				color:white;
+			}
+			
+			#main{
+				width:600px;
+				height:600px;
+			}
+			
+			.smallPic{
+				width:100px;
+				padding:5px;
+				background:white;
+				margin:10px 2px;
+			}
+			.selected{
+				background: orange;
+			}
+			.row{
+			margin-left: 0px;
+			}
+			#sizeStock{
+			color: #e63946;
+			}
         </style>
         <script src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -32,6 +61,8 @@
             function init() {
                 $("#minus").click(minusHandler);
                 $("#plus").click(plusHandler);
+            	$(".smallPic").click(showHandler);
+            	$(".smallPic:first").addClass("selected");
             }
             function minusHandler() {
                 var quantitiyValue = parseInt($("#quantity").val());
@@ -44,10 +75,21 @@
 
                 $("#quantity").val(quantitiyValue + 1);
             }
-//             function changeDate(object) {
-// 				this.
-// 			}
-        </script>
+            function showHandler(){
+            	var image = $(this).attr("src");
+            	 $("#main").attr("src",image);
+            	 $(".smallPic").removeClass("selected");
+            	 $(this).addClass("selected");
+            }
+        	function changeData(theObj){
+// 				alert($(theObj).attr("src"));
+// 				alert($(theObj).attr("title"));
+				
+				$("#sizeStock").text($(theObj).attr("title") + "剩餘" + $(theObj).attr("data-stock") + "個");
+				$("input[name='quantity']").attr("max", $(theObj).attr("data-stock"));
+// 				$(".photo").attr("src", $(theObj).attr("data-photo"));
+			}
+        	</script>
         <title>產品詳細</title>
     </head>
 
@@ -70,10 +112,10 @@
         <jsp:include page="subviews/header.jsp" />
         <div class="container ">
             <div class="row">
-                <div class="col-sm-12 col-md-6 col-lg-6 photo rounded ">
-                    <img src="<%=p.getPhotoUrl() %>" class="rounded" alt="">
+                <div class="col-sm-12 col-md-6 col-lg-6 photo rounded order-1 order-md-1">
+                    <img src="<%=p.getPhotoUrl() %>" class="rounded" id="main" alt="">
                 </div>
-                <div class="col-sm-12 col-md-6 col-lg-6 order-2 order-md-1">
+                 <div class="col-sm-12 col-md-6 col-lg-6 order-3 order-md-3">
                     <div class="text-center">
                         <hr>
                         <h2>
@@ -85,48 +127,65 @@
                            <%=p.getDescription() %>
                         </p>
                         <hr>
-                        <h3>折扣價:</h3>
-                        <p>
-                            <%=p instanceof Outlet?((Outlet)p).getDiscountString():""%>
-                        </p>
-                        <h4>定價:</h3>
-                        <p>
-                            <%=p.getUnitPrice() %>
-                        </p>
+                        <h3>特價:<%=p instanceof Outlet?((Outlet)p).getDiscountString():"" %> 
+                            <%= p.getUnitPrice()%>元</h3> 
+                            <% if(p instanceof Outlet) {%>
+                        <h4>定價:<%= ((Outlet)p).getListPrice() %>元</h4>
+                            <% } %>
                         <hr>
                         <h3>庫存:</h3>
                         <p>
-                        <%=p.getStock() %>
+                        總數:<%=p.getStock()+"個"%>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sizeStock"></span>
                         </p>
                         <hr>
+                        <form>
+  							<div class="col-md-6 order-4 order-md-4" style="max-width: 100%;">
+  					   			<div class="btn-group btn-group-toggle" data-toggle="buttons">
+  									<% if(p.getSizeMapSize()>0){%>
+                						<%for(Size size:p.getSizes()){ %>												
+							  				<label class="btn btn-primary" class="btn btn-primary" for="<%=size.getName() %>">
+							    			<input type="radio" name="size" value="<%=size.getName() %>" id="<%=size.getName() %>"
+		                					title='<%= size.getName() %>' data-stock='<%= size.getStock() %>' onclick ='changeData(this)' 
+		                					required="required">
+		                					<%=size.getName()%>
+		                						
+							  				</label>
+	            						<%} %> 
+						    		<%} %>  
+					 			</div> 
+							</div>
+						</form>
+<%-- 	<%} %> --%>
                     </div>
-                </div>
-
-                <div class="col-md-6 col-lg-6 order-1 order-md-2">
-                <%if(p.getSizeMapSize()>0) %>
-                <label>大小:</label>
-                <%for(Size size:p.getSizes()){ %>
-                <label>
-                <input type="radio" name="size" value="<%=size.getName() %>" required="required">
-                <img class="iconImg" src="<%=size.getPhotoURL() %>" class="rounded" alt="">
-                </label>
-                <%} %>
-		<%} %>
-
-                <form action="GET" class="col-sm-12 col-md-6 order-3 order-md-1">
+                 </div>
+                <div class="col-6 col-md-6 rounded order-2 order-md-5">
+                 <% if(p.getSizeMapSize()>0){%>
+					<div id="album" class="rounded">
+					    	<%for(Size size:p.getSizes()){ %>
+					    <div class="row">
+					    	<img src="<%=size.getPhotoURL()==null?size.getPhotoURL():size.getIconURL() %>" class="rounded shadow smallPic" 
+					    	title='<%= size.getName() %>' data-photo='<%= size.getPhotoURL() %>'/>
+					    	<%} %>
+					    </div>
+					</div>
+			   </div>
+			    <%} %>
+	<%} %>
+			</div>
+                <form action="post" class="col-sm-12 col-md-6 order-6 mt-4">
                 <input type="hidden" value="1" name="prodcutId">
                     <div class="text-center">
                         <span class="">數量:</span>
                         <div class="input-group justify-content-center">
                             <span class="input-group-addon">
-                                <button class="btn btn-primary btn-lg rounded rounded cartBtn" type="button"
+                                <button class="btn btn-primary btn-lg rounded  cartBtn" type="button"
                                     id="minus">-
                                 </button>
                             </span>
                             <input type="text" class="form-control form-control-lg text-center rounded col-sm-12 col-md-4 col-lg-3" aria-label=""
-                                value="0" id="quantity" name="quantity">
+                                value="0" id="quantity" name="quantity" >
                             <span class="input-group-addon">
-                                <button class="btn btn-primary btn-lg rounded rounded cartBtn" type="button"
+                                <button class="btn btn-primary btn-lg rounded  cartBtn" type="button"
                                     id="plus">+
                                 </button>
                             </span>
@@ -138,7 +197,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+
         <br>
         <br>
         <br>

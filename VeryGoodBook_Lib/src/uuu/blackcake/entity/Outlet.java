@@ -86,7 +86,7 @@ public class Outlet extends Product {
 
 	@Override
 	public double getUnitPrice() {
-		return super.getUnitPrice() * (100d - unitDiscount) / 100;
+		return super.getUnitPrice() * (100D - unitDiscount) / 100;
 	}
 
 	/**

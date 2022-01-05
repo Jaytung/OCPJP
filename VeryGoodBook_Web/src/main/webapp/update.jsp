@@ -31,20 +31,18 @@
     }
     function repopulationForm() {
 		<%if("POST".equals(request.getMethod())){ %>
-        // alert("post");
-        $("value[name='email']").val('<%= request.getParameter("email")%>');
-        $("value[name='password']").val('<%= request.getParameter("password")%>');
-        $("value[name='passwordCheck']").val('<%= request.getParameter("passwordCheck")%>');
-        $("value[name='name']").val('<%= request.getParameter("name")%>');
-        $("value[name='gender']").val(<%= request.getParameter("gender")%>);
-        
-        $(".gender[value='<%= request.getParameter("gender")%>']").val('gender');
-        $("value[name='phone']").val('<%= request.getParameter("phone")%>');
-        $("value[name='id']").val('<%= request.getParameter("id")%>');
-        $("value[name='birthday']").val('<%= request.getParameter("birthday")%>');
-        $("value[name='address']").val('<%= request.getParameter("address")%>');
-        $("value[name='subscribed']").prop('checked',<%= request.getParameter("subscribed")%>);
+        $("input[name='email']").val('<%= request.getParameter("email")%>');
+        $("input[name='password']").val('<%= request.getParameter("password")%>');
+        $("input[name='passwordCheck']").val('<%= request.getParameter("passwordCheck")%>');
+        $("input[name='name']").val('<%= request.getParameter("name")%>');
+        $("input[name='phone']").val('<%= request.getParameter("phone")%>');
+        $("input[name='id']").val('<%= request.getParameter("id")%>');
+        $("input[name='birthday']").val('<%= request.getParameter("birthday")%>');
+        $("input[name='address']").val('<%= request.getParameter("address")%>');
+        $("input[name='subscribed']").prop('checked', <%= request.getParameter("subscribed")!=null%>);
+        $("select[name='gender']").val('<%= request.getParameter("gender")%>');
         <%}%>
+        
     }
     </script>
     
@@ -100,7 +98,7 @@
                             <label for="gender">性別Gender</label>
                         </div>
                         <select id="gender" class="form-control shadow" name="gender" required>
-                            <option value="">選擇</option>
+                            <option value="<%=member!=null?member.getGender():"" %>">選擇</option>
                             <option value="M">男(Male)</option>
                             <option value="F">女(Female)</option>
                             <option value="O">其他(Other)</option>

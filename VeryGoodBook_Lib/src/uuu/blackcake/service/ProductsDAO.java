@@ -16,7 +16,7 @@ import uuu.blackcake.exception.BlackCakeException;
 class ProductsDAO {
 	private static final String SELECT_ALL_PRODUCTS=
 			"SELECT id, name, unit_price, stock,"
-			+ " photo_url, description, size, shelf_date,"
+			+ " photo_url, description, shelf_date,"
 			+ " unit_Discount FROM blackcake.product";
 	List<Product> selsectAllProducts() throws BlackCakeException {
 		List<Product> list= new ArrayList<>();
@@ -41,7 +41,6 @@ class ProductsDAO {
 				p.setStock(rs.getInt("stock"));
 				p.setPhotoUrl(rs.getString("photo_url"));
 				p.setDescription(rs.getString("description"));
-				p.setSize(rs.getString("size"));
 				p.setShelfDate(LocalDate.parse(rs.getString("shelf_date")));
 				
 				list.add(p);
@@ -53,7 +52,7 @@ class ProductsDAO {
 	}
 	private static final String SELECT_PRODUCT_BY_NAME=
 			"SELECT id, name, unit_price, stock, photo_url, description,"
-			+ " size, shelf_date, unit_Discount FROM blackcake.product "
+			+ " shelf_date, unit_Discount FROM blackcake.product "
 			+ "WHERE name LIKE ?";
 	public List<Product> selectProductByName(String keyWord)throws BlackCakeException {
 		List<Product> list = new ArrayList<>();
@@ -83,7 +82,6 @@ class ProductsDAO {
 					p.setStock(rs.getInt("stock"));
 					p.setPhotoUrl(rs.getString("photo_url"));
 					p.setDescription(rs.getString("description"));
-					p.setSize(rs.getString("size"));
 					p.setShelfDate(LocalDate.parse(rs.getString("shelf_date")));
 					
 					list.add(p);
@@ -97,7 +95,7 @@ class ProductsDAO {
 	
 	private static final String SELECT_PRODUCT_BY_CATEGORY=
 			"SELECT id, name, unit_price, stock, photo_url, description,"
-			+ " size, shelf_date, unit_Discount, category FROM blackcake.product "
+			+ " shelf_date, unit_Discount, category FROM blackcake.product "
 			+ "WHERE category LIKE ?";
 	public List<Product> selectProductByCategory(String category)throws BlackCakeException {
 		List<Product> list = new ArrayList<>();
@@ -127,7 +125,6 @@ class ProductsDAO {
 					p.setStock(rs.getInt("stock"));
 					p.setPhotoUrl(rs.getString("photo_url"));
 					p.setDescription(rs.getString("description"));
-					p.setSize(rs.getString("size"));
 					p.setShelfDate(LocalDate.parse(rs.getString("shelf_date")));
 					p.setCategory(rs.getString("category"));
 					list.add(p);
@@ -139,7 +136,7 @@ class ProductsDAO {
 		return list;
 	}
 	private static final String SELECT_PRODUCT_BY_ID=
-		"SELECT id, name, unit_price,  description, size, shelf_date, unit_Discount, category, brand, "
+		"SELECT id, name, unit_price,  description, shelf_date, unit_Discount, category, brand, "
 		+ "product_id, size_name, icon_url, "
 		+ "product.stock,products_sizes.stock AS size_stock, "
 		+ "product.photo_url,products_sizes.photo_url AS photo_url "
@@ -175,7 +172,6 @@ class ProductsDAO {
 					p.setStock(rs.getInt("stock"));
 					p.setPhotoUrl(rs.getString("photo_url"));
 					p.setDescription(rs.getString("description"));
-					p.setSize(rs.getString("size"));
 					p.setShelfDate(LocalDate.parse(rs.getString("shelf_date")));
 					p.setCategory(rs.getString("category"));
 					}
@@ -186,7 +182,7 @@ class ProductsDAO {
 					if(sizeName!=null) {						
 					Size size = new Size();				
 					size.setName(sizeName);
-					size.setStock((rs.getInt("size_stock")));
+					size.setStock(rs.getInt("size_stock"));
 					size.setPhotoURL(rs.getString("photo_url"));
 					size.setIconURL(rs.getString("icon_url"));
 					System.out.println(size);
