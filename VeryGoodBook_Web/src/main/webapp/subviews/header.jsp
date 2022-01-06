@@ -40,6 +40,7 @@
        會員
        	</span>
        		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+       			<a class="nav-link"href='<%=request.getContextPath() %>/member/cart.jsp'>購物車</a>
           		<a class="nav-link" href='<%=request.getContextPath() %>/register.jsp'>註冊</a>
           		<a class="nav-link" href='<%=request.getContextPath() %>/login.jsp'>登入</a>
         	</div>

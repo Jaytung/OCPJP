@@ -1,8 +1,3 @@
-<%@page import="uuu.blackcake.entity.Outlet"%>
-<%@page import="uuu.blackcake.entity.Size"%>
-<%@page import="uuu.blackcake.entity.Product"%>
-<%@page import="uuu.blackcake.entity.CartItem"%>
-<%@page import="uuu.blackcake.entity.ShoppingCart"%>
 <%@page import="java.util.List"%>
 <%@ page import="uuu.blackcake.entity.Customer"%>
 <%@ page pageEncoding="UTF-8"%>
@@ -22,10 +17,8 @@
     <!-- Font-Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-        crossorigin="anonymous"></script>
-    </script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="app.css">
     
     <style>
     .container{
@@ -44,20 +37,12 @@
 
 <body>
     <!-- style="background-color: #EED6C4; -->
-<%-- 	<jsp:include page="<%=request.getContextPath() %>subviews/header.jsp" /> --%>
-<%-- <%--     <%  --%>
-<!-- //     List<String> errors = (List<String>)request.getAttribute("errors");  -->
-<%-- <%--     %> --%> 
+	<jsp:include page="subviews/header.jsp" />
+    <% 
+    List<String> errors = (List<String>)request.getAttribute("errors"); 
+    %>
+     <%Customer member = (Customer)session.getAttribute("member");%>
      
-     <div>
-     ${sessionScope.cart}
-     </div>
-     <%
-     ShoppingCart cart =(ShoppingCart)session.getAttribute("cart");
-     if(cart==null||cart.isEmpty()){
-     %>
-     <p>購物車是空的!</p>
-     <%}else{%>
      <div class="container">
      	<h1 class="text-center">購物明細</h1>
 		 <table class="table table-hover">
@@ -76,27 +61,42 @@
 			    </tr>
 			  </thead>
 			  <tbody>
-			  <%for(CartItem item:cart.getCartItemSet()){ 
-			  		Product p = item.getProduct();
-			  		Size size = item.getSize();
-			  		String spicy = item.getSpicy();
-			  		int qty = cart.getQuantity(item);
-			  		
-			  %>
 			    <tr>
 			      <th scope="row">1</th>
-			      <td><img src="<%=p.getPhotoUrl()%>"><%=p.getName() %></td>
-			      <td><%=size!=null?size.getName():"" %></td>
-			      <td><%=spicy %></td>
-			      <td><%=p instanceof Outlet?((Outlet)p).getListPrice():p.getUnitPrice() %></td>
-			      <td><%=p instanceof Outlet?((Outlet)p).getDiscountString():""%></td>
-			      <td><%=p.getUnitPrice() %></td>
-			      <td><%=qty%></td>
-			      <td><%=p.getUnitPrice()*qty %></td>
+			      <td><img src="imgs/黑糖糕.png"> 黑糖糕</td>
+			      <td></td>
+			      <td>大盒</td>
+			      <td>200元</td>
+			      <td>9折</td>
+			      <td>180.0元</td>
+			      <td>3盒</td>
+			      <td>540元</td>
 			      <td><input type="checkbox" name="delete"></td>
 			    </tr>
-			    <%} %>
-			  </tbody>
+			    <tr>
+			      <th scope="row">2</th>
+			      <td>XO醬</td>
+			      <td>大辣</td>
+			      <td></td>
+			      <td>500元</td>
+			      <td></td>
+			      <td>500.0元</td>
+			      <td>1罐</td>
+			      <td>500元</td>
+			      <td><input type="checkbox" name="delete"></td>
+			    </tr>
+			    <tr>
+			      <th scope="row">3</th>
+			      <td>XO醬</td>
+			      <td>小辣</td>
+			      <td></td>
+			      <td>500元</td>
+			      <td></td>
+			      <td>500.0元</td>
+			      <td>1罐</td>
+			      <td>500元</td>
+			      <td><input type="checkbox" name="delete"></td>
+			    </tr>
 				  <tfoot>
 				  <tr>
 				  <td>
@@ -107,11 +107,11 @@
 				  <td>
 				  <td>
 				  <td>
-				  <td><%=cart.size()+"項"+"共"+cart.getTotalQuantity()+"件" %></td>
-				  <td><%=cart.getTotalAmount() %></td>
+				  <td>共3項,5件</td>
+				  <td>總金額:$1600</td>
 				  </tfoot>
+			  </tbody>
 		</table>
-		<%} %>
 			  <div class="d-flex justify-content-end">
 			  <button type="button" class="btn btn-primary btn-lg">結帳</button>
 			  </div>

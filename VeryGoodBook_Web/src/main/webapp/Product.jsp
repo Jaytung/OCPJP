@@ -111,6 +111,8 @@
     
         <jsp:include page="subviews/header.jsp" />
         <div class="container ">
+        <form action="add_to_cart.do" method="POST">
+        <input type='hidden' value='<%= p.getId() %>' name='productId'>
             <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-6 photo rounded order-1 order-md-1">
                     <img src="<%=p.getPhotoUrl() %>" class="rounded" id="main" alt="">
@@ -138,14 +140,14 @@
                         總數:<%=p.getStock()+"個"%>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sizeStock"></span>
                         </p>
                         <hr>
-                        <form>
   							<div class="col-md-6 order-4 order-md-4" style="max-width: 100%;">
   					   			<div class="btn-group btn-group-toggle" data-toggle="buttons">
   									<% if(p.getSizeMapSize()>0){%>
                 						<%for(Size size:p.getSizes()){ %>												
 							  				<label class="btn btn-primary" class="btn btn-primary" for="<%=size.getName() %>">
 							    			<input type="radio" name="size" value="<%=size.getName() %>" id="<%=size.getName() %>"
-		                					title='<%= size.getName() %>' data-stock='<%= size.getStock() %>' onclick ='changeData(this)' 
+		                					title='<%= size.getName() %>' data-stock='<%= size.getStock() %>' Value="<%=size.getName() %>"
+		                					 onclick ='changeData(this)' 
 		                					required="required">
 		                					<%=size.getName()%>
 		                						
@@ -154,10 +156,9 @@
 						    		<%} %>  
 					 			</div> 
 							</div>
-						</form>
-<%-- 	<%} %> --%>
                     </div>
                  </div>
+               
                 <div class="col-6 col-md-6 rounded order-2 order-md-5">
                  <% if(p.getSizeMapSize()>0){%>
 					<div id="album" class="rounded">
@@ -172,8 +173,7 @@
 			    <%} %>
 	<%} %>
 			</div>
-                <form action="post" class="col-sm-12 col-md-6 order-6 mt-4">
-                <input type="hidden" value="1" name="prodcutId">
+                <div class="col-sm-12 col-md-6 order-6 mt-4">
                     <div class="text-center">
                         <span class="">數量:</span>
                         <div class="input-group justify-content-center">
@@ -195,9 +195,9 @@
                         <br>
                         <input class="btn btn-primary" type="submit" value="加到購物車">
                     </div>
-                </form>
-            </div>
-
+            	</div>
+		</form>
+		</div>
         <br>
         <br>
         <br>
