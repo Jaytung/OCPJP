@@ -7,7 +7,16 @@ public class Size {
 	private String photoURL;
 	private String iconURL;
 	private int stock;
+	private int price;
 	
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -67,6 +76,6 @@ public class Size {
 	@Override
 	public String toString() {
 		return this.getClass().getSimpleName()+"大小名稱:"+name+"\n"+"庫存:"+stock+",\n"
-		+"photoURL:"+photoURL+"\n"+"iconURL:"+iconURL;
+		+"photoURL:"+photoURL+"\n"+"iconURL:"+iconURL+"\n"+"Size_price:"+price;
 	}
 }

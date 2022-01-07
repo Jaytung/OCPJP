@@ -3,8 +3,11 @@ package uuu.blackcake.test;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+
 import org.apache.jasper.tagplugins.jstl.core.Catch;
 
+import uuu.blackcake.entity.CartItem;
 import uuu.blackcake.entity.Customer;
 import uuu.blackcake.entity.Product;
 import uuu.blackcake.entity.ShoppingCart;
@@ -26,8 +29,27 @@ public class TestShoppingCart {
 			System.out.println(cart);
 			
 			Product p5 =pService.selectProductById("5");
-			cart.addToCart(p5, "小盒" ,null, 6);
+			cart.addToCart(p5, "小盒" ,null, 4);
 			System.out.println(cart);
+			
+			
+//			quantity1126 4
+//			for(CartItem item:cart.getCartItemSet()) {
+//				if(String.valueOf(item.hashCode()).equals("1126")){
+//
+//				String quantity = "12";
+//				cart.updateCart(item, Integer.parseInt(quantity));				
+//
+//				}
+//			}
+			
+			CartItem item = new CartItem();
+			item.setProduct(p5);
+			item.setSize(p5.getsize("小盒"));
+			
+			cart.updateCart(item, 10);
+			System.out.println(cart);
+			
 	}catch(BlackCakeException e){
 		Logger.getLogger("測試[加入購物車]").log(Level.SEVERE,"加入購物車失敗",e);
 	}

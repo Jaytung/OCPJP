@@ -43,10 +43,10 @@ public class AddToCartServlet extends HttpServlet {
 		String sizeName = request.getParameter("size");
 		String spicy=request.getParameter("spicy");
 		String quantity = request.getParameter("quantity");
-		System.out.println(productId);
-		System.out.println(sizeName);
-		System.out.println(spicy);
-		System.out.println(quantity);
+//		System.out.println(productId);
+//		System.out.println(sizeName);
+//		System.out.println(spicy);
+//		System.out.println(quantity);
 		if(productId!=null&&productId.length()>0) {
 			
 			//2.呼叫商業邏輯
@@ -76,8 +76,8 @@ public class AddToCartServlet extends HttpServlet {
 			System.out.println(errors);
 		}
 		//3.redirect購物車
-		//response.sendRedirect(request.getContextPath()+"/member/cart.jsp");
-		request.getRequestDispatcher("/member/cart.jsp").forward(request, response);
+		response.sendRedirect(request.getContextPath()+"/member/cart.jsp");
+//		request.getRequestDispatcher("/member/cart.jsp").forward(request, response);
 	}
 
 }

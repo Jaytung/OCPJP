@@ -20,16 +20,27 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="app.css">
     <link rel="stylesheet" href="shoplist.css">
-    <style>
     
-    </style>
-     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-        crossorigin="anonymous"></script>
+   
     <script>
 	 function getImg(theImg) {
 // 		 if(!theImg.src) theImg=this;
 			 theImg.src='imgs/fishlogo1.png';
 			 theImg.onerror=null;
+	}
+	 
+	 function getProduct(pId) {
+		//送出同步GET請求
+		location.href="Product.jsp?productId="+pId;
+		
+		//送出非同步請求
+// 		var xhr = $.ajax({
+// 			url:'Product.jsp?productId='+pId,
+// 			method:'GET'
+// 		}).done(getProductDoneHandler);	
+	}
+	 function getProductDoneHandler(data, textStatus,jqXHR) {
+// 		alert(data);
 	}
     </script>
     <title>商品清單</title>
@@ -75,7 +86,7 @@
         	  Product p = list.get(i);
         	%>
             <li class="col-md-6 col-lg-4" id=" 1">
-            <a href="Product.jsp?productId=<%=p.getId()%>">
+            <a href="javascript:getProduct(<%=p.getId()%>)">
                 <img src='<%=p.getPhotoUrl() %>' onerror='getImg(this)' class="productList img-fluid rounded">
                 <h2><%=p.getName() %></h2>
                 <span>優惠價:<%= p instanceof Outlet?((Outlet)p).getDiscountString():""%> 
@@ -95,6 +106,7 @@
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
             crossorigin="anonymous"></script>
+            <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
             integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
             crossorigin="anonymous"></script>
@@ -102,6 +114,8 @@
             integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
             crossorigin="anonymous"></script>
         <script>
+        
+        
         $(function () {
             $(document).scroll(function () {
                 var $nav = $("#mainNavbar");

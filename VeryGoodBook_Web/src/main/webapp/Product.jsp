@@ -134,6 +134,7 @@
                             <% if(p instanceof Outlet) {%>
                         <h4>定價:<%= ((Outlet)p).getListPrice() %>元</h4>
                             <% } %>
+                         
                         <hr>
                         <h3>庫存:</h3>
                         <p>
@@ -147,10 +148,10 @@
 							  				<label class="btn btn-primary" class="btn btn-primary" for="<%=size.getName() %>">
 							    			<input type="radio" name="size" value="<%=size.getName() %>" id="<%=size.getName() %>"
 		                					title='<%= size.getName() %>' data-stock='<%= size.getStock() %>' Value="<%=size.getName() %>"
-		                					 onclick ='changeData(this)' 
+		                					onclick ='changeData(this)' 
 		                					required="required">
 		                					<%=size.getName()%>
-		                						
+		                					<%=size.getPrice() %>	
 							  				</label>
 	            						<%} %> 
 						    		<%} %>  

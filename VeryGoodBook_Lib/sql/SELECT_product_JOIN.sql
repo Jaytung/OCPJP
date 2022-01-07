@@ -16,10 +16,11 @@ WHERE  id= 7;
 /*left outter join 產品明細用*/
 SELECT id, name, unit_price,  description, size, shelf_date, unit_Discount, category, brand,
 product_id, size_name,  icon_url, 
+products_sizes.size_price as size_price,
 product.stock,products_sizes.stock AS size_stock,
 product.photo_url,products_sizes.photo_url AS photo_url
 FROM product LEFT JOIN products_sizes ON product.id=product_id
-WHERE  id= ?; 
+WHERE  id= 5; 
 
 /*right outter join*/
 SELECT id, name, unit_price, product.stock, product.photo_url, description, size, shelf_date, unit_Discount, category, brand,

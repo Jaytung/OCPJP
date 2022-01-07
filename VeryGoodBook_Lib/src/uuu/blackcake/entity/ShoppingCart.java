@@ -2,6 +2,8 @@ package uuu.blackcake.entity;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,7 +19,7 @@ public class ShoppingCart {
 		this.member = member;
 	}
 
-
+	//accessor 可用Delegate method產生
 	public int size() {
 		return cartMap.size();
 	}
@@ -26,8 +28,9 @@ public class ShoppingCart {
 		return cartMap.isEmpty();
 	}
 
-	public Set<CartItem> getCartItemSet() {
-		return cartMap.keySet();
+	public Set<CartItem> getCartItemSet() {//回傳集合元件時不得原本的參考,必須回傳複本物件
+		
+		return new HashSet<>(cartMap.keySet());
 	}
 	
 	
@@ -67,8 +70,17 @@ public class ShoppingCart {
 		
 	}
 	
-	public Integer remove(Object key) {
-		return cartMap.remove(key);
+	public void updateCart(CartItem item,int quantity) {
+		if(item==null)throw new IllegalArgumentException("購物車item不得為null");
+		//找出之前是否加入相同的(product,colorName,size)產品的數量
+		Integer oldQuantity = cartMap.get(item);
+		if(oldQuantity!=null) {
+			cartMap.put(item, quantity);			
+		}
+	}
+	
+	public void remove(CartItem item) {
+		cartMap.remove(item);
 	}
 
 	public int getTotalQuantity() {
@@ -86,6 +98,20 @@ public class ShoppingCart {
 			double price = item.getProduct().getUnitPrice();
 			Integer qty = cartMap.get(item);
 			if(qty!=null)sum= sum+price*qty;
+		}
+		return sum;
+	}
+	
+	public int getTotalAmountTest() {
+		int sum=0;
+//		Collection<Integer>values=cartMap.values();
+//		Iterator<Integer> iterator = values.iterator();
+//		while(iterator.hasNext()) {
+		for(Integer quantity:cartMap.values()) {
+//			Integer quantity = iterator.next();
+			if(quantity!=null) {
+				sum+=quantity;
+			}
 		}
 		return sum;
 	}

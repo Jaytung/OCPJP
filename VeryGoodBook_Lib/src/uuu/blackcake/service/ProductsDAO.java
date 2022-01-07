@@ -138,6 +138,7 @@ class ProductsDAO {
 	private static final String SELECT_PRODUCT_BY_ID=
 		"SELECT id, name, unit_price,  description, shelf_date, unit_Discount, category, brand, "
 		+ "product_id, size_name, icon_url, "
+		+ "products_sizes.size_price as size_price, " //大小價格查詢
 		+ "product.stock,products_sizes.stock AS size_stock, "
 		+ "product.photo_url,products_sizes.photo_url AS photo_url "
 		+ "FROM product LEFT JOIN products_sizes ON product.id=product_id "
@@ -182,6 +183,7 @@ class ProductsDAO {
 					if(sizeName!=null) {						
 					Size size = new Size();				
 					size.setName(sizeName);
+					size.setPrice(rs.getInt("size_price"));
 					size.setStock(rs.getInt("size_stock"));
 					size.setPhotoURL(rs.getString("photo_url"));
 					size.setIconURL(rs.getString("icon_url"));
