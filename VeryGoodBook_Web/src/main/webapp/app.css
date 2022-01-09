@@ -1,6 +1,26 @@
+html{
+	scroll-behavior:smooth;
+	}
+a {
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: #bfc0c0;
+    transition:900ms;
+}
+/* .productList:hover{ */
+/* 	width:80%; */
+/* 	height:auto; */
+/* 	transition:900ms; */
+/* } */
 body{
     background: #f1f1f1;
     font-family: "Nuntio", sans-serif;
+}
+.footer {
+   position:fix;
+   bottom:0;
+   width:100%;
 }
 div h1{
     color: #483434;
@@ -24,7 +44,7 @@ div h2{
     margin-bottom: 100px;
 }
 .navbar.scrolled{
-    background: #bb8765;
+    background: #e0e1dd;
     transition: background 500ms;
 }
 /* .navbar.notScrolled{
@@ -71,6 +91,10 @@ div h2{
         height: auto;
         justify-content: center;
 }
+.cartPlusAndMinus{
+	font-weight: 600;
+/* 	font-size: 1.5rem; */
+}
 .center_div{
     margin: 10rem auto;
     width:80%;
@@ -95,12 +119,13 @@ ul {
     list-style-type: none;
 }
 .dropdown-menu{
-	background: #cfcbcb;
+	background: #e0e1dd;
     font-family: "Nuntio", sans-serif;
+    border:0;
 }
  @media screen and (max-width: 768px){
     #mainNavbar{
-        background:#bb8765;
+        background:#e0e1dd;
     }
 }
 @media screen and (min-width: 300px)and (max-width: 992px){

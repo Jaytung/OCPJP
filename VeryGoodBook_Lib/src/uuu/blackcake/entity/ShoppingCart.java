@@ -95,6 +95,7 @@ public class ShoppingCart {
 	public double getTotalAmount() {
 		double sum =0;
 		for(CartItem item:cartMap.keySet()) {
+//			double price = item.getProduct().getUnitPrice();
 			double price = item.getProduct().getUnitPrice();
 			Integer qty = cartMap.get(item);
 			if(qty!=null)sum= sum+price*qty;

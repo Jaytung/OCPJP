@@ -36,43 +36,49 @@ public class UpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		HttpSession session = request.getSession();
 		List<String> errors = new ArrayList<>();
-//		Customer member =(Customer)session.getAttribute("member");
-//		String id =request.getParameter("id");
-//		String password = request.getParameter("password");
-//		if(member==null) {
-//			
-//		}
-//		if (id != null || id.equals(member.getId())) {
-//			errors.add("不得竄改ID");
-//		}
-//		//
-//		if (password == null || password.equals(member.getPassword())) {
-//			errors.add("必須輸入一致的密碼");
-//		}
-		// 1.取得request中的FormData:email,password,passwordCheck,
-		// name,gender,phone,id,birthday,address
-		//其他欄位的檢查
-		String email = request.getParameter("email");
+		HttpSession session = request.getSession();
+		Customer member =(Customer)session.getAttribute("member");
+		//1.取的Form Data檢查
+		if(member==null) {
+			//redirect回login.jsp
+			response.sendRedirect(request.getContextPath()+"/login.jsp");
+		}
+		String id =request.getParameter("id");
 		String password = request.getParameter("password");
-		String passwordCheck = request.getParameter("passwordCheck");
+		String changePassword = request.getParameter("changePassword");
+		String email = request.getParameter("email");
 		String name = request.getParameter("name");
 		String gender = request.getParameter("gender");
 		String phone = request.getParameter("phone");
-		String id = request.getParameter("id");
 		String birthday = request.getParameter("birthday");
 		String address = request.getParameter("address");
 		String subscribed = request.getParameter("subscribed");
-		if (id != null || email.length() == 0) {
-			errors.add("必須輸入Email");
+//		 1.取得request中的FormData:email,password,passwordCheck,
+//		 name,gender,phone,id,birthday,address
+//		其他欄位的檢查
+		if (id != null && !id.equals(member.getId())) {
+			errors.add("不得竄改ID");
+			this.log(changePassword);
 		}
-		if (password == null || password.length() == 0 || !password.equals(passwordCheck)) {
-			errors.add("必須輸入一致的密碼");
+		if (password == null || !password.equals(member.getPassword())) {
+			errors.add("原密碼不正確");
+		}else {
+			password = member.getPassword();
 		}
+//		if(changePassword!=null) {
+			String password1 = request.getParameter("password1");	
+			String password2 = request.getParameter("password2");	
+			if(password1==null || !password1.equals(password2)) {
+				errors.add("新密碼不正確");
+			}else{
+				password=password1;
+			}
+//		}
 		if (name == null || name.length() == 0) {
 			errors.add("必須輸入姓名");
+		}else {
+	
 		}
 		if (gender == null || gender.length() == 0) {
 			errors.add("必須選擇性別");
@@ -86,15 +92,15 @@ public class UpdateServlet extends HttpServlet {
 
 		// TODO:2.若無誤則呼叫商業邏輯
 		if (errors.isEmpty()) {
-			Customer c = new Customer();
 			try {
+				Customer c = new Customer();
 				c.setEmail(email);
 				c.setName(name);
 				c.setPassword(password);
 				c.setBirthday(birthday);
 				c.setGender(gender.charAt(0));
 				c.setPhone(phone);
-				c.setId(id);
+				c.setId(member.getId());
 				c.setAddress(address);
 				c.setSubscribed(subscribed!=null);
 				CustomerService cService = new CustomerService();

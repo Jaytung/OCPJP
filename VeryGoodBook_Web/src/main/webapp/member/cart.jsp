@@ -72,10 +72,10 @@
      <div class="container">
      	<h1 class="text-center">購物明細</h1>
      	<form action="<%=request.getContextPath()%>/member/update_cart.do" method="POST">
+     	<button type="button" class="btn btn-lg btn-dark mb-1" onclick="goBackShop()">繼續購物</button>
 		 <table class="table table-hover">
 			  <thead class="thead-dark">
 			    <tr>
-			      <th scope="col">#</th>
 			      <th scope="col">名稱</th>
 			      <th scope="col">大小</th>
 			      <th scope="col">口味</th>
@@ -96,65 +96,37 @@
 			  		int stock = size!=null?size.getStock():p.getStock();
 			  		%>
 			    <tr>
-			      <th scope="row"></th>
 			      <td><img src="/blackcake/<%=p.getPhotoUrl()%>"><%=p.getName() %> <span>庫存剩餘:<%=stock%></span></td>
 			      <td><%=size!=null?size.getName():"" %></td>
 			      <td><%=spicy %></td>
-			      <td><%=p instanceof Outlet?((Outlet)p).getListPrice():p.getUnitPrice() %></td>
+			      <td><%=size.getPrice()!=0?size.getPrice():p instanceof Outlet?((Outlet)p).getListPrice():p.getUnitPrice() %></td>
 			      <td><%=p instanceof Outlet?((Outlet)p).getDiscountString():""%></td>
-			      <td><%=p.getUnitPrice() %></td>
+			      <td><%=size.getPrice()!=0?size.getPrice():p.getUnitPrice() %></td>
 			      <td><input type="number" name="quantity<%=item.hashCode()%>" value="<%=qty%>" required min="<%=stock>0?1:0%>" max="<%=stock>10?10:stock%>"></td>
-			      <td><%=p.getUnitPrice()*qty %></td>
+			      <td><%=(size.getPrice()!=0?size.getPrice():p.getUnitPrice())*qty %></td>
 			      <td><input type="checkbox" name="delete<%=item.hashCode()%>" class=""></td>
 			    </tr>
 			    <% } %>
 			  </tbody>
 				  <tfoot>
-				  	<tr>
-				  		<td>
-				  			<select name="paymentType"></select>
-				  			<select name="shippingType">
-				  				<option value="超商取貨">超商取貨</option>
-				  				<option value="門市取貨">門市付款</option>
-				  				<option value="送貨到府">送貨到府</option>
-				  			</select>	
-				  			
-				  		</td>
-				  	</tr>
-				  	<tr>
-					  <td colspan="7">
-					  	<fieldset>
-					  		<legend>收件人</legend>
-					  		<label for="name">姓名</label>
-					  		<input placeholder="姓名" name="name" id="name">
-					  		<label for="phone">電話</label>
-					  		<input placeholder="電話" name="phone" id="phone">
-					  		<label for="email">Email</label>
-					  		<input placeholder="Email" name="email" id="email">
-					  		<label for="address">收件地址</label>
-					  		<input placeholder="地址" name="address" id="address">
-					  	</fieldset>
-					  </td>
-				  	</tr>
+				  <tr>
+				  <th colspan="7"></th>
+				  <th>數量</th>
+				  <th>總金額</th>
+				  </tr>
 				  <tr>
 				  <td colspan="7">
 				  <td><%=cart.size()+"項"+"共"+cart.getTotalQuantity()+"件" %></td>
-				  <td>總金額: <%=cart.getTotalAmount() %>元</td>
-				  <td><button type="submit" class="btn btn-primary btn-lg">結帳</button></td>
+				  <td><%=cart.getTotalAmount() %>元</td>
+				  </tr>
+				  <tr>
+				  <td><input type="submit" class="btn btn-dark btn-lg" value="修改購物車"></td>
+				  <td colspan="6"></td>
+				  <td><button type="button" class="btn btn-dark btn-lg">查詢庫存</button></td>
+				  <td><input type='button' value='結帳' class="btn btn-dark btn-lg" onclick='location.href="check_out.jsp"'></td>
 				  </tr>
 				  </tfoot>
 			</table>
-			
-				<div class="btn-group" role="group" aria-label="Basic example">
-				  <button type="button" class="btn btn-primary btn-lg" onclick="goBackShop()">繼續購物</button>
-				  <input type="submit" class="btn btn-primary btn-lg" value="修改購物車">
-				  <button type="button" class="btn btn-primary btn-lg">查詢庫存</button>
-				</div>
-			
-<!-- 			<button type="button" class="btn btn-primary btn-lg" onclick="goBackShop()">繼續購物</button> -->
-<!-- 			<input type="submit" class="btn btn-primary btn-lg" value="修改購物車"> -->
-<!-- 			<button type="button" class="btn btn-primary btn-lg">查詢庫存</button> -->
-			
 		</form>
 		<%} %>
 	</div>

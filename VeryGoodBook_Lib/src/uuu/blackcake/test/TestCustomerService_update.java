@@ -17,11 +17,13 @@ public class TestCustomerService_update {
 			c.setPassword("qwe12345");
 			c.setBirthday("1990-01-10");
 			c.setGender(Customer.MALE);
+			c.setSubscribed(true);
 			
 			CustomerService cService = new CustomerService();
 			try {
 				cService.update(c);
 				System.out.println("修改成功!");
+				System.out.println(c.isSubscribed());
 			} catch (BlackCakeException e) {
 				Logger.getLogger("測試註冊會員").log(Level.SEVERE,e.getMessage(), e);
 				e.printStackTrace();

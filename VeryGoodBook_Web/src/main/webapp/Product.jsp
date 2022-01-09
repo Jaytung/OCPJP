@@ -84,10 +84,12 @@
         	function changeData(theObj){
 // 				alert($(theObj).attr("src"));
 // 				alert($(theObj).attr("title"));
+// 				alert($(theObj).attr("data-price"));
 				
+				$(".sizePrice").text($(theObj).attr("title") +$(theObj).attr("data-price") + "元");
 				$("#sizeStock").text($(theObj).attr("title") + "剩餘" + $(theObj).attr("data-stock") + "個");
 				$("input[name='quantity']").attr("max", $(theObj).attr("data-stock"));
-// 				$(".photo").attr("src", $(theObj).attr("data-photo"));
+// 				$(".price").attr("text", $(theObj).attr("data-price"));
 			}
         	</script>
         <title>產品詳細</title>
@@ -129,16 +131,16 @@
                            <%=p.getDescription() %>
                         </p>
                         <hr>
-                        <h3>特價:<%=p instanceof Outlet?((Outlet)p).getDiscountString():"" %> 
-                            <%= p.getUnitPrice()%>元</h3> 
+                        <h3>特價:<%=p instanceof Outlet?((Outlet)p).getDiscountString():"" %>
+                            <span class="sizePrice"><%= p.getUnitPrice()+"元"%> &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        </h3>
                             <% if(p instanceof Outlet) {%>
-                        <h4>定價:<%= ((Outlet)p).getListPrice() %>元</h4>
+                        <h4>定價:<span class="sizePrice"><%= ((Outlet)p).getListPrice()+"" %></span></h4>
                             <% } %>
-                         
                         <hr>
-                        <h3>庫存:</h3>
+                        <h3>庫存:</h3>    
                         <p>
-                        總數:<%=p.getStock()+"個"%>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sizeStock"></span>
+                        總數:<%=p.getStock()+"個"%> &nbsp;&nbsp;&nbsp;&nbsp;<span id="sizeStock"></span>
                         </p>
                         <hr>
   							<div class="col-md-6 order-4 order-md-4" style="max-width: 100%;">
@@ -147,11 +149,9 @@
                 						<%for(Size size:p.getSizes()){ %>												
 							  				<label class="btn btn-primary" class="btn btn-primary" for="<%=size.getName() %>">
 							    			<input type="radio" name="size" value="<%=size.getName() %>" id="<%=size.getName() %>"
-		                					title='<%= size.getName() %>' data-stock='<%= size.getStock() %>' Value="<%=size.getName() %>"
-		                					onclick ='changeData(this)' 
-		                					required="required">
+		                					title='<%= size.getName() %>' data-stock='<%= size.getStock() %>' data-price='<%=size.getPrice() %>'
+		                					Value="<%=size.getName() %>" onclick ='changeData(this)' required="required">
 		                					<%=size.getName()%>
-		                					<%=size.getPrice() %>	
 							  				</label>
 	            						<%} %> 
 						    		<%} %>  
@@ -179,22 +179,22 @@
                         <span class="">數量:</span>
                         <div class="input-group justify-content-center">
                             <span class="input-group-addon">
-                                <button class="btn btn-primary btn-lg rounded  cartBtn" type="button"
-                                    id="minus">-
+                                <button class="btn btn-dark btn-lg mr-1 cartBtn" type="button"
+                                    id="minus"><span class="cartPlusAndMinus">-</span>
                                 </button>
                             </span>
                             <input type="text" class="form-control form-control-lg text-center rounded col-sm-12 col-md-4 col-lg-3" aria-label=""
                                 value="0" id="quantity" name="quantity" >
                             <span class="input-group-addon">
-                                <button class="btn btn-primary btn-lg rounded  cartBtn" type="button"
-                                    id="plus">+
+                                <button class="btn btn-dark btn-lg ml-1 cartBtn" type="button"
+                                    id="plus"><span class="cartPlusAndMinus">+</span>
                                 </button>
                             </span>
                         </div><!-- /input-group -->
                     </div><!-- /.col-lg-6 -->
                     <div class="text-center" id="addToCart">
                         <br>
-                        <input class="btn btn-primary" type="submit" value="加到購物車">
+                        <input class="btn btn-lg btn-dark" type="submit" value="加到購物車">
                     </div>
             	</div>
 		</form>

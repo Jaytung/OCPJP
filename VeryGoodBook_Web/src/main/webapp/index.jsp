@@ -26,6 +26,7 @@ section{
 	margin-top: 6vh;
 }
 
+
 /*   body{ */
 /*   	background-image: url("imgs/background\ logo.jpg"); */
 /*   	background-repeat: round; */
@@ -33,7 +34,7 @@ section{
 /*   } */
 /*  .row { */
 /*      margin-right: 0px !important; */
-/* } */
+/* } */ 
 </style>
 <title>澎湖名產</title>
 </head>
@@ -91,9 +92,10 @@ section{
 			</div>
 		</div>
 	</section>
-	<section class="container-fluid px-0">
-		<div class="row align-items-center content" id="blackCake">
-			<div class="col-md-6 order-2 order-md-1">
+	<section class="container-fluid px-0 mt-0 mb-0">
+			<h2 class="text-center display-4 mt-5">產品介紹</h2>
+		<div class="row align-items-center content mt-0 mb-0" id="blackCake">
+			<div class="col-md-6 order-2 order-md-1 px-0">
 				<img src="imgs/黑糖糕1000X1000.png" alt="" class="img-fluid rounded">
 			</div>
 			<div class="col-md-6 text-center order-1 order-md-2">
@@ -106,7 +108,7 @@ section{
 				</div>
 			</div>
 		</div>
-		<div class="row align-items-center content">
+		<div class="row align-items-center content mt-0 mb-0">
 			<div class="col-md-6 text-center">
 				<div class="row justify-content-center">
 					<div class="col-10 mb-5 mb-md-0 partOne">
@@ -116,13 +118,13 @@ section{
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6 col-lg-6" id="小管片">
+			<div class="col-md-6 col-lg-6 px-0" id="小管片">
 				<img src="imgs/小管片1000X1000.png" alt="" class="img-fluid rounded">
 			</div>
 		</div>
 
-		<div class="row align-items-center content">
-			<div class="col-md-6 order-2 order-md-1" id="XO醬">
+		<div class="row align-items-center content mt-0">
+			<div class="col-md-6 order-2 order-md-1 px-0" id="XO醬">
 				<img src="imgs/干貝醬1000X1000.png" alt="" class="img-fluid rounded">
 			</div>
 			<div class="col-md-6 text-center order-1 order-md-2">
@@ -164,8 +166,8 @@ section{
 					class="rounded mx-auto rounded d-inline-block">
 				<ul class="d-inline-block mt-2 mr-4">
 					<li>鮮記食品工廠</li>
-					<li>工廠地址:台北市松山區復興北路99號12樓至14樓</li>
-					<li>電話:02-2514-9191</li>
+					<li>工廠地址:澎湖縣馬公市仁愛路42號</li>
+					<li>電話:06-9125-1565</li>
 				</ul>
 			</div>
 		</div>
