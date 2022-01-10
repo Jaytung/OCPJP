@@ -37,7 +37,7 @@
 
 <body>
     <!-- style="background-color: #EED6C4; -->
-	<jsp:include page="subviews/header.jsp" />
+	<jsp:include page="subviews/navbar.jsp" />
     <% 
     List<String> errors = (List<String>)request.getAttribute("errors"); 
     %>

@@ -101,7 +101,7 @@ if (member != null) {%>
 	<%
 	List<String> errors = (List<String>) request.getAttribute("errors");
 	%>
-	<jsp:include page="/subviews/header.jsp" />
+	<jsp:include page="/subviews/navbar.jsp" />
 	<div class="container">
 		<div id="formBackground">
 			<div class="registerForm">

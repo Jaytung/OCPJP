@@ -76,8 +76,11 @@ public class AddToCartServlet extends HttpServlet {
 			System.out.println(errors);
 		}
 		//3.redirect購物車
-		response.sendRedirect(request.getContextPath()+"/member/cart.jsp");
-//		request.getRequestDispatcher("/member/cart.jsp").forward(request, response);
+		String ajax=request.getParameter("ajax");
+		if(ajax==null) {
+			response.sendRedirect(request.getContextPath()+"/member/cart.jsp");			
+		}else {
+		request.getRequestDispatcher("small_cart.jsp").forward(request, response);
+		}
 	}
-
 }

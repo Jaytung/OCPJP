@@ -41,7 +41,7 @@ section{
 
 <body>
 
-	<jsp:include page="subviews/header.jsp" />
+	<jsp:include page="subviews/navbar.jsp" />
 	<section class="container-fulid px-0">
 		<div class="row align-items-center">
 			<div class="col-lg-6">

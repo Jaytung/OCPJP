@@ -1,9 +1,12 @@
 <%@page import="uuu.blackcake.entity.Customer"%>
 <%@ page pageEncoding="UTF-8"%>
-<!--header.jsp start-->
+<!--navbar.jsp start-->
+
 <%
 Customer member = (Customer) session.getAttribute("member");
 %>
+
+
 <nav id="mainNavbar"
 	class="navbar navbar-light navbar-expand-md py-0 fixed-top rounded-down">
 	<a href=" #" class="navbar-brand">鮮記</a>
@@ -43,12 +46,13 @@ Customer member = (Customer) session.getAttribute("member");
 			<%
 			if (member == null) {
 			%>
+			<a class="nav-link" href='<%=request.getContextPath()%>/member/cart.jsp'>購物車</a>
+			<span class="cartQty">${sessionScope.cart.getTotalQuantity()}</span>
 			<li class="nav-item dropdown"><span
 				class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
 				data-toggle="dropdown" aria-expanded="false"> 會員 </span>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="nav-link"
-						href='<%=request.getContextPath()%>/member/cart.jsp'>購物車</a> <a
+	<a
 						class="nav-link"
 						href='<%=request.getContextPath()%>/register.jsp'>註冊</a> <a
 						class="nav-link" href='<%=request.getContextPath()%>/login.jsp'>登入</a>
@@ -66,6 +70,8 @@ Customer member = (Customer) session.getAttribute("member");
 			<%
 			}
 			%>
+			<a class="nav-link" href='<%=request.getContextPath()%>/member/cart.jsp'>購物車</a>
+			<span class="cartQty">${sessionScope.cart.getTotalQuantity()}</span>
 			<li class="nav-item dropdown"><span
 				class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
 				data-toggle="dropdown" aria-expanded="false"> 會員中心 </span>
@@ -87,4 +93,4 @@ Customer member = (Customer) session.getAttribute("member");
 		</form>
 	</div>
 </nav>
-<!--header.jsp end-->
+<!--navbar.jsp end-->

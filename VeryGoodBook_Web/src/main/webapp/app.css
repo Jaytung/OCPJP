@@ -44,7 +44,7 @@ div h2{
     margin-bottom: 100px;
 }
 .navbar.scrolled{
-    background: #e0e1dd;
+    background: #cee5f2;
     transition: background 500ms;
 }
 /* .navbar.notScrolled{

@@ -37,7 +37,7 @@ p {
 </head>
 
 <body>
-	<jsp:include page="subviews/header.jsp" />
+	<jsp:include page="subviews/navbar.jsp" />
 	<div class="container">
 		<div class="row align-items-center">
 			<div class="col-md-6">
@@ -60,7 +60,7 @@ p {
 				<h2>門市地圖</h2>
 				<iframe
 					src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1798.8924043925083!2d121.54352452198901!3d25.05278148187133!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abe7665bbd4f%3A0xd48843af978e0dff!2z5oGG6YC45pWZ6IKy6KiT57e05Lit5b-D!5e0!3m2!1szh-TW!2stw!4v1641715257479!5m2!1szh-TW!2stw"
-					width="600" height="500" style="border: 0;" allowfullscreen=""
+					width="550" height="470" style="border: 0;" allowfullscreen=""
 					loading="lazy"></iframe>
 			</div>
 		</div>

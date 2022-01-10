@@ -14,16 +14,22 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700"
 	rel="stylesheet">
-
+	
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
 	integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
 	crossorigin="anonymous">
 
+<!-- Fancybox CSS -->
+<link rel="stylesheet" href="<%=request.getContextPath() %>/fancybox3/jquery.fancybox.css">
 <!-- Custom CSS -->
 <link rel="stylesheet" href="app.css">
 <link rel="stylesheet" href="shoplist.css">
+<style>
+#productDetail{display: none;width:70%}
+</style>
+
 
 <script>
 	function getImg(theImg) {
@@ -34,25 +40,37 @@
 
 	function getProduct(pId) {
 		//送出同步GET請求
-		location.href = "Product.jsp?productId=" + pId;
+// 				location.href = "Product_ajax.jsp?productId=" + pId;
 
-		//送出非同步請求
-		// 		var xhr = $.ajax({
-		// 			url:'Product.jsp?productId='+pId,
-		// 			method:'GET'
-		// 		}).done(getProductDoneHandler);	
+// 		送出非同步請求
+		var xhr = $.ajax({
+			url : 'Product_ajax.jsp?productId=' + pId,
+			method : 'GET'
+		}).done(getProductDoneHandler);
 	}
 	function getProductDoneHandler(data, textStatus, jqXHR) {
-		// 		alert(data);
+		alert(data);
+		$("#productDetail").html(data);
+ 		$("#productDetail").css('height','fit-content');
+ 		$.fancybox.open({
+		    src  : '#productDetail',
+		    type : 'inline',
+		    opts : {
+		      afterShow : function( instance, current ) {
+		        console.info('done!');
+	      }
+	    }
+	  });
 	}
 </script>
 <title>商品清單</title>
 </head>
 
 <body>
-	<jsp:include page="/subviews/header.jsp">
-		<jsp:param value="shopList" name="shophead" />
+	<jsp:include page="/subviews/navbar.jsp">
+		<jsp:param value="shopList" name="shophead"/>
 	</jsp:include>
+<div id="productDetail"></div>
 	<br>
 	<br>
 	<!-- 		<aside> -->
@@ -60,6 +78,7 @@
 	<%--  	<a href="<%=request.getRequestURI()%>?name=黑糖糕">黑糖糕</a> --%>
 	<%--  	<a href="<%=request.getRequestURI()%>?name=XO">罐醬類</a> --%>
 	<!--  	</aside> -->
+
 	<div class="header">
 		<h1 class="text-center">商品清單</h1>
 	</div>
@@ -83,25 +102,24 @@
 
 		if (list != null && list.size() > 0) {
 		%>
-
 		<ul class="row text-center">
 			<%
 			for (int i = 0; i < list.size(); i++) {
 				Product p = list.get(i);
 			%>
-			<li class="col-md-6 col-lg-4 " id=" 1"><a
-				href="javascript:getProduct(<%=p.getId()%>)"> 
-				<img
+			<li class="col-md-6 col-lg-4"><a
+				href='Product.jsp?productId=<%= p.getId()%>'><img
 					src='<%=p.getPhotoUrl()%>' onerror='getImg(this)'
 					class="productList img-fluid rounded">
 					<h2><%=p.getName()%></h2> <span>優惠價:<%=p instanceof Outlet ? ((Outlet) p).getDiscountString() : ""%>
 						<%=Math.round(p.getUnitPrice())%>元
 				</span> <br></a>
-					<button type="button" class="btn btn-dark addToCart">加到購物車</button></li>
+				<button><a href="javascript:getProduct(<%=p.getId()%>)">加到購物車</a></button></li>
 			<%
 			}
 			%>
 		</ul>
+		
 		<%
 		} else {
 		%>
@@ -111,13 +129,16 @@
 		%>
 
 	</div>
+	
+
+
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
 	<script
 		src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
 		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
@@ -126,6 +147,13 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
 		integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
 		crossorigin="anonymous"></script>
+	
+		<script src="https://code.jquery.com/jquery-3.0.0.js" 
+		integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" 
+		crossorigin="anonymous"></script>
+		
+	<script src='<%=request.getContextPath() %>/fancybox3/jquery.fancybox.js'></script>
+		
 	<script>
 		$(function() {
 			$(document).scroll(

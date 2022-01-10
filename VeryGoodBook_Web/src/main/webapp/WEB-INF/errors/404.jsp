@@ -24,7 +24,7 @@ article{
 <title>404</title>
 </head>
 <body>
-<jsp:include page="/subviews/header.jsp">
+<jsp:include page="/subviews/navbar.jsp">
 <jsp:param value="找不到網頁" name="subheader"/>
 </jsp:include>
 <div class="container">

@@ -30,6 +30,10 @@
 
 <!-- Custom CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/app.css">
+
+<script src="https://code.jquery.com/jquery-3.0.0.js" 
+	integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" 
+	crossorigin="anonymous"></script>
 <style>
 .container {
 	margin-top: 8vh;
@@ -41,15 +45,20 @@ td>img {
 </style>
 <script>
     function goBackShop() {
-		location.href="<%=request.getContextPath()%>
-	/shoplist.jsp";
+		location.href="<%=request.getContextPath()%>/shoplist.jsp";
+	}
+    function copyMember() {
+		$("input[name=name]").val('${sessionScope.member.name}');
+		$("input[name=phone]").val('${sessionScope.member.phone}');
+		$("input[name=email]").val('${sessionScope.member.email}');
+		$("input[name=address]").val('${sessionScope.member.address}');
 	}
 </script>
 <title>澎湖名產</title>
 </head>
 
 <body>
-	<jsp:include page="/subviews/header.jsp">
+	<jsp:include page="/subviews/navbar.jsp">
 		<jsp:param value="結帳" name="subheader" />
 	</jsp:include>
 
@@ -68,7 +77,7 @@ td>img {
 			%>
 			<div class="container">
 				<h1 class="text-center">購物明細</h1>
-				<form action="" method="POST">
+				<form action="" method="POST" id="cartForm">
 					<table class="table table-hover">
 						<thead class="thead-dark  text-center">
 							<tr>
@@ -96,11 +105,14 @@ td>img {
 									<span>庫存剩餘:<%=stock%></span></td>
 								<td><%=size != null ? size.getName() : ""%></td>
 								<td><%=spicy%></td>
-								<td><%=size.getPrice() != 0 ? size.getPrice() : p instanceof Outlet ? ((Outlet) p).getListPrice() : p.getUnitPrice()%></td>
+<!-- 								size.getPrice() != 0 ? size.getPrice() :  -->
+								<td><%=p instanceof Outlet ? ((Outlet) p).getListPrice() : p.getUnitPrice()%></td>
 								<td><%=p instanceof Outlet ? ((Outlet) p).getDiscountString() : ""%></td>
-								<td><%=size.getPrice() != 0 ? size.getPrice() : p.getUnitPrice()%></td>
+<!-- 								size.getPrice() != 0 ? size.getPrice() :  -->
+								<td><%=p.getUnitPrice()%></td>
 								<td><%=qty%></td>
-								<td><%=(size.getPrice() != 0 ? size.getPrice() : p.getUnitPrice()) * qty%></td>
+<!-- 								size.getPrice() != 0 ? size.getPrice() :  -->
+								<td><%=p.getUnitPrice()*qty%></td>
 							</tr>
 							<%
 							}
@@ -141,6 +153,7 @@ td>img {
 								<td colspan='8'>
 									<fieldset>
 										<legend>收件人</legend>
+										<a href="javascript:copyMember()">同收件人</a>
 										<div class="form-row col-6">
 											<div class="col-md-6 mb-3">
 												<label for="validationDefault01">姓名</label> <input
@@ -160,14 +173,14 @@ td>img {
 											<div class="col-md-6 mb-3">
 												<label for="validationDefault02">地址</label> <input
 													type="text" class="form-control" placeholder="收件地址"
-													name='shippingAddress' required>
+													name='address' required>
 											</div>
 										</div>
 									</fieldset>
 								</td>
 							<tr class="">
 								<td><input type='button' value='回商城繼續購物'
-									class='btn btn-lg btn-dark' onclick='goBackMall()'></td>
+									class='btn btn-lg btn-dark' onclick='goBackShop()'></td>
 								<td><input type='submit' value='送出訂單'
 									class='btn btn-lg btn-dark'></td>
 							</tr>
