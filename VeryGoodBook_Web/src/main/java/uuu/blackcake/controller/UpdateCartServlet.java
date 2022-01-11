@@ -62,7 +62,7 @@ public class UpdateCartServlet extends HttpServlet {
 		if(checkout!=null) {
 			response.sendRedirect("check_out.jsp");
 		}else {
-			response.sendRedirect("cart.jsp");			
+			response.sendRedirect("cart.jsp");					
 		}
 	}
 

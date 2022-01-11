@@ -68,6 +68,7 @@ td>img {
 			ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 			if (cart == null || cart.isEmpty()) {
 			%>
+
 			<div class="container text-center">
 				<h2 class="text-center">購物車是空的!</h2>
 				<a href="<%=request.getContextPath()%>/index.jsp">返回首頁</a>
@@ -149,35 +150,61 @@ td>img {
 										<option value='HOME'>送貨到府, 100元</option>
 								</select></td>
 							</tr>
-							<tr class="">
-								<td colspan='8'>
-									<fieldset>
-										<legend>收件人</legend>
-										<a href="javascript:copyMember()">同收件人</a>
-										<div class="form-row col-6">
-											<div class="col-md-6 mb-3">
+			<%
+			Customer member = (Customer)session.getAttribute("member");
+			%>
+							<tr class="col-12">
+								<td class="col-md-6">
+										<h4>購買人:</h4>
+										<div class="form-row col">
+											<div class="col-6 mb-3">
+												<label for="validationDefault01">姓名</label> <input
+													type="text" class="form-control" placeholder="姓名"
+													name='name' value="<%=member.getName() %>" readonly>
+											</div>
+											<div class="col-6 mb-3">
+												<label for="validationDefault02">電話</label> <input
+													type="text" class="form-control" placeholder="phone"
+													name='phone' value="<%=member.getPhone() %>" readonly>
+											</div>
+											<div class="col-6 mb-3">
+												<label for="validationDefault02">信箱</label> <input
+													type="text" class="form-control" placeholder="email"
+													name='email' value="<%=member.getEmail() %>" readonly>
+											</div>
+											<div class="col-6 mb-3">
+												<label for="validationDefault02">地址</label> <input
+													type="text" class="form-control" placeholder="收件地址"
+													name='address' value="<%=member.getAddress() %>" readonly>
+											</div>
+										</div>	
+								</td>
+										<td class="col-md-6">
+										<h4>收件人<a href='javascript:copyMember()'>同購買人</a></h4>				
+										<div class="form-row col">
+											<div class="col-6 mb-3">
 												<label for="validationDefault01">姓名</label> <input
 													type="text" class="form-control" placeholder="姓名"
 													name='name' required>
 											</div>
-											<div class="col-md-6 mb-3">
+											<div class="col-6 mb-3">
 												<label for="validationDefault02">電話</label> <input
 													type="text" class="form-control" placeholder="phone"
 													name='phone' required>
 											</div>
-											<div class="col-md-6 mb-3">
+											<div class="col-6 mb-3">
 												<label for="validationDefault02">信箱</label> <input
 													type="text" class="form-control" placeholder="email"
 													name='email' required>
 											</div>
-											<div class="col-md-6 mb-3">
+											<div class="col-6 mb-3">
 												<label for="validationDefault02">地址</label> <input
 													type="text" class="form-control" placeholder="收件地址"
 													name='address' required>
 											</div>
-										</div>
-									</fieldset>
+										</div>	
 								</td>
+							</tr>
 							<tr class="">
 								<td><input type='button' value='回商城繼續購物'
 									class='btn btn-lg btn-dark' onclick='goBackShop()'></td>

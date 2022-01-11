@@ -111,16 +111,16 @@ td>img {
 							<span>庫存剩餘:<%=stock%></span></td>
 						<td><%=size != null ? size.getName() : ""%></td>
 						<td><%=spicy%></td>
-<!-- 						size.getPrice() != 0 ? size.getPrice() :  -->
+<!-- 						size.getPrice()!=0?size.getPrice(): -->
 						<td><%=p instanceof Outlet ? ((Outlet) p).getListPrice() : p.getUnitPrice()%></td>
 						<td><%=p instanceof Outlet ? ((Outlet) p).getDiscountString() : ""%></td>
-<!-- 						size.getPrice() != 0 ? size.getPrice() :  -->
+<!-- 						size.getPrice()!=0?size.getPrice(): -->
 						<td><%=p.getUnitPrice()%></td>
 						<td><input type="number" name="quantity<%=item.hashCode()%>"
 							value="<%=qty%>" required min="<%=stock > 0 ? 1 : 0%>"
 							max="<%=stock > 10 ? 10 : stock%>"></td>
-<!-- 							size.getPrice() != 0 ? size.getPrice() :  -->
-						<td><%=p.getUnitPrice() * qty%></td>
+<!-- 							size.getPrice() != 0 ? size.getPrice(): -->
+						<td><%=p.getUnitPrice() * qty%> </td>
 						<td><input type="checkbox" name="delete<%=item.hashCode()%>"
 							class=""></td>
 					</tr>
@@ -144,9 +144,9 @@ td>img {
 							value="修改購物車"></td>
 						<td colspan="6"></td>
 						<td><button type="button" class="btn btn-dark btn-lg">查詢庫存</button></td>
-						<td><input type='submit' value='結帳'
+						<td><button type='submit' value='結帳'
 							class="btn btn-dark btn-lg" name="checkout"
-							onclick='location.href="check_out.jsp"'></td>
+							onclick='location.href="check_out.jsp"'>結帳</button></td>
 					</tr>
 				</tfoot>
 			</table>

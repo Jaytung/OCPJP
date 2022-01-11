@@ -22,7 +22,7 @@ import uuu.blackcake.service.CustomerService;
  * Servlet implementation class LoginServlet
  */
 @WebServlet(name="uuu.blackcake.controller.LoginServlet"
-,urlPatterns = {"/login.do"})
+,urlPatterns = {"/login.do"},loadOnStartup = 1)
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -31,6 +31,7 @@ public class LoginServlet extends HttpServlet {
      */
     public LoginServlet() {
         super();
+        System.out.println("LoginServlet Started!");
     }
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

@@ -114,7 +114,8 @@
 					<h2><%=p.getName()%></h2> <span>優惠價:<%=p instanceof Outlet ? ((Outlet) p).getDiscountString() : ""%>
 						<%=Math.round(p.getUnitPrice())%>元
 				</span> <br></a>
-				<button><a href="javascript:getProduct(<%=p.getId()%>)">加到購物車</a></button></li>
+				<a href='javascript:getProduct(<%=p.getId()%>)' value="加到購物車">
+				<button class="btn btn-lg btn-dark" onclick="href='javascript:getProduct(<%=p.getId()%>)'">加到購物車</button></li>
 			<%
 			}
 			%>

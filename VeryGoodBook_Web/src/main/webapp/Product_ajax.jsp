@@ -3,66 +3,66 @@
 <%@page import="uuu.blackcake.entity.Product"%>
 <%@page import="uuu.blackcake.service.ProductService"%>
 <%@ page pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Google Font -->
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700"
-	rel="stylesheet">
-
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-	integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
-	crossorigin="anonymous">
-<link rel="stylesheet" href="app.css">
-
+<!--Product_ajax.jsp start -->
 <style>
-.cartBtn {
-	width: 60px;
-}
+			#productItem{width:80%;margin:auto;max-width: 1200px}
+			#product{width:80%;margin:auto;max-width: 1200px}
+			#productData div{white-space:nowrap}
+/* 			.photo{width:40%;min-width:250px;max-width:350px;float:left}			 */
+			[type=radio] {position: absolute;opacity: 0;width: 3;height: 1;}			 */
+/* 			.icon{width:48px} */
+			
+			/* IMAGE STYLES */
+			[type=radio] + img {cursor: pointer;}
+			
+			/* CHECKED STYLES */
+			[type=radio]:checked + img {outline: 2px solid #000;}	
+			
+			#description{clear:both;padding-top: 1ex;width:100%}
+			.container{
+				margin-top:10vh;
+			}
+			.cartBtn {
+				width: 60px;
+			}
+			
+			.iconImg {
+				width: 300px;
+			}
+			
+			#album {
+				width: 250px;
+				height: auto;
+				border: none;
+				padding: 10px;
+				background: #F0ECE3;
+				color: white;
+			}
+			
+			#main {
+				width: 600px;
+				height: 600px;
+			}
+			
+			.smallPic {
+				width: 100px;
+				padding: 5px;
+				background: white;
+				margin: 10px 2px;
+			}
+			
+			.selected {
+				background: orange;
+			}
+			
+			.row {
+				margin-left: 0px;
+			}
+			
+			#sizeStock {
+				color: #e63946;
+			}
 
-.iconImg {
-	width: 300px;
-}
-
-#album {
-	width: 250px;
-	height: auto;
-	border: none;
-	padding: 10px;
-	background: #F0ECE3;
-	color: white;
-}
-
-#main {
-	width: 600px;
-	height: 600px;
-}
-
-.smallPic {
-	width: 100px;
-	padding: 5px;
-	background: white;
-	margin: 10px 2px;
-}
-
-.selected {
-	background: orange;
-}
-
-.row {
-	margin-left: 0px;
-}
-
-#sizeStock {
-	color: #e63946;
-}
 </style>
 <script>
             $(document).ready(init);
@@ -100,26 +100,25 @@
 // 				$(".price").attr("text", $(theObj).attr("data-price"));
 			}
         	function submitCart() {
-        		alert("#cartForm serialize(): " + $("#cartForm").serialize());
+//         		alert("#cartForm serialize(): " + $("#cartForm").serialize());
         		
         		$.ajax({
         			url:$("#cartForm").attr('action')+'?ajax=',
         			method:'POST',
         			data:$("#cartForm").serialize()		
-        		}).done(submitCartDoneHander);
+        		}).done(submitCartDoneHandler);
         		
         		
         		return false;//取消原來同步的submit功能
 			}
-        	function submitCartDoneHander(data,status,xhr) {
-				alert("加入購物車");
-				$(".cartQty").html(data.totalQuantity);
+        	function submitCartDoneHandler(data,status,xhr) {
+				alert("加入購物車成功");
+				$(".cartQuantity").html(data.totalQuantity);
 			}
         	</script>
-<title>產品詳細</title>
-</head>
 
-<body id="product">
+
+	<div class="productItem">
 	<%
 	String productId = request.getParameter("productId");
 	Product p = null;
@@ -138,7 +137,7 @@
 	%>
 
 	<jsp:include page="subviews/navbar.jsp" />
-	<div class="container ">
+	<div class="container" id="product">
 		<form action="add_to_cart.do" method="POST" id="cartForm" onsubmit="return submitCart()">
 
 			<input type='hidden' value='<%=p.getId()%>' name='productId'>
@@ -161,18 +160,18 @@
 						<hr>
 						<h3>
 							特價:<%=p instanceof Outlet ? ((Outlet) p).getDiscountString() : ""%>
-							<span class="sizePrice"><%=p.getUnitPrice() + "元"%>
+								<span class="sizePrice"><%=Math.round(p.getUnitPrice())%>元
 								&nbsp;&nbsp;&nbsp;&nbsp;</span>
 						</h3>
 						<%
-						if (p instanceof Outlet) {
-						%>
+					if (p instanceof Outlet) {
+					%> 
 						<h4>
 							定價:<span class="sizePrice"><%=((Outlet) p).getListPrice() + ""%></span>
 						</h4>
-						<%
-						}
-						%>
+
+					<%} %> 
+
 						<hr>
 						<h3>庫存:</h3>
 						<p>
@@ -188,8 +187,8 @@
 								<%
 								for (Size size : p.getSizes()) {
 								%>
-								<label class="btn btn-primary" class="btn btn-primary"
-									for="<%=size.getName()%>"> <input type="radio"
+								<label class="btn btn-dark" for="<%=size.getName()%>"> 
+									<input type="radio"
 									name="size" value="<%=size.getName()%>"
 									id="<%=size.getName()%>" title='<%=size.getName()%>'
 									data-stock='<%=size.getStock()%>'
@@ -256,44 +255,10 @@
 				</div>
 				<!-- /.col-lg-6 -->
 				<div class="text-center" id="addToCart">
-					<br> <input class="btn btn-lg btn-dark" type="submit"
-						value="加到購物車">
+					<br> <input class="btn btn-lg btn-dark" type="submit" value="加到購物車">
 				</div>
 			</div>
 		</form>
 	</div>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-
-
-	<%@ include file='subviews/footer.jsp'%>
-	<!-- Optional JavaScript -->
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.6.0.js"
-		integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-		crossorigin="anonymous"></script>
-	</script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
-		integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
-		crossorigin="anonymous"></script>
-	<script>
-	$(function () { $(document).scroll( function () { var $nav =
-	$("#mainNavbar"); $nav.toggleClass("scrolled", $(this).scrollTop() >
-	$nav .height()); }) })
-	</script>
-</body>
-
-
-</html>
+	</div>
+<!-- product_ajax.jsp end -->

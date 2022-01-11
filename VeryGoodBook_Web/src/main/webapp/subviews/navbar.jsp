@@ -16,13 +16,13 @@ Customer member = (Customer) session.getAttribute("member");
 	</button>
 	<div class="collapse navbar-collapse" id="navLinks">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item"><a
-				href='<%=request.getContextPath()%>/index.jsp' class="nav-link">首頁</a>
+			<li class="nav-item nav-link order-md-1"><a
+				href='<%=request.getContextPath()%>/index.jsp' class="">首頁</a>
 			</li>
-			<li class="nav-item"><a
+			<li class="nav-item  order-3 order-md-2"><a
 				href="<%=request.getContextPath()%>/about_us.jsp" class="nav-link">關於我們</a>
 			</li>
-			<li class="nav-item dropdown"><a
+			<li class="nav-item dropdown order-7 order-md-3"><a
 				href='<%=request.getContextPath()%>/shoplist.jsp'
 				class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
 				data-toggle="dropdown" aria-expanded="false"> 商品 </a>
@@ -41,13 +41,12 @@ Customer member = (Customer) session.getAttribute("member");
 					</div>
 				</form></li>
 		</ul>
-		<ul class="navbar-nav ">
+		<ul class="navbar-nav">
 			<!-- 尚未登入 -->
 			<%
 			if (member == null) {
 			%>
-			<a class="nav-link" href='<%=request.getContextPath()%>/member/cart.jsp'>購物車</a>
-			<span class="cartQty">${sessionScope.cart.getTotalQuantity()}</span>
+
 			<li class="nav-item dropdown"><span
 				class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
 				data-toggle="dropdown" aria-expanded="false"> 會員 </span>
@@ -64,31 +63,38 @@ Customer member = (Customer) session.getAttribute("member");
 			<%
 			if (member != null) {
 			%>
-			<span class="nav-link" id="loginName"> <%=member != null ? member.getName() : ""%>
-				你好
-			</span>
+		
+<%-- 			<span class="nav-link order-1 order-md-1" id="loginName"> <%=member != null ? member.getName() : ""%> --%>
+<!-- 				你好 -->
+<!-- 			</span> -->
 			<%
 			}
 			%>
-			<a class="nav-link" href='<%=request.getContextPath()%>/member/cart.jsp'>購物車</a>
-			<span class="cartQty">${sessionScope.cart.getTotalQuantity()}</span>
+<!-- 			<div class="row ml-2"> -->
+<%-- 			<a class="nav-link order-1" href='<%=request.getContextPath()%>/member/cart.jsp'><img src="<%=request.getContextPath()%>/imgs/cart.png"></a> --%>
+<%-- 			<span class="cartQuantity order-2 ">${sessionScope.cart.getTotalQuantity()}</span> --%>
+<!-- 			</div> -->
 			<li class="nav-item dropdown"><span
 				class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
 				data-toggle="dropdown" aria-expanded="false"> 會員中心 </span>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="nav-link"
-						href="<%=request.getContextPath()%>/history.jsp">歷史訂單</a> <a
-						class="nav-link" href="<%=request.getContextPath()%>/update.jsp">會員修改</a>
+					<a class="nav-link"><%=member!=null?member.getName()+"你好":"" %></a> 
+					<a class="nav-link" href="<%=request.getContextPath()%>/history.jsp">歷史訂單</a> 
+					<a class="nav-link" href="<%=request.getContextPath()%>/update.jsp">會員修改</a>
 					<a class="nav-link" href="<%=request.getContextPath()%>/logout.do">登出</a>
 				</div></li>
 			<%
 			}
 			%>
+			<li class="nav-link">
+			<a class="order-1" href='<%=request.getContextPath()%>/member/cart.jsp'><img src="<%=request.getContextPath()%>/imgs/cart.png"></a>
+			<span class="cartQuantity order-2 ">${sessionScope.cart.getTotalQuantity()}</span>
+			</li>
 		</ul>
 		<form class="form-inline my-2 my-lg-0" action='shoplist.jsp'
 			method="get">
 			<input type="search" name="keyword" placeholder="SEARCH"
-				class="form-control mr-sm-2" value="${param.keyword}">
+				class="form-control mr-sm-2 ml-auto ml-md-3" value="${param.keyword}">
 			<button class="btn btn btn-dark my-2 my-sm-0" type="submit">搜尋</button>
 		</form>
 	</div>
