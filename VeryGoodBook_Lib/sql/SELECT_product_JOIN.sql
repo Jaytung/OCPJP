@@ -10,7 +10,7 @@ SELECT id, name, unit_price, product.stock, product.photo_url, description, size
 product_id, size_name, icon_url, products_sizes.stock,
 products_sizes.photo_url
 FROM product JOIN products_sizes ON id=product_id
-WHERE  id= 7; 
+WHERE  id= 5; 
 
 
 /*left outter join 產品明細用*/

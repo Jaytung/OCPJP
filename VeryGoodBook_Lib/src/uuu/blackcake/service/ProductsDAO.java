@@ -135,10 +135,11 @@ class ProductsDAO {
 		}
 		return list;
 	}
+	//大小價格查詢
 	private static final String SELECT_PRODUCT_BY_ID=
 		"SELECT id, name, unit_price,  description, shelf_date, unit_Discount, category, brand, "
 		+ "product_id, size_name, icon_url, "
-		+ "products_sizes.size_price as size_price, " //大小價格查詢
+		+ "products_sizes.size_price as size_price, "
 		+ "product.stock,products_sizes.stock AS size_stock, "
 		+ "product.photo_url,products_sizes.photo_url AS photo_url "
 		+ "FROM product LEFT JOIN products_sizes ON product.id=product_id "

@@ -3,10 +3,6 @@ package uuu.blackcake.test;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-
-import org.apache.jasper.tagplugins.jstl.core.Catch;
-
 import uuu.blackcake.entity.CartItem;
 import uuu.blackcake.entity.Customer;
 import uuu.blackcake.entity.Product;

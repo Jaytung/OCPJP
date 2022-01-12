@@ -54,7 +54,7 @@ td>img {
 		$("input[name=address]").val('${sessionScope.member.address}');
 	}
 </script>
-<title>澎湖名產</title>
+<title>結帳</title>
 </head>
 
 <body>
