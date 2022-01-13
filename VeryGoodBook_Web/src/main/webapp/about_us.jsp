@@ -20,7 +20,7 @@
 	crossorigin="anonymous">
 
 <!-- Custom CSS -->
-<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="css/app.css">
 <style>
 .container {
 	margin-top: 8vh;

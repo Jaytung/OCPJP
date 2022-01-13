@@ -24,7 +24,7 @@
 <!-- Fancybox CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath() %>/fancybox3/jquery.fancybox.css">
 <!-- Custom CSS -->
-<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/app.css">
 <link rel="stylesheet" href="shoplist.css">
 <style>
 #productDetail{display: none;width:70%}

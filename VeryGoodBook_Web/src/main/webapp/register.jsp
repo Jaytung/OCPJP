@@ -23,7 +23,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="registerCss.css">
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/css/app.css">
     <style>
     #captchaImg {
     height: 40px;

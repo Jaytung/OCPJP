@@ -136,7 +136,7 @@
 	} else {
 	%>
 
-	<jsp:include page="subviews/navbar.jsp" />
+
 	<div class="container" id="product">
 		<form action="add_to_cart.do" method="POST" id="cartForm" onsubmit="return submitCart()">
 
@@ -188,12 +188,12 @@
 								for (Size size : p.getSizes()) {
 								%>
 								<label class="btn btn-dark" for="<%=size.getName()%>"> 
-									<input type="radio"
+								<input type="radio"
 									name="size" value="<%=size.getName()%>"
 									id="<%=size.getName()%>" title='<%=size.getName()%>'
-									data-stock='<%=size.getStock()%>'
-									data-price='<%=size.getPrice()%>' Value="<%=size.getName()%>"
-									onclick='changeData(this)' required="required"> <%=size.getName()%>
+									data-stock='<%=size.getStock()%>' data-price='<%=size.getPrice()%>' 
+									Value="<%=size.getName()%>" onclick='changeData(this)' 
+									required="required"> <%=size.getName()%>
 								</label>
 								<%
 								}

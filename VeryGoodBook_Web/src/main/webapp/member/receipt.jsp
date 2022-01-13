@@ -29,15 +29,15 @@
 	crossorigin="anonymous">
 
 <!-- Custom CSS -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/app.css">
-
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/app.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/receipt.css">
 <script src="https://code.jquery.com/jquery-3.0.0.js"
 	integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo="
 	crossorigin="anonymous"></script>
 <style>
-/* .container { */
-/* 	margin-top: 8vh; */
-/* } */
+ .container { 
+ 	margin-top: 2vh;
+} 
 
 /* td>img { */
 /* 	width: 100px; */

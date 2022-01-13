@@ -1,3 +1,5 @@
+<%@page import="uuu.blackcake.entity.ShippingType"%>
+<%@page import="uuu.blackcake.entity.PaymentType"%>
 <%@page import="uuu.blackcake.entity.CartItem"%>
 <%@page import="uuu.blackcake.entity.ShoppingCart"%>
 <%@page import="uuu.blackcake.entity.Outlet"%>
@@ -29,10 +31,10 @@
 	crossorigin="anonymous">
 
 <!-- Custom CSS -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/app.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/app.css">
 
-<script src="https://code.jquery.com/jquery-3.0.0.js" 
-	integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" 
+<script src="https://code.jquery.com/jquery-3.0.0.js"
+	integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo="
 	crossorigin="anonymous"></script>
 <style>
 .container {
@@ -44,16 +46,36 @@ td>img {
 }
 </style>
 <script>
+
     function goBackShop() {
 		location.href="<%=request.getContextPath()%>/shoplist.jsp";
 	}
     function copyMember() {
-		$("input[name=name]").val('${sessionScope.member.name}');
-		$("input[name=phone]").val('${sessionScope.member.phone}');
-		$("input[name=email]").val('${sessionScope.member.email}');
-		$("input[name=address]").val('${sessionScope.member.address}');
+    	if(${not empty sessionScope.member}){
+    		$("input[name=name]").val('${sessionScope.member.name}');
+    		$("input[name=phone]").val('${sessionScope.member.phone}');
+    		$("input[name=email]").val('${sessionScope.member.email}');
+    		$("input[name=address]").val('${sessionScope.member.address}');	
+    	}else{
+    		alert("請先登入");
+    	}
 	}
-</script>
+ 	function changePaymentType(theObj){
+ 		alert($("select[name='paymentType'] option:selected").attr("data-fee"));
+ 		$("#feePrice").text($("select[name='paymentType'] option:selected").attr("data-fee") + "元");		
+ 	}
+
+	
+ 	function changeShippingType(theObj1){
+ 		alert($("select[name='shippingType'] option:selected").attr("data-ship"));
+ 		$("#shipPrice").text($("select[name='shippingType'] option:selected").attr("data-ship") + "元");		
+ 	}
+ 	function totalfee() {
+		var feePrice = ($("select[name='paymentType'] option:selected").attr("data-fee"));
+		var shipPrice = ($("select[name='shippingType'] option:selected").attr("data-ship"));
+		$("#totalAmount").text(Number(feePrice)+Number(shipPrice) + "元");	
+	}
+<!-- </script> -->
 <title>結帳</title>
 </head>
 
@@ -78,7 +100,8 @@ td>img {
 			%>
 			<div class="container">
 				<h1 class="text-center">購物明細</h1>
-				<form action="" method="POST" id="cartForm">
+				<form action="<%=request.getContextPath()%>/member/receipt.jsp"
+					method="POST" id="cartForm">
 					<table class="table table-hover">
 						<thead class="thead-dark  text-center">
 							<tr>
@@ -106,14 +129,14 @@ td>img {
 									<span>庫存剩餘:<%=stock%></span></td>
 								<td><%=size != null ? size.getName() : ""%></td>
 								<td><%=spicy%></td>
-<!-- 								size.getPrice() != 0 ? size.getPrice() :  -->
+								<!-- 								size.getPrice() != 0 ? size.getPrice() :  -->
 								<td><%=p instanceof Outlet ? ((Outlet) p).getListPrice() : p.getUnitPrice()%></td>
 								<td><%=p instanceof Outlet ? ((Outlet) p).getDiscountString() : ""%></td>
-<!-- 								size.getPrice() != 0 ? size.getPrice() :  -->
+								<!-- 								size.getPrice() != 0 ? size.getPrice() :  -->
 								<td><%=p.getUnitPrice()%></td>
 								<td><%=qty%></td>
-<!-- 								size.getPrice() != 0 ? size.getPrice() :  -->
-								<td><%=p.getUnitPrice()*qty%></td>
+								<!-- 								size.getPrice() != 0 ? size.getPrice() :  -->
+								<td><%=p.getUnitPrice() * qty%></td>
 							</tr>
 							<%
 							}
@@ -138,71 +161,92 @@ td>img {
 						<tbody>
 							<tr>
 								<td><label>付款方式:</label> <select name='paymentType'
-									class="form-control" required>
+									class="form-control" onchange='changePaymentType(this)'
+									required>
 										<option value=''>請選擇...</option>
-										<option value='SHOP'>門市付款</option>
+										<%
+										for (PaymentType pType : PaymentType.values()) {
+										%>
+										<option value='<%=pType.getPaymentName()%>'
+											data-fee="<%=pType.getFee()%>"><%=pType.toString()%></option>
+										<%
+										}
+										%>
 								</select></td>
 								<td><label>貨運方式:</label> <select name='shippingType'
-									class="form-control" required>
+									class="form-control" onchange='changeShippingType(this)'
+									required>
 										<option value=''>請選擇...</option>
-										<option value='SHOP'>門市取貨</option>
-										<option value='STORE'>超商取貨, 60元</option>
-										<option value='HOME'>送貨到府, 100元</option>
+										<%
+										for (ShippingType sType : ShippingType.values()) {
+										%>
+										<option value='<%=sType.getShippingName()%>'
+											data-ship='<%=sType.getFee()%>'><%=sType.toString()%></option>
+										<%
+										}
+										%>
 								</select></td>
 							</tr>
-			<%
-			Customer member = (Customer)session.getAttribute("member");
-			%>
+							<tr>
+								<td>商品總金額: <%=cart.getTotalAmount()%>元&nbsp; 手續費:<span
+									id="feePrice"></span>&nbsp; 運費:<span id="shipPrice"></span><br>
+									總付款金額:<span id="totalAmount"></span></td>
+							</tr>
+							<%
+							Customer member = (Customer) session.getAttribute("member");
+							%>
 							<tr class="col-12">
 								<td class="col-md-6">
-										<h4>購買人:</h4>
-										<div class="form-row col">
-											<div class="col-6 mb-3">
-												<label for="validationDefault01">姓名</label> <input
-													type="text" class="form-control" placeholder="姓名"
-													name='name' value="<%=member.getName() %>" readonly>
-											</div>
-											<div class="col-6 mb-3">
-												<label for="validationDefault02">電話</label> <input
-													type="text" class="form-control" placeholder="phone"
-													name='phone' value="<%=member.getPhone() %>" readonly>
-											</div>
-											<div class="col-6 mb-3">
-												<label for="validationDefault02">信箱</label> <input
-													type="text" class="form-control" placeholder="email"
-													name='email' value="<%=member.getEmail() %>" readonly>
-											</div>
-											<div class="col-6 mb-3">
-												<label for="validationDefault02">地址</label> <input
-													type="text" class="form-control" placeholder="收件地址"
-													name='address' value="<%=member.getAddress() %>" readonly>
-											</div>
-										</div>	
+									<h4>購買人:</h4>
+									<div class="form-row col">
+										<div class="col-6 mb-3">
+											<label for="validationDefault01">姓名</label> <input
+												type="text" class="form-control" placeholder="姓名"
+												name='name' value="<%=member.getName()%>" readonly>
+										</div>
+										<div class="col-6 mb-3">
+											<label for="validationDefault02">電話</label> <input
+												type="text" class="form-control" placeholder="phone"
+												name='phone' value="<%=member.getPhone()%>" readonly>
+										</div>
+										<div class="col-6 mb-3">
+											<label for="validationDefault02">信箱</label> <input
+												type="text" class="form-control" placeholder="email"
+												name='email' value="<%=member.getEmail()%>" readonly>
+										</div>
+										<div class="col-6 mb-3">
+											<label for="validationDefault02">地址</label> <input
+												type="text" class="form-control" placeholder="收件地址"
+												name='address' value="<%=member.getAddress()%>" readonly>
+										</div>
+									</div>
 								</td>
-										<td class="col-md-6">
-										<h4>收件人<a href='javascript:copyMember()'>同購買人</a></h4>				
-										<div class="form-row col">
-											<div class="col-6 mb-3">
-												<label for="validationDefault01">姓名</label> <input
-													type="text" class="form-control" placeholder="姓名"
-													name='name' required>
-											</div>
-											<div class="col-6 mb-3">
-												<label for="validationDefault02">電話</label> <input
-													type="text" class="form-control" placeholder="phone"
-													name='phone' required>
-											</div>
-											<div class="col-6 mb-3">
-												<label for="validationDefault02">信箱</label> <input
-													type="text" class="form-control" placeholder="email"
-													name='email' required>
-											</div>
-											<div class="col-6 mb-3">
-												<label for="validationDefault02">地址</label> <input
-													type="text" class="form-control" placeholder="收件地址"
-													name='address' required>
-											</div>
-										</div>	
+								<td class="col-md-6">
+									<h4>
+										收件人<a href='javascript:copyMember()'>同購買人</a>
+									</h4>
+									<div class="form-row col">
+										<div class="col-6 mb-3">
+											<label for="validationDefault01">姓名</label> <input
+												type="text" class="form-control" placeholder="姓名"
+												name='name' required>
+										</div>
+										<div class="col-6 mb-3">
+											<label for="validationDefault02">電話</label> <input
+												type="text" class="form-control" placeholder="phone"
+												name='phone' required>
+										</div>
+										<div class="col-6 mb-3">
+											<label for="validationDefault02">信箱</label> <input
+												type="text" class="form-control" placeholder="email"
+												name='email' required>
+										</div>
+										<div class="col-6 mb-3">
+											<label for="validationDefault02">地址</label> <input
+												type="text" class="form-control" placeholder="收件地址"
+												name='address' required>
+										</div>
+									</div>
 								</td>
 							</tr>
 							<tr class="">
@@ -218,23 +262,23 @@ td>img {
 				}
 				%>
 			</div>
-			</div>
-			</section>
-			<!-- Optional JavaScript -->
-			<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		</div>
+	</section>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script>
 	<script
-				src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-				integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-				crossorigin="anonymous"></script>
-			<script
-				src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
-				integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
-				crossorigin="anonymous"></script>
-			<script>
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
+		integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
+		crossorigin="anonymous"></script>
+	<script>
 				$(function() {
 					$(document).scroll(
 							function() {
