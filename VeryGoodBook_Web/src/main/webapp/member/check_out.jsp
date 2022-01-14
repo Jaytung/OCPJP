@@ -63,17 +63,21 @@ td>img {
  	function changePaymentType(theObj){
  		alert($("select[name='paymentType'] option:selected").attr("data-fee"));
  		$("#feePrice").text($("select[name='paymentType'] option:selected").attr("data-fee") + "元");		
+ 		totalfee();
  	}
 
 	
  	function changeShippingType(theObj1){
  		alert($("select[name='shippingType'] option:selected").attr("data-ship"));
- 		$("#shipPrice").text($("select[name='shippingType'] option:selected").attr("data-ship") + "元");		
+ 		$("#shipPrice").text($("select[name='shippingType'] option:selected").attr("data-ship") + "元");
+ 		totalfee();
  	}
  	function totalfee() {
-		var feePrice = ($("select[name='paymentType'] option:selected").attr("data-fee"));
-		var shipPrice = ($("select[name='shippingType'] option:selected").attr("data-ship"));
-		$("#totalAmount").text(Number(feePrice)+Number(shipPrice) + "元");	
+		var feePrice = Number($("select[name='paymentType'] option:selected").attr("data-fee"));
+		var shipPrice = Number($("select[name='shippingType'] option:selected").attr("data-ship"));
+		var total = ('${sessionScope.cart.getTotalAmount()}');
+		$("#totalAmount").text(Number(total)+feePrice+shipPrice);
+		
 	}
 <!-- </script> -->
 <title>結帳</title>
@@ -100,7 +104,7 @@ td>img {
 			%>
 			<div class="container">
 				<h1 class="text-center">購物明細</h1>
-				<form action="<%=request.getContextPath()%>/member/receipt.jsp"
+				<form action="<%=request.getContextPath()%>/member/order.jsp"
 					method="POST" id="cartForm">
 					<table class="table table-hover">
 						<thead class="thead-dark  text-center">
@@ -163,7 +167,7 @@ td>img {
 								<td><label>付款方式:</label> <select name='paymentType'
 									class="form-control" onchange='changePaymentType(this)'
 									required>
-										<option value=''>請選擇...</option>
+										<option value='' data-fee="0">請選擇...</option>
 										<%
 										for (PaymentType pType : PaymentType.values()) {
 										%>
@@ -176,7 +180,7 @@ td>img {
 								<td><label>貨運方式:</label> <select name='shippingType'
 									class="form-control" onchange='changeShippingType(this)'
 									required>
-										<option value=''>請選擇...</option>
+										<option value='' data-ship="0">請選擇...</option>
 										<%
 										for (ShippingType sType : ShippingType.values()) {
 										%>

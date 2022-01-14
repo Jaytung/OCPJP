@@ -1,7 +1,7 @@
 package uuu.blackcake.entity;
 
 public enum ShippingType {
-	BLACKCAKT("黑貓宅急便",80),
+	BLACKCAT("黑貓宅急便",80),
 	SEVENELEVEN("7-11",60),
 	HILIFE("萊爾富",50),
 	OK("OK Mart",45),
