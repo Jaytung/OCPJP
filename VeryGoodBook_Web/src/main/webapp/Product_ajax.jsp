@@ -5,120 +5,149 @@
 <%@ page pageEncoding="UTF-8"%>
 <!--Product_ajax.jsp start -->
 <style>
-			#productItem{width:80%;margin:auto;max-width: 1200px}
-			#product{width:80%;margin:auto;max-width: 1200px}
-			#productData div{white-space:nowrap}
-/* 			.photo{width:40%;min-width:250px;max-width:350px;float:left}			 */
-			[type=radio] {position: absolute;opacity: 0;width: 3;height: 1;}			 */
-/* 			.icon{width:48px} */
-			
-			/* IMAGE STYLES */
-			[type=radio] + img {cursor: pointer;}
-			
-			/* CHECKED STYLES */
-			[type=radio]:checked + img {outline: 2px solid #000;}	
-			
-			#description{clear:both;padding-top: 1ex;width:100%}
-			.container{
-				margin-top:10vh;
-			}
-			.cartBtn {
-				width: 60px;
-			}
-			
-			.iconImg {
-				width: 300px;
-			}
-			
-			#album {
-				width: 250px;
-				height: auto;
-				border: none;
-				padding: 10px;
-				background: #F0ECE3;
-				color: white;
-			}
-			
-			#main {
-				width: 600px;
-				height: 600px;
-			}
-			
-			.smallPic {
-				width: 100px;
-				padding: 5px;
-				background: white;
-				margin: 10px 2px;
-			}
-			
-			.selected {
-				background: orange;
-			}
-			
-			.row {
-				margin-left: 0px;
-			}
-			
-			#sizeStock {
-				color: #e63946;
-			}
+#productItem {
+	width: 80%;
+	margin: auto;
+	max-width: 1200px
+}
 
+#product {
+	width: 80%;
+	margin: auto;
+	max-width: 1200px
+}
+
+#productData div {
+	white-space: nowrap
+}
+/* 			.photo{width:40%;min-width:250px;max-width:350px;float:left}			 */
+[type=radio] {
+	position: absolute;
+	opacity: 0;
+	width: 3;
+	height: 1;
+}
+
+* /
+	/* 			.icon{width:48px} */
+	/* IMAGE STYLES */ 
+			[type=radio]+img {
+	cursor: pointer;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked+img {
+	outline: 2px solid #000;
+}
+
+#description {
+	clear: both;
+	padding-top: 1ex;
+	width: 100%
+}
+
+.container {
+	margin-top: 10vh;
+}
+
+.cartBtn {
+	width: 60px;
+}
+
+.iconImg {
+	width: 300px;
+}
+
+#album {
+	width: 250px;
+	height: auto;
+	border: none;
+	padding: 10px;
+	background: #F0ECE3;
+	color: white;
+}
+
+#main {
+	width: 600px;
+	height: 600px;
+}
+
+.smallPic {
+	width: 100px;
+	padding: 5px;
+	background: white;
+	margin: 10px 2px;
+}
+
+.selected {
+	background: orange;
+}
+
+.row {
+	margin-left: 0px;
+}
+
+#sizeStock {
+	color: #e63946;
+}
 </style>
 <script>
-            $(document).ready(init);
-            function init() {
-                $("#minus").click(minusHandler);
-                $("#plus").click(plusHandler);
-            	$(".smallPic").click(showHandler);
-            	$(".smallPic:first").addClass("selected");
-            }
-            function minusHandler() {
-                var quantitiyValue = parseInt($("#quantity").val());
-                if (quantitiyValue > 0) {
-                    $("#quantity").val(quantitiyValue - 1);
-                }
-            }
-            function plusHandler() {
-                var quantitiyValue = parseInt($("#quantity").val());
+	$(document).ready(init);
+	function init() {
+		$("#minus").click(minusHandler);
+		$("#plus").click(plusHandler);
+		$(".smallPic").click(showHandler);
+		$(".smallPic:first").addClass("selected");
+	}
+	function minusHandler() {
+		var quantitiyValue = parseInt($("#quantity").val());
+		if (quantitiyValue > 0) {
+			$("#quantity").val(quantitiyValue - 1);
+		}
+	}
+	function plusHandler() {
+		var quantitiyValue = parseInt($("#quantity").val());
 
-                $("#quantity").val(quantitiyValue + 1);
-            }
-            function showHandler(){
-            	var image = $(this).attr("src");
-            	 $("#main").attr("src",image);
-            	 $(".smallPic").removeClass("selected");
-            	 $(this).addClass("selected");
-            }
-        	function changeData(theObj){
-// 				alert($(theObj).attr("src"));
-// 				alert($(theObj).attr("title"));
-// 				alert($(theObj).attr("data-price"));
-				
-				$(".sizePrice").text($(theObj).attr("title") +$(theObj).attr("data-price") + "元");
-				$("#sizeStock").text($(theObj).attr("title") + "剩餘" + $(theObj).attr("data-stock") + "個");
-				$("input[name='quantity']").attr("max", $(theObj).attr("data-stock"));
-// 				$(".price").attr("text", $(theObj).attr("data-price"));
-			}
-        	function submitCart() {
-//         		alert("#cartForm serialize(): " + $("#cartForm").serialize());
-        		
-        		$.ajax({
-        			url:$("#cartForm").attr('action')+'?ajax=',
-        			method:'POST',
-        			data:$("#cartForm").serialize()		
-        		}).done(submitCartDoneHandler);
-        		
-        		
-        		return false;//取消原來同步的submit功能
-			}
-        	function submitCartDoneHandler(data,status,xhr) {
-				alert("加入購物車成功");
-				$(".cartQuantity").html(data.totalQuantity);
-			}
-        	</script>
+		$("#quantity").val(quantitiyValue + 1);
+	}
+	function showHandler() {
+		var image = $(this).attr("src");
+		$("#main").attr("src", image);
+		$(".smallPic").removeClass("selected");
+		$(this).addClass("selected");
+	}
+	function changeData(theObj) {
+		// 				alert($(theObj).attr("src"));
+		// 				alert($(theObj).attr("title"));
+		// 				alert($(theObj).attr("data-price"));
+
+		$(".sizePrice").text(
+				$(theObj).attr("title") + $(theObj).attr("data-price") + "元");
+		$("#sizeStock").text(
+				$(theObj).attr("title") + "剩餘" + $(theObj).attr("data-stock")
+						+ "個");
+		$("input[name='quantity']").attr("max", $(theObj).attr("data-stock"));
+		// 				$(".price").attr("text", $(theObj).attr("data-price"));
+	}
+	function submitCart() {
+		//         		alert("#cartForm serialize(): " + $("#cartForm").serialize());
+
+		$.ajax({
+			url : $("#cartForm").attr('action') + '?ajax=',
+			method : 'POST',
+			data : $("#cartForm").serialize()
+		}).done(submitCartDoneHandler);
+
+		return false;//取消原來同步的submit功能
+	}
+	function submitCartDoneHandler(data, status, xhr) {
+		alert("加入購物車成功");
+		$(".cartQuantity").html(data.totalQuantity);
+	}
+</script>
 
 
-	<div class="productItem">
+<div class="productItem">
 	<%
 	String productId = request.getParameter("productId");
 	Product p = null;
@@ -138,7 +167,8 @@
 
 
 	<div class="container" id="product">
-		<form action="add_to_cart.do" method="POST" id="cartForm" onsubmit="return submitCart()">
+		<form action="add_to_cart.do" method="POST" id="cartForm"
+			onsubmit="return submitCart()">
 
 			<input type='hidden' value='<%=p.getId()%>' name='productId'>
 			<div class="row">
@@ -160,17 +190,19 @@
 						<hr>
 						<h3>
 							特價:<%=p instanceof Outlet ? ((Outlet) p).getDiscountString() : ""%>
-								<span class="sizePrice"><%=Math.round(p.getUnitPrice())%>元
+							<span class="sizePrice"><%=Math.round(p.getUnitPrice())%>元
 								&nbsp;&nbsp;&nbsp;&nbsp;</span>
 						</h3>
 						<%
-					if (p instanceof Outlet) {
-					%> 
+						if (p instanceof Outlet) {
+						%>
 						<h4>
 							定價:<span class="sizePrice"><%=((Outlet) p).getListPrice() + ""%></span>
 						</h4>
 
-					<%} %> 
+						<%
+						}
+						%>
 
 						<hr>
 						<h3>庫存:</h3>
@@ -187,13 +219,12 @@
 								<%
 								for (Size size : p.getSizes()) {
 								%>
-								<label class="btn btn-dark" for="<%=size.getName()%>"> 
-								<input type="radio"
-									name="size" value="<%=size.getName()%>"
+								<label class="btn btn-dark" for="<%=size.getName()%>"> <input
+									type="radio" name="size" value="<%=size.getName()%>"
 									id="<%=size.getName()%>" title='<%=size.getName()%>'
-									data-stock='<%=size.getStock()%>' data-price='<%=size.getPrice()%>' 
-									Value="<%=size.getName()%>" onclick='changeData(this)' 
-									required="required"> <%=size.getName()%>
+									data-stock='<%=size.getStock()%>'
+									data-price='<%=size.getPrice()%>' Value="<%=size.getName()%>"
+									onclick='changeData(this)' required="required"> <%=size.getName()%>
 								</label>
 								<%
 								}
@@ -255,10 +286,11 @@
 				</div>
 				<!-- /.col-lg-6 -->
 				<div class="text-center" id="addToCart">
-					<br> <input class="btn btn-lg btn-dark" type="submit" value="加到購物車">
+					<br> <input class="btn btn-lg btn-dark" type="submit"
+						value="加到購物車">
 				</div>
 			</div>
 		</form>
 	</div>
-	</div>
+</div>
 <!-- product_ajax.jsp end -->
