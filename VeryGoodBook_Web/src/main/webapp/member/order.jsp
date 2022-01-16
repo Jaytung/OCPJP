@@ -49,16 +49,18 @@
 	<jsp:include page="/subviews/navbar.jsp">
 		<jsp:param value="結帳" name="subheader" />
 	</jsp:include>
-
+	<%
+	Customer member = (Customer) session.getAttribute("member");
+	%>
 		<div class="receipt-content">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
 					<div class="invoice-wrapper">
 						<div class="intro">
-							您好 <strong>Jimmy</strong>,
+							您好 <strong><%=member.getName() %></strong>,
 							<br>
-							本次訂單共 <strong>$312</strong> (元) 感謝您的購買
+							本次訂單共 <strong><%= %></strong> (元) 感謝您的購買
 						</div>
 
 						<div class="payment-info">

@@ -6,13 +6,13 @@
 <!--Product_ajax.jsp start -->
 <style>
 #productItem {
-	width: 80%;
+	width: 70%;
 	margin: auto;
 	max-width: 1200px
 }
 
 #product {
-	width: 80%;
+	width: 70%;
 	margin: auto;
 	max-width: 1200px
 }
@@ -20,6 +20,7 @@
 #productData div {
 	white-space: nowrap
 }
+
 /* 			.photo{width:40%;min-width:250px;max-width:350px;float:left}			 */
 [type=radio] {
 	position: absolute;
@@ -28,10 +29,10 @@
 	height: 1;
 }
 
-* /
-	/* 			.icon{width:48px} */
-	/* IMAGE STYLES */ 
-			[type=radio]+img {
+/* 			.icon{width:48px} */
+
+/* IMAGE STYLES */
+[type=radio]+img {
 	cursor: pointer;
 }
 
@@ -59,7 +60,7 @@
 }
 
 #album {
-	width: 250px;
+	width: 400px;
 	height: auto;
 	border: none;
 	padding: 10px;
@@ -68,19 +69,19 @@
 }
 
 #main {
-	width: 600px;
-	height: 600px;
+	width: 800px;
+	height: 800px;
 }
 
 .smallPic {
-	width: 100px;
+	width: 150px;
 	padding: 5px;
 	background: white;
 	margin: 10px 2px;
 }
 
 .selected {
-	background: orange;
+	background: #6c757d;
 }
 
 .row {
@@ -89,6 +90,42 @@
 
 #sizeStock {
 	color: #e63946;
+}
+
+@media screen and (min-width: 500px) and (max-width: 768px) {
+	#album {
+		width: 295px;
+	}
+	.smallPic {
+		width: 100px;
+	}
+}
+
+@media screen and (min-width: 768px) and (max-width: 1250px) {
+	#album {
+		width: 200px;
+	}
+	.smallPic {
+		width: 80px;
+	}
+}
+
+@media screen and (min-width: 860px) and (max-width: 1250px) {
+	#album {
+		width: 300px;
+	}
+	.smallPic {
+		width: 120px;
+	}
+}
+
+@media screen and (min-width: 1250px) and (max-width: 2000px) {
+	#album {
+		width: 450px;
+	}
+	.smallPic {
+		width: 150px;
+	}
 }
 </style>
 <script>
@@ -154,7 +191,6 @@
 	if (productId != null) {
 		ProductService pService = new ProductService();
 		p = pService.selectProductById(productId);
-
 	}
 	if (p == null) {
 	%>
@@ -173,10 +209,11 @@
 			<input type='hidden' value='<%=p.getId()%>' name='productId'>
 			<div class="row">
 				<div
-					class="col-sm-12 col-md-6 col-lg-6 photo rounded order-1 order-md-1">
+					class="col-sm-12 col-md-6 col-lg-6 photo rounded order-1 order-md-1 mb-1 mainProduct">
 					<img src="<%=p.getPhotoUrl()%>" class="rounded" id="main" alt="">
 				</div>
-				<div class="col-sm-12 col-md-6 col-lg-6 order-3 order-md-3">
+				<div
+					class="col-sm-12 col-md-6 col-lg-6 order-3 order-md-3 productDetail">
 					<div class="text-center">
 						<hr>
 						<h2>
@@ -190,14 +227,16 @@
 						<hr>
 						<h3>
 							特價:<%=p instanceof Outlet ? ((Outlet) p).getDiscountString() : ""%>
-							<span class="sizePrice"><%=Math.round(p.getUnitPrice())%>元
-								&nbsp;&nbsp;&nbsp;&nbsp;</span>
+							<span class="sizePrice"> <%=Math.round(p.getUnitPrice())%>元
+								&nbsp;&nbsp;&nbsp;&nbsp;
+							</span>
 						</h3>
 						<%
 						if (p instanceof Outlet) {
 						%>
 						<h4>
-							定價:<span class="sizePrice"><%=((Outlet) p).getListPrice() + ""%></span>
+							定價:<span class="sizePrice"> <%=((Outlet) p).getListPrice() + ""%>
+							</span>
 						</h4>
 
 						<%
@@ -237,15 +276,22 @@
 					</div>
 				</div>
 
-				<div class="col-6 col-md-6 rounded order-2 order-md-5">
+				<div class="col-6 col-md-6 rounded order-2 order-md-5 mt-0">
+					<div id="album"
+						class="row-6 row-sm-9 row-md-12 justify-content-center rounded ">
+						<div class="row justify-content-center">
+							<img class="rounded shadow smallPic" src="<%=p.getPhotoUrl()%>">
+							<img class="rounded shadow smallPic" src="<%=p.getPhotoUrl1()%>">
+						</div>
+					</div>
 					<%
 					if (p.getSizeMapSize() > 0) {
 					%>
-					<div id="album" class="rounded">
+					<div id="album" class="row-9 rounded">
 						<%
 						for (Size size : p.getSizes()) {
 						%>
-						<div class="row">
+						<div class="row row-6 row-sm-9 row-md-12 justify-content-center">
 							<img
 								src="<%=size.getPhotoURL() == null ? size.getPhotoURL() : size.getIconURL()%>"
 								class="rounded shadow smallPic" title='<%=size.getName()%>'
@@ -263,7 +309,7 @@
 				}
 				%>
 			</div>
-			<div class="col-sm-12 col-md-6 order-6 mt-4">
+			<div class="col-sm-12 col-md-6 order-8 mt-4 productInput">
 				<div class="text-center">
 					<span class="">數量:</span>
 					<div class="input-group justify-content-center">

@@ -13,6 +13,8 @@ public class Product {
 	private String description;
 	private LocalDate shelfDate;// 必要,以上架當日為預設值,RW
 	private String photoUrl;
+	private String photoUrl1;
+
 	private String category;
 	private Map<String,Size> sizeMap=new HashMap<>();
 	
@@ -174,6 +176,13 @@ public class Product {
 
 	public void setPhotoUrl(String photoUrl) {
 		this.photoUrl = photoUrl;
+	}
+	public String getPhotoUrl1() {
+		return photoUrl1;
+	}
+
+	public void setPhotoUrl1(String photoUrl1) {
+		this.photoUrl1 = photoUrl1;
 	}
 
 	public String getCategory() {

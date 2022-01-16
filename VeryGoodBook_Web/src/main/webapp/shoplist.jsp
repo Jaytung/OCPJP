@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="<%=request.getContextPath() %>/fancybox3/jquery.fancybox.css">
 <!-- Custom CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/app.css">
-<link rel="stylesheet" href="shoplist.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/shoplist.css">
 <style>
 #productDetail{display: none;width:70%}
 </style>
@@ -87,7 +87,6 @@
 		//1.取得requst的form data
 		String keyword = request.getParameter("keyword");
 		String category = request.getParameter("category");
-		//TODO:加上分類查詢
 		//2.呼叫商業邏輯
 
 		ProductService pService = new ProductService();

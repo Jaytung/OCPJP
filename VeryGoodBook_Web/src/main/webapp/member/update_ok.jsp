@@ -9,7 +9,7 @@
         <script>
             function callHomePage() {
                 //同步請求
-                location.href = 'index.jsp'
+                location.href = '../index.jsp'
             }
         </script>
         <title>登入成功</title>

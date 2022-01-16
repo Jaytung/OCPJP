@@ -40,6 +40,7 @@ class ProductsDAO {
 				p.setUnitPrice(rs.getDouble("unit_price"));
 				p.setStock(rs.getInt("stock"));
 				p.setPhotoUrl(rs.getString("photo_url"));
+//				p.setPhotoUrl(rs.getString("photo_url1"));
 				p.setDescription(rs.getString("description"));
 				p.setShelfDate(LocalDate.parse(rs.getString("shelf_date")));
 				
@@ -81,6 +82,7 @@ class ProductsDAO {
 					p.setUnitPrice(rs.getDouble("unit_price"));
 					p.setStock(rs.getInt("stock"));
 					p.setPhotoUrl(rs.getString("photo_url"));
+//					p.setPhotoUrl(rs.getString("photo_url1"));
 					p.setDescription(rs.getString("description"));
 					p.setShelfDate(LocalDate.parse(rs.getString("shelf_date")));
 					
@@ -141,7 +143,7 @@ class ProductsDAO {
 		+ "product_id, size_name, icon_url, "
 		+ "products_sizes.size_price as size_price, "
 		+ "product.stock,products_sizes.stock AS size_stock, "
-		+ "product.photo_url,products_sizes.photo_url AS photo_url "
+		+ "product.photo_url, product.photo_url_1, products_sizes.photo_url AS photo_url "
 		+ "FROM product LEFT JOIN products_sizes ON product.id=product_id "
 		+ "WHERE  id= ?;";
 	public Product selectProductById(String id)throws BlackCakeException {
@@ -173,6 +175,7 @@ class ProductsDAO {
 					p.setUnitPrice(rs.getDouble("unit_price"));
 					p.setStock(rs.getInt("stock"));
 					p.setPhotoUrl(rs.getString("photo_url"));
+					p.setPhotoUrl1(rs.getString("photo_url_1"));
 					p.setDescription(rs.getString("description"));
 					p.setShelfDate(LocalDate.parse(rs.getString("shelf_date")));
 					p.setCategory(rs.getString("category"));

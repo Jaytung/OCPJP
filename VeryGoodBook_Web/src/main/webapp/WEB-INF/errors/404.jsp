@@ -15,7 +15,7 @@
 	crossorigin="anonymous">
 
 <!-- Custom CSS -->
-<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/app.css">
 <style>
 article{
 	margin-top: 5vh;

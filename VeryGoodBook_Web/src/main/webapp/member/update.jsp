@@ -22,7 +22,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <!-- Custom CSS -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/app.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/app.css">
 <style>
 body {
 	margin-top: 12vh;
@@ -192,7 +192,7 @@ if (member != null) {%>
 							</div>
 							<div id="updateCaptchaImg"
 								class="form-group col-md-4 text-center pr-0">
-								<img id="captchaImg" src="imgs/reg_captcha.jpg" alt="驗證碼圖片"
+								<img id="captchaImg" src="<%=request.getContextPath() %>/imgs/reg_captcha.jpg" alt="驗證碼圖片"
 									class="border shadow rounded" style="vertical-align: bottom;">
 								<img src="" alt=""> <a class="text-start"
 									id="reCaptchaImg" href="javascript:refreshCaptcha()"> <i

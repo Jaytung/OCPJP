@@ -20,7 +20,7 @@ import uuu.blackcake.service.CustomerService;
 /**
  * Servlet implementation class UpdateServlet1
  */
-@WebServlet("/update.do")
+@WebServlet("/member/update.do")
 public class UpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
