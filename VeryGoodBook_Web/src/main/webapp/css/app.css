@@ -58,6 +58,7 @@ div h2{
 #mainNavbar{
     font-size: 1.5rem;
     font-weight: 600;
+    position: sticky;
 }
 #mainNavbar .nav-link{ 
     color: #353535;

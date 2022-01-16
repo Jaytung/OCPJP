@@ -6,13 +6,13 @@
 <!--Product_ajax.jsp start -->
 <style>
 #productItem {
-	width: 70%;
+	width: 50%;
 	margin: auto;
 	max-width: 1200px
 }
 
 #product {
-	width: 70%;
+	width: 100%;
 	margin: auto;
 	max-width: 1200px
 }
@@ -25,7 +25,7 @@
 [type=radio] {
 	position: absolute;
 	opacity: 0;
-	width: 3;
+	width: 1;
 	height: 1;
 }
 

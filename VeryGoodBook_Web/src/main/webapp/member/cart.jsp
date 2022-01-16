@@ -60,9 +60,6 @@ td>img {
 	<!-- //     List<String> errors = (List<String>)request.getAttribute("errors");  -->
 	<%-- <%--     %> --%>
 
-	<div style="margin-top: 5vh">
-		<%--      ${sessionScope.cart} --%>
-	</div>
 	<jsp:include page="/subviews/navbar.jsp" />
 	<%
 	ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");

@@ -8,8 +8,8 @@ Customer member = (Customer) session.getAttribute("member");
 
 
 <nav id="mainNavbar"
-	class="navbar navbar-light navbar-expand-md py-0 fixed-top rounded-down">
-	<a href=" #" class="navbar-brand">鮮記</a>
+	class="navbar row navbar-light navbar-expand-lg py-0 fixed-top rounded-down">
+	<a href=" #" class="navbar-brand ml-1">鮮記</a>
 	<button class="navbar-toggler" data-toggle="collapse"
 		data-target="#navLinks" arir-label="Toggle navigation">
 		<span class="navbar-toggler-icon"> </span>
@@ -87,11 +87,12 @@ Customer member = (Customer) session.getAttribute("member");
 			}
 			%>
 			<li class="nav-link">
-			<a class="order-1" href='<%=request.getContextPath()%>/member/cart.jsp'><img src="<%=request.getContextPath()%>/imgs/cart.png"></a>
-			<span class="cartQuantity order-2 ">${sessionScope.cart.getTotalQuantity()}</span>
+			<a class="order-1" href='<%=request.getContextPath()%>/member/cart.jsp'><img src="<%=request.getContextPath()%>/imgs/cart.png">
+			<span class="cartQuantity order-2 ">${sessionScope.cart.getTotalQuantity()}</span></a>
+			
 			</li>
 		</ul>
-		<form class="form-inline my-2 my-lg-0" action='shoplist.jsp'
+		<form class="form-inline my-2 my-lg-0 mr-1" action='shoplist.jsp'
 			method="get">
 			<input type="search" name="keyword" placeholder="SEARCH"
 				class="form-control mr-sm-2 ml-auto ml-md-3" value="${param.keyword}">

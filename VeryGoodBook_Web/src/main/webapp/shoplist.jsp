@@ -27,7 +27,9 @@
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/app.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/shoplist.css">
 <style>
-#productDetail{display: none;width:70%}
+#productDetail{
+display: none;width:70%
+}
 </style>
 
 

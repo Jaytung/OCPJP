@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/app.css">
 
 <style>
-body {
+section {
 	margin-top: 13vh;
 }
 </style>

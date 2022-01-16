@@ -58,9 +58,9 @@
 				<div class="col-md-12">
 					<div class="invoice-wrapper">
 						<div class="intro">
-							您好 <strong><%=member.getName() %></strong>,
+							您好 <strong><%=member!=null?member.getName():"" %></strong>,
 							<br>
-							本次訂單共 <strong><%= %></strong> (元) 感謝您的購買
+							本次訂單共 <strong></strong> (元) 感謝您的購買
 						</div>
 
 						<div class="payment-info">
@@ -81,10 +81,10 @@
 								<div class="col-sm-6">
 									<span>購買人</span>
 									<strong>
-										Jimmy
+										<%=member!=null?member.getName():"" %>
 									</strong>
 									<p>
-										台北市信義區基隆路一段1號
+										<%=member!=null?member.getAddress():"" %>
 										<br>
 									</p>
 								</div>
