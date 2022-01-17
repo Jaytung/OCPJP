@@ -83,26 +83,30 @@ class OrdersDAO {
 		}
 	}
 
-	private static final String SELECT_ORDER_BY_CUSTOMER = "SELECT id,member_id, created_date, created_time,"
+	private static final String SELECT_ORDER_BY_CUSTOMER = 
+			"SELECT id,member_id, created_date, created_time,"
 			+ " receipt_name, receipt_email, receipt_phone, shipping_addres, "
 			+ " payment_type, payment_fee, payment_note, shipping_type, " + " shipping_fee, shipping_note, status,"
 			+ " product_id, size_name, price, quantity, SUM(price*quantity) as total_amount"
 			+ " FROM orders LEFT JOIN order_items ON id=order_id" + " WHERE member_id=? "
-			+ " GROUP BY orders.id;";
-
-	List<Order> selectOrderByCustomer(String account) throws BlackCakeException {
-		if (account == null || account.length() == 0)
+			+ " GROUP BY orders.id"
+			+ " ORDER BY created_date DESC, created_time DESC;";
+				
+	List<Order> selectOrderByCustomer(String email) throws BlackCakeException {
+		if (email == null || email.length() == 0)
 			throw new IllegalArgumentException("查詢歷史訂單時帳號必須有值");
 		List<Order> list = new ArrayList<>();
 		try (Connection connection = RDBConnection.getConnection();
 				PreparedStatement pstmt = connection.prepareStatement(SELECT_ORDER_BY_CUSTOMER);) {
 
-			pstmt.setString(1, account);
+			pstmt.setString(1, email);
 			
-			try (ResultSet rs = pstmt.executeQuery();) {
+			try (ResultSet rs = pstmt.executeQuery();
+					) {
 				while (rs.next()) {
 					Order order = new Order();
 					order.setId(rs.getInt("id"));
+					
 					Customer c = new Customer();
 					c.setEmail(rs.getString("member_id"));
 					order.setMember(c);
@@ -117,7 +121,9 @@ class OrdersDAO {
 					} catch (Exception e) {
 						System.out.println("付款方式不正確" + pType );
 					}
+					
 					order.setPaymentFee(rs.getDouble("payment_fee"));
+					
 					String sType = rs.getString("shipping_type");
 					try {
 						ShippingType shippingType = ShippingType.valueOf(sType);
@@ -125,8 +131,8 @@ class OrdersDAO {
 					}catch(Exception e) {
 						System.out.println("貨運方式不正確"+sType);
 					}
-					order.setPaymentFee(rs.getDouble("payment_fee"));
 					order.setShippingFee(rs.getDouble("shipping_fee"));
+					order.setStatus(rs.getInt("status"));
 					order.setTotalAmount(rs.getDouble("total_amount"));
 					list.add(order);
 				}
@@ -137,20 +143,22 @@ class OrdersDAO {
 		}
 		return list;
 	}
-	private static final String GET_ORDER_BY_ID="SELECT orders.id, member_id, created_date, created_time,\r\n"
+
+	private static final String GET_ORDER_BY_ID=
+			"SELECT orders.id, member_id, created_date, created_time,\r\n"
 			+ " receipt_name, receipt_email, receipt_phone, shipping_addres,\r\n"
 			+ " payment_type, payment_fee, payment_note, shipping_type,\r\n"
 			+ " shipping_fee, shipping_note, status \r\n"
-			+ " order_id, order_items.product_id, product.name, product.name as product_name,product.photo_url,\r\n"
+			+ " order_id, order_items.product_id, product.name as product_name,product.photo_url,\r\n"
 			+ " order_items.size_name, products_sizes.size_name as p_size_name,\r\n"
 			+ " products_sizes.photo_url as size_photo,\r\n"
 			+ " spicy, price, quantity\r\n"
-			+ " FROM orders JOIN order_items ON order_id=order_items.order_id\r\n"
+			+ " FROM orders JOIN order_items ON orders.id=order_items.order_id\r\n"
 			+ "			JOIN  product ON order_items.product_id = product.id\r\n"
-			+ "				LEFT JOIN products_sizes ON order_items.product_id=products_sizes.product_id\r\n"
+			+ "				LEFT JOIN products_sizes ON order_items.product_id = products_sizes.product_id\r\n"
 			+ "                AND order_items.size_name = products_sizes.size_name\r\n"
-			+ "WHERE member_id='jimmy@gmail.com' AND orders.id='2';";
-	public Order getOrderById(String email, String orderId)throws BlackCakeException {
+			+ "WHERE member_id='?' AND orders.id='?';";
+	Order selectOrderByCustomer(String email, String orderId)throws BlackCakeException {
 		Order order =null;
 		try(
 				Connection connection = RDBConnection.getConnection();
@@ -177,8 +185,9 @@ class OrdersDAO {
 							PaymentType paymentType = PaymentType.valueOf(pType);
 							order.setPaymentType(paymentType);
 						}catch(Exception e) {
-							System.err.println("付款方式部正確"+pType);
+							System.err.println("付款方式不正確"+pType);
 						}
+						
 						order.setPaymentFee(rs.getDouble("payment_fee"));
 						order.setPaymentNote(rs.getString("payment_note"));
 						
@@ -227,6 +236,6 @@ class OrdersDAO {
 			throw new BlackCakeException("查詢歷史訂單失敗",e);
 		}
 		return order;
-	} 
+	}
 	
 }

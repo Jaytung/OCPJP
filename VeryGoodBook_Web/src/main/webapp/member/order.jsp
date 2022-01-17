@@ -1,5 +1,6 @@
 <%@page import="uuu.blackcake.service.OrderService"%>
 <%@page import="uuu.blackcake.entity.Order"%>
+<%@page import="uuu.blackcake.entity.OrderItem"%>
 <%@page import="uuu.blackcake.entity.CartItem"%>
 <%@page import="uuu.blackcake.entity.ShoppingCart"%>
 <%@page import="uuu.blackcake.entity.Outlet"%>
@@ -9,7 +10,10 @@
 <%@page import="uuu.blackcake.entity.ShoppingCart"%>
 <%@page import="java.util.List"%>
 <%@ page import="uuu.blackcake.entity.Customer"%>
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="java.time.format.DateTimeFormatter" %>
 <%@ page pageEncoding="UTF-8"%>
+<%! private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss"); %>
 <!doctype html>
 <html lang="en">
 
@@ -57,29 +61,32 @@
 	Order order =null;
 	if(member!=null && orderId!=null){
 		OrderService oService = new OrderService();
-// 		order=oService.get
+		order = oService.getOrderById(member, orderId);
 	}
 	%>
 		<div class="receipt-content">
 		<div class="container">
+			<%if(order==null){ %>
+			<h2>查無此訂單(<%=orderId%>)</h2>
+			<%}else{%>
 			<div class="row">
 				<div class="col-md-12">
 					<div class="invoice-wrapper">
 						<div class="intro">
 							您好 <strong><%=member!=null?member.getName():"" %></strong>,
 							<br>
-							本次訂單共 <strong></strong> (元) 感謝您的購買
+							本次訂單共 <strong><%=order.getTotalAmountWithFee() %></strong> (元) 感謝您的購買
 						</div>
 
 						<div class="payment-info">
 							<div class="row">
 								<div class="col-sm-6">
 									<span></span>
-									<strong>434334343</strong>
+									<strong>NO.<%=order.getId() %></strong>
 								</div>
 								<div class="col-sm-6 text-right">
-									<span>付款日期</span>
-									<strong>Jul 09, 2014 - 12:20 pm</strong>
+									<span>建立時間</span>
+									<strong><%=order.getCreateDate()%>  <%=order.getCreatTime().format(formatter) %></strong>
 								</div>
 							</div>
 						</div>
@@ -92,17 +99,25 @@
 										<%=member!=null?member.getName():"" %>
 									</strong>
 									<p>
-										<%=member!=null?member.getAddress():"" %>
+										地址:<%=member!=null?member.getAddress():"" %>
+										<br>
+										電話:<%=member!=null?member.getPhone():"" %>
+										<br>
+										Email:<%=member!=null?member.getEmail():"" %>
 										<br>
 									</p>
 								</div>
 								<div class="col-sm-6 text-right">
 									<span>收件人</span>
 									<strong>
-										Jimmy
+										<%=order.getReceiptName() %>
 									</strong>
 									<p>
-										台北市基隆路一段1號
+										地址:<%=order.getShippingAddres() %>
+										<br>
+										電話:<%=order.getReceiptPhone() %>
+										<br>
+										Email:<%=order.getReceiptEmail() %>
 										<br>
 									</p>
 								</div>
@@ -112,65 +127,52 @@
 						<div class="line-items">
 							<div class="headers clearfix">
 								<div class="row">
+									<div class="col-xs-5"></div>
 									<div class="col-xs-4">詳細/</div>
 									<div class="col-xs-3">數量/</div>
-									<div class="col-xs-5 text-right">總價</div>
+<!-- 									<div class="col-xs-5 text-right">小記</div> -->
 								</div>
 							</div>
 							<div class="items">
+							<%for(OrderItem orderItem:order.getOrderItemSet()){
+								Product p = orderItem.getProduct();
+								Size size = orderItem.getSize();
+							%>
 								<div class="row item">
+									<div class="col-xs-5 imgs">
+										<img src='<%=size!=null&&size.getPhotoURL()!=null?size.getPhotoURL():p.getPhotoUrl() %>'>
+									</div>
 									<div class="col-xs-4 desc">
-										黑糖糕
+										<%=p.getName() %>
 									</div>
 									<div class="col-xs-3 qty">
-										3個
+										<%=orderItem.getQuantity() %>
 									</div>
-									<div class="col-xs-5 amount text-right">
-										$60.00
-									</div>
+<!-- 									<div class="col-xs-3 amount text-right"> -->
+<%-- 										<%=orderItem.getPrice()*orderItem.getQuantity() %> --%>
+<!-- 									</div> -->
 								</div>
-								<div class="row item">
-									<div class="col-xs-4 desc">
-										干貝醬
-									</div>
-									<div class="col-xs-3 qty">
-										1個
-									</div>
-									<div class="col-xs-5 amount text-right">
-										$20.00
-									</div>
-								</div>
-								<div class="row item">
-									<div class="col-xs-4 desc">
-										小管片
-									</div>
-									<div class="col-xs-3 qty">
-										2個
-									</div>
-									<div class="col-xs-5 amount text-right">
-										$18.00
-									</div>
-								</div>
+
 							</div>
 							<div class="total text-right">
 								<p class="extra-notes">
 									<strong>備註</strong>
-									同時間於明日下午送達
+									<%=order.getShippingNote()!=null?order.getShippingNote():"" %>
 								</p>
 								<div class="field">
-									小記 <span>$379.00</span>
+									小記 <span>$<%=orderItem.getPrice()*orderItem.getQuantity() %></span>
 								</div>
 								<div class="field">
-									運費 <span>$0.00</span>
+									運費 <span>$<%=order.getShippingFee()>0?order.getShippingFee():"" %></span>
 								</div>
 								<div class="field">
-									折扣 <span>4.5%</span>
+									手續費 <span>$<%=order.getPaymentFee()>0?order.getPaymentFee():"" %></span>
 								</div>
 								<div class="field grand-total">
-									總金額 <span>$312.00</span>
+									總金額 <span>$<%=order.getTotalAmountWithFee() %></span>
 								</div>
 							</div>
-
+							<%} %>
 							<div class="print">
 								<a href="#">
 									<i class="fa fa-print"></i>
@@ -181,12 +183,13 @@
 					</div>
 
 					<div class="footer">
-						Copyright © 2022. 鮮記
+						<%@ include file='/subviews/footer.jsp' %>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<%} %>
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script

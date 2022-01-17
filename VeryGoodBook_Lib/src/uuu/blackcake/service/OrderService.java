@@ -19,6 +19,6 @@ public class OrderService {
 		return dao.selectOrderByCustomer(member.getEmail());
 	}
 	public Order getOrderById(Customer member,String orderId)throws BlackCakeException{
-		return dao.getOrderById(member.getEmail(),orderId);
+		return dao.selectOrderByCustomer(member.getEmail(), orderId);
 	}
 }
