@@ -30,8 +30,8 @@ public class TestOrder {
 			cart.addToCart(p1, null, null, 1);
 //			System.out.println(cart);
 			
-			Product p5 =pService.selectProductById("5");
-			cart.addToCart(p5,"大盒",null, 1);
+			Product p5 =pService.selectProductById("1");
+			cart.addToCart(p5,"",null, 3);
 
 			System.out.println(cart);
 			System.out.println("**********************************");
@@ -45,8 +45,8 @@ public class TestOrder {
 			ShippingType sType= ShippingType.valueOf("BLACKCAT");
 			order.setShippingType(sType);
 			order.setShippingFee(sType.getFee());
-			order.setReceiptName("Henry");
-			order.setReceiptEmail("Henry@gmail.com");
+			order.setReceiptName("Jimmy");
+			order.setReceiptEmail("Jimmy@gmail.com");
 			order.setReceiptPhone("0988665209");		
 			order.setShippingAddres("敦化北路158號");
 			

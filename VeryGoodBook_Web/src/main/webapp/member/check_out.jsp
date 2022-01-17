@@ -55,7 +55,7 @@ td>img {
     		$("input[name=name]").val('${sessionScope.member.name}');
     		$("input[name=phone]").val('${sessionScope.member.phone}');
     		$("input[name=email]").val('${sessionScope.member.email}');
-    		$("input[name=address]").val('${sessionScope.member.address}');	
+    		$("input[name=shippingAddress]").val('${sessionScope.member.address}');	
     	}else{
     		alert("請先登入");
     	}
@@ -79,7 +79,7 @@ td>img {
 		$("#totalAmount").text(Number(total)+feePrice+shipPrice);
 		
 	}
-<!-- </script> -->
+<!-- </script>
 <title>結帳</title>
 </head>
 
@@ -102,10 +102,15 @@ td>img {
 			<%
 			} else {
 			%>
+			<%
+			List<String> errors = (List<String>) request.getAttribute("errors");
+			%>
 			<div class="container">
+				<p>
+					<%=errors != null ? errors : ""%>
+				</p>
 				<h1 class="text-center">購物明細</h1>
-				<form action="<%=request.getContextPath()%>/member/order.jsp"
-					method="POST" id="cartForm">
+				<form action="check_out.do" method="POST" id="cartForm">
 					<table class="table table-hover">
 						<thead class="thead-dark  text-center">
 							<tr>
@@ -171,7 +176,7 @@ td>img {
 										<%
 										for (PaymentType pType : PaymentType.values()) {
 										%>
-										<option value='<%=pType.getPaymentName()%>'
+										<option value='<%=pType.name()%>'
 											data-fee="<%=pType.getFee()%>"><%=pType.toString()%></option>
 										<%
 										}
@@ -184,7 +189,7 @@ td>img {
 										<%
 										for (ShippingType sType : ShippingType.values()) {
 										%>
-										<option value='<%=sType.getShippingName()%>'
+										<option value='<%=sType.name()%>'
 											data-ship='<%=sType.getFee()%>'><%=sType.toString()%></option>
 										<%
 										}
@@ -206,22 +211,22 @@ td>img {
 										<div class="col-6 mb-3">
 											<label for="validationDefault01">姓名</label> <input
 												type="text" class="form-control" placeholder="姓名"
-												name='name' value="<%=member.getName()%>" readonly>
+												name='bName' value="<%=member.getName()%>" readonly>
 										</div>
 										<div class="col-6 mb-3">
 											<label for="validationDefault02">電話</label> <input
 												type="text" class="form-control" placeholder="phone"
-												name='phone' value="<%=member.getPhone()%>" readonly>
+												name='bPhone' value="<%=member.getPhone()%>" readonly>
 										</div>
 										<div class="col-6 mb-3">
 											<label for="validationDefault02">信箱</label> <input
 												type="text" class="form-control" placeholder="email"
-												name='email' value="<%=member.getEmail()%>" readonly>
+												name='bEmail' value="<%=member.getEmail()%>" readonly>
 										</div>
 										<div class="col-6 mb-3">
 											<label for="validationDefault02">地址</label> <input
 												type="text" class="form-control" placeholder="收件地址"
-												name='address' value="<%=member.getAddress()%>" readonly>
+												name='bAddress' value="<%=member.getAddress()%>" readonly>
 										</div>
 									</div>
 								</td>
@@ -241,14 +246,14 @@ td>img {
 												name='phone' required>
 										</div>
 										<div class="col-6 mb-3">
-											<label for="validationDefault02">信箱</label> <input
+											<label for="validationDefault03">信箱</label> <input
 												type="text" class="form-control" placeholder="email"
 												name='email' required>
 										</div>
 										<div class="col-6 mb-3">
-											<label for="validationDefault02">地址</label> <input
+											<label for="validationDefault04">收件地址</label> <input
 												type="text" class="form-control" placeholder="收件地址"
-												name='address' required>
+												name='shippingAddress' required>
 										</div>
 									</div>
 								</td>

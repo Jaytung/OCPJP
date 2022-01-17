@@ -55,11 +55,20 @@ td>img {
 
 <body>
 	<jsp:include page="/subviews/navbar.jsp">
-		<jsp:param value="結帳" name="subheader" />
+		<jsp:param value="歷史定單" name="subheader" />
 	</jsp:include>
 	<%Customer member = (Customer)session.getAttribute("member");
-// 	  OrderService oService = 
+	  OrderService oService = new OrderService();
+	  List<Order> list =null;
+	  if(member!=null){
+		  list=oService.getOrderHistory(member);
+	  }
 	%>
+	<%if(list==null||list.isEmpty()){%>
+	<div class="container">
+		<p>歷史清單是空的!</p>
+	</div>
+	<%}else{ %>
 	<table class="table table-hover">
 		<thead>
 			<tr>
@@ -67,29 +76,26 @@ td>img {
 				<th scope="col">訂單日期</th>
 				<th scope="col">付款方式</th>
 				<th scope="col">貨運方式</th>
+				<th scope="col">處理狀況</th>
 				<th scope="col">總金額</th>
+				<th scope="col">查看明細</th>
 			</tr>
 		</thead>
 		<tbody>
+		<% for(Order order:list){%>
 			<tr>
-				<th scope="row">1</th>
-				<td>000001</td>
-				<td>2022/1/09</td>
-				<td>ATM</td>
-				<td>黑貓</td>
-				<td>以收款</td>
+				<td><%=order.getId() %></td>
+				<td><%=order.getCreateDate()%><%=order.getCreatTime()%></td>
+				<td><%=order.getPaymentType() %></td>
+				<td><%=order.getShippingType() %></td>
+				<td><%=order.getStatus() %></td>
+				<td><%=order.getTotalAmountWithFee() %></td>
+				<td><a href='order.jsp?orderId=<%=order.getId()%>'>訂單明細</a></td>
 			</tr>
-			<tr>
-				<th scope="row">1</th>
-				<td>000002</td>
-				<td>2022/1/10</td>
-				<td>ATM</td>
-				<td>黑貓</td>
-				<td>2000元</td>
-				<td>帶付款</td>
-			</tr>
+			<%} %>
 		</tbody>
 	</table>
+	<%} %>
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script

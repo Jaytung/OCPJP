@@ -1,3 +1,5 @@
+<%@page import="uuu.blackcake.service.OrderService"%>
+<%@page import="uuu.blackcake.entity.Order"%>
 <%@page import="uuu.blackcake.entity.CartItem"%>
 <%@page import="uuu.blackcake.entity.ShoppingCart"%>
 <%@page import="uuu.blackcake.entity.Outlet"%>
@@ -47,10 +49,16 @@
 
 <body>
 	<jsp:include page="/subviews/navbar.jsp">
-		<jsp:param value="結帳" name="subheader" />
+		<jsp:param value="建立訂單成功" name="subheader" />
 	</jsp:include>
 	<%
 	Customer member = (Customer) session.getAttribute("member");
+	String orderId = request.getParameter("orderId");
+	Order order =null;
+	if(member!=null && orderId!=null){
+		OrderService oService = new OrderService();
+// 		order=oService.get
+	}
 	%>
 		<div class="receipt-content">
 		<div class="container">
@@ -66,7 +74,7 @@
 						<div class="payment-info">
 							<div class="row">
 								<div class="col-sm-6">
-									<span>訂單編號 No.</span>
+									<span></span>
 									<strong>434334343</strong>
 								</div>
 								<div class="col-sm-6 text-right">

@@ -79,7 +79,7 @@ Customer member = (Customer) session.getAttribute("member");
 				data-toggle="dropdown" aria-expanded="false"> 會員中心 </span>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="nav-link"><%=member!=null?member.getName()+"你好":"" %></a> 
-					<a class="nav-link" href="<%=request.getContextPath()%>/member/history.jsp">歷史訂單</a> 
+					<a class="nav-link" href="<%=request.getContextPath()%>/member/order_history.jsp">歷史訂單</a> 
 					<a class="nav-link" href="<%=request.getContextPath()%>/member/update.jsp">會員修改</a>
 					<a class="nav-link" href="<%=request.getContextPath()%>/logout.do">登出</a>
 				</div></li>
