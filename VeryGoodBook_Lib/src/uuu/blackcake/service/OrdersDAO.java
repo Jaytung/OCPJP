@@ -69,7 +69,7 @@ class OrdersDAO {
 				String spicy = orderItem.getSpicy();
 				// 3.1傳入pstmt2 ? 的值
 				pstmt2.setInt(1, order.getId());
-				pstmt2.setInt(2, orderItem.getProduct().getId());
+				pstmt2.setInt(2, p.getId());
 				pstmt2.setString(3, size != null ? size.getName() : "");
 				pstmt2.setString(4, spicy != null ? spicy : "");
 				pstmt2.setDouble(5, orderItem.getPrice());
@@ -144,11 +144,11 @@ class OrdersDAO {
 		return list;
 	}
 
-	private static final String GET_ORDER_BY_ID=
+	private static final String GET_ORDER_BY_ID = 
 			"SELECT orders.id, member_id, created_date, created_time,\r\n"
 			+ " receipt_name, receipt_email, receipt_phone, shipping_addres,\r\n"
 			+ " payment_type, payment_fee, payment_note, shipping_type,\r\n"
-			+ " shipping_fee, shipping_note, status \r\n"
+			+ " shipping_fee, shipping_note, status, \r\n"
 			+ " order_id, order_items.product_id, product.name as product_name,product.photo_url,\r\n"
 			+ " order_items.size_name, products_sizes.size_name as p_size_name,\r\n"
 			+ " products_sizes.photo_url as size_photo,\r\n"
@@ -157,7 +157,7 @@ class OrdersDAO {
 			+ "			JOIN  product ON order_items.product_id = product.id\r\n"
 			+ "				LEFT JOIN products_sizes ON order_items.product_id = products_sizes.product_id\r\n"
 			+ "                AND order_items.size_name = products_sizes.size_name\r\n"
-			+ "WHERE member_id='?' AND orders.id='?';";
+			+ "WHERE member_id= ? AND orders.id= ?";
 	Order selectOrderByCustomer(String email, String orderId)throws BlackCakeException {
 		Order order =null;
 		try(

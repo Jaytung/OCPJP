@@ -18,7 +18,8 @@ public class OrderService {
 			throw new IllegalArgumentException("查詢歷史訂單member物件不能為null");
 		return dao.selectOrderByCustomer(member.getEmail());
 	}
-	public Order getOrderById(Customer member,String orderId)throws BlackCakeException{
+	public Order getOrderById(Customer member,String orderId)
+			throws BlackCakeException{
 		return dao.selectOrderByCustomer(member.getEmail(), orderId);
 	}
 }

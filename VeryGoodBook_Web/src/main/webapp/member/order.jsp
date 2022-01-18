@@ -44,7 +44,10 @@
  .container { 
  	margin-top: 2vh;
 } 
-
+.imgs{
+	width: 150px;
+	height: auto;
+}
 /* td>img { */
 /* 	width: 100px; */
 </style>
@@ -127,10 +130,10 @@
 						<div class="line-items">
 							<div class="headers clearfix">
 								<div class="row">
-									<div class="col-xs-5"></div>
-									<div class="col-xs-4">詳細/</div>
-									<div class="col-xs-3">數量/</div>
-<!-- 									<div class="col-xs-5 text-right">小記</div> -->
+									<div class="col-md-2"></div>
+									<div class="col-md-4">詳細/</div>
+									<div class="col-md-3 text-right">數量/</div>
+									<div class="col-md-3 text-right">小記</div>
 								</div>
 							</div>
 							<div class="items">
@@ -138,30 +141,33 @@
 								Product p = orderItem.getProduct();
 								Size size = orderItem.getSize();
 							%>
-								<div class="row item">
-									<div class="col-xs-5 imgs">
-										<img src='<%=size!=null&&size.getPhotoURL()!=null?size.getPhotoURL():p.getPhotoUrl() %>'>
+								<div class="row item border-bottom">
+									<div class="col-md-2 ">
+										<img class="imgs" src='<%=request.getContextPath()%>/<%=size!=null&&size.getPhotoURL()!=null?size.getPhotoURL():p.getPhotoUrl() %>'>
 									</div>
-									<div class="col-xs-4 desc">
+									<div class="col-md-4 text-center desc">
+										 <br>
+										 <br>
+										 <br>
 										<%=p.getName() %>
 									</div>
-									<div class="col-xs-3 qty">
-										<%=orderItem.getQuantity() %>
+									<div class="col-md-3 qty text-right">
+										共<%=orderItem.getQuantity() %>件
 									</div>
-<!-- 									<div class="col-xs-3 amount text-right"> -->
-<%-- 										<%=orderItem.getPrice()*orderItem.getQuantity() %> --%>
-<!-- 									</div> -->
+									<div class="col-md-3 amount text-right">
+										<%=orderItem.getPrice()*orderItem.getQuantity() %>
+									</div>
 								</div>
-
+							<%} %>
 							</div>
 							<div class="total text-right">
 								<p class="extra-notes">
 									<strong>備註</strong>
 									<%=order.getShippingNote()!=null?order.getShippingNote():"" %>
 								</p>
-								<div class="field">
-									小記 <span>$<%=orderItem.getPrice()*orderItem.getQuantity() %></span>
-								</div>
+<!-- 								<div class="field"> -->
+<%-- 									小記 <span>$<%=orderItem.getPrice()*orderItem.getQuantity() %></span> --%>
+<!-- 								</div> -->
 								<div class="field">
 									運費 <span>$<%=order.getShippingFee()>0?order.getShippingFee():"" %></span>
 								</div>
@@ -172,7 +178,7 @@
 									總金額 <span>$<%=order.getTotalAmountWithFee() %></span>
 								</div>
 							</div>
-							<%} %>
+						
 							<div class="print">
 								<a href="#">
 									<i class="fa fa-print"></i>

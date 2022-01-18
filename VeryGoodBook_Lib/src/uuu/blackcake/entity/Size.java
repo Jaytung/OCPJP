@@ -1,14 +1,22 @@
 package uuu.blackcake.entity;
 
-import uuu.blackcake.exception.DataInvalidException;
-
-public class Size {
+public class Size implements Comparable<Size> {
 	private String name;//PKey
 	private String photoURL;
 	private String iconURL;
 	private int stock;
 	private int price;
+	private int listPrice;
+	private int ordinal;
 	
+
+	public int getListPrice() {
+		return listPrice;
+	}
+
+	public void setListPrice(int listPrice) {
+		this.listPrice = listPrice;
+	}
 	public int getPrice() {
 		return price;
 	}
@@ -76,6 +84,19 @@ public class Size {
 	@Override
 	public String toString() {
 		return this.getClass().getSimpleName()+"大小名稱:"+name+"\n"+"庫存:"+stock+",\n"
-		+"photoURL:"+photoURL+"\n"+"iconURL:"+iconURL+"\n"+"Size_price:"+price;
+		+"photoURL:"+photoURL+"\n"+"iconURL:"+iconURL+"\n"+"Size_price:"+price+"\n 定價:"+listPrice;
+	}
+
+	public int getOrdinal() {
+		return ordinal;
+	}
+
+	public void setOrdinal(int ordinal) {
+		this.ordinal = ordinal;
+	}
+
+	@Override
+	public int compareTo(Size another) {
+		return this.ordinal-another.ordinal;
 	}
 }

@@ -44,6 +44,14 @@
 td>img {
 	width: 100px;
 }
+
+#finalCalAmount {
+	font-size: 1.2rem;
+}
+
+#finalCalAmount span {
+	color: #20A720;
+}
 </style>
 <script>
 
@@ -161,6 +169,13 @@ td>img {
 						</tfoot>
 					</table>
 					<hr>
+					<div>
+						<div class="text-monospace text-center" id="finalCalAmount">
+							商品總金額:<span><%=cart.getTotalAmount()%></span>元&nbsp; 手續費:<span
+								id="feePrice"></span>&nbsp; 運費:<span id="shipPrice"></span><br>
+							總付款金額:<span id="totalAmount"></span>
+						</div>
+					</div>
 					<table class="table table-borderless">
 						<thead>
 							<tr>
@@ -195,11 +210,6 @@ td>img {
 										}
 										%>
 								</select></td>
-							</tr>
-							<tr>
-								<td>商品總金額: <%=cart.getTotalAmount()%>元&nbsp; 手續費:<span
-									id="feePrice"></span>&nbsp; 運費:<span id="shipPrice"></span><br>
-									總付款金額:<span id="totalAmount"></span></td>
 							</tr>
 							<%
 							Customer member = (Customer) session.getAttribute("member");

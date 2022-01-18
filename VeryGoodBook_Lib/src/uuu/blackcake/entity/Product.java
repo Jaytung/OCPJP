@@ -14,9 +14,9 @@ public class Product {
 	private LocalDate shelfDate;// 必要,以上架當日為預設值,RW
 	private String photoUrl;
 	private String photoUrl1;
-
 	private String category;
 	private Map<String,Size> sizeMap=new HashMap<>();
+	private boolean hasSize;
 	
 	
 	//accessors(getter)for sizeMap
@@ -198,6 +198,14 @@ public class Product {
 		+ "size=" + "\n" + "unitPrice=" + unitPrice + "\n" + "on sale: " + "% off\n" 
 		+ "stock=" + stock+ "\n" + "description=" + description + "\n" + "shelfDate=" + shelfDate 
 		+ "\n" + "photoUrl=" + photoUrl + "\n"+"Category ="+category+ "\n"+"SizeMap:"+sizeMap;
+	}
+
+	public boolean isSize() {
+		return hasSize;
+	}
+
+	public void setSize(boolean hasSize) {
+		this.hasSize = hasSize;
 	}
 
 
