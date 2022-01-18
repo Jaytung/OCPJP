@@ -11,6 +11,7 @@ import java.util.List;
 import uuu.blackcake.entity.Outlet;
 import uuu.blackcake.entity.Product;
 import uuu.blackcake.entity.Size;
+import uuu.blackcake.entity.Spicy;
 import uuu.blackcake.exception.BlackCakeException;
 
 class ProductsDAO {
@@ -142,9 +143,12 @@ class ProductsDAO {
 		"SELECT id, name, unit_price,  description, shelf_date, unit_Discount, category, brand, "
 		+ "product_id, size_name, icon_url, "
 		+ "products_sizes.size_price as size_price, "
+		+ "products_spicy.spicy_name AS spicy_name, "
+		+ "products_spicy.stock AS spicy_stock, "
 		+ "product.stock,products_sizes.stock AS size_stock, "
 		+ "product.photo_url, product.photo_url_1, products_sizes.photo_url AS photo_url "
 		+ "FROM product LEFT JOIN products_sizes ON product.id=product_id "
+		+ "LEFT JOIN products_spicy ON product.id=products_spicy.product_id"
 		+ "WHERE  id= ?;";
 	public Product selectProductById(String id)throws BlackCakeException {
 		Product p = null;
@@ -195,6 +199,13 @@ class ProductsDAO {
 					p.add(size);
 					}
 					System.out.println(p);
+					
+					String spicyName=rs.getString("spicy_name");
+					if(spicyName!=null) {
+						Spicy spicy = new Spicy();
+						spicy.setName(spicyName);
+						spicy.setId(rs.getInt(""));
+					}
 				}
 			}
 		} catch (SQLException e) {

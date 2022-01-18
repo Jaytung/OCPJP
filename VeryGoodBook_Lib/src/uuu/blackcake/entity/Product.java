@@ -16,8 +16,16 @@ public class Product {
 	private String photoUrl1;
 	private String category;
 	private Map<String,Size> sizeMap=new HashMap<>();
+	private Map<String,Spicy> spicyMap=new HashMap<>();
 	private boolean hasSize;
 	
+	
+	public Spicy getspicy(String spicyName) {
+		if(spicyName==null)
+			throw new IllegalArgumentException("辣度不得為null");
+		Spicy spicy = spicyMap.get(spicyName);
+		return spicy;
+	}
 	
 	//accessors(getter)for sizeMap
 	public Size getsize(String sizeName) {
@@ -29,6 +37,11 @@ public class Product {
 		
 		return size;
 	}
+	public void add (Spicy spicy) {
+		if(spicy==null||spicy.getName()==null)
+			throw new IllegalArgumentException("產品辣度不得為null");
+		spicyMap.put(spicy.getName(), spicy);
+	}
 	
 	//mutators(setter)for sizeMap
 	public void add(Size size) {
@@ -37,15 +50,24 @@ public class Product {
 		sizeMap.put(size.getName(), size);
 	}
 	
+	public int getSpicyMapSize() {
+		return spicyMap.size();
+	}
 	
 	public int getSizeMapSize() {
 		return sizeMap.size();
 	}
-
+	
+	public boolean isSpicyMapEmpty() {
+		return spicyMap.isEmpty();
+	}
 	public boolean isSizeMapEmpty() {
 		return sizeMap.isEmpty();
 	}
-
+	
+	public Collection<Spicy> getSpicy(){
+		return spicyMap.values();
+	}
 	public Collection<Size> getSizes() {
 		return sizeMap.values();
 	}
@@ -197,7 +219,7 @@ public class Product {
 		return this.getClass().getName() + "\n" + "Product id=" + id + "\n" + "name=" + name + "\n"
 		+ "size=" + "\n" + "unitPrice=" + unitPrice + "\n" + "on sale: " + "% off\n" 
 		+ "stock=" + stock+ "\n" + "description=" + description + "\n" + "shelfDate=" + shelfDate 
-		+ "\n" + "photoUrl=" + photoUrl + "\n"+"Category ="+category+ "\n"+"SizeMap:"+sizeMap;
+		+ "\n" + "photoUrl=" + photoUrl + "\n"+"Category ="+category+ "\n"+"SizeMap:"+sizeMap+"\n SpicyMap:"+spicyMap;
 	}
 
 	public boolean isSize() {

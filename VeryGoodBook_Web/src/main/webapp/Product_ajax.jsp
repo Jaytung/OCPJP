@@ -1,4 +1,5 @@
 <%@page import="uuu.blackcake.entity.Size"%>
+<%@page import="uuu.blackcake.entity.Spicy"%>
 <%@page import="uuu.blackcake.entity.Outlet"%>
 <%@page import="uuu.blackcake.entity.Product"%>
 <%@page import="uuu.blackcake.service.ProductService"%>
@@ -258,7 +259,8 @@
 								<%
 								for (Size size : p.getSizes()) {
 								%>
-								<label class="btn btn-dark" for="<%=size.getName()%>"> <input
+								<label class="btn btn-dark" for="<%=size.getName()%>"> 
+								<input
 									type="radio" name="size" value="<%=size.getName()%>"
 									id="<%=size.getName()%>" title='<%=size.getName()%>'
 									data-stock='<%=size.getStock()%>'
@@ -269,8 +271,19 @@
 								}
 								%>
 								<%
-								}
+								}else if(p.getSpicyMapSize()>0){
 								%>
+								<%
+								for(Spicy spicy :p.getSpicy()){
+								%>
+									<label class="btn btn-dark" for="<%=spicy.getName()%>"> <input
+									type="radio" name="size" value="<%=spicy.getName()%>"
+									id="<%=spicy.getName()%>" title='<%=spicy.getName()%>'
+									data-stock='<%=spicy.getStock()%>' Value="<%=spicy.getName()%>"
+									onclick='changeData(this)' required="required"> <%=spicy.getName()%>
+								</label>
+								<%} %>
+								<%} %>
 							</div>
 						</div>
 					</div>
@@ -305,6 +318,7 @@
 				<%
 				}
 				%>
+				
 				<%
 				}
 				%>
