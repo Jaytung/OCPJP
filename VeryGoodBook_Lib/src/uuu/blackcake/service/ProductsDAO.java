@@ -141,15 +141,16 @@ class ProductsDAO {
 	//大小價格查詢
 	private static final String SELECT_PRODUCT_BY_ID=
 		"SELECT id, name, unit_price,  description, shelf_date, unit_Discount, category, brand, "
-		+ "product_id, size_name, icon_url, "
-		+ "products_sizes.size_price as size_price, "
-		+ "products_spicy.spicy_name AS spicy_name, "
+		+ "products_sizes.product_id, size_name,  icon_url, "
+		+ "products_sizes.size_price AS size_price, "
+		+ "products_spicy.spicy_name AS spicy_name,"
 		+ "products_spicy.stock AS spicy_stock, "
 		+ "product.stock,products_sizes.stock AS size_stock, "
-		+ "product.photo_url, product.photo_url_1, products_sizes.photo_url AS photo_url "
-		+ "FROM product LEFT JOIN products_sizes ON product.id=product_id "
-		+ "LEFT JOIN products_spicy ON product.id=products_spicy.product_id"
-		+ "WHERE  id= ?;";
+		+ "product.photo_url,products_sizes.photo_url AS photo_url "
+		+ "FROM product "
+		+ "	LEFT JOIN products_sizes ON product.id=product_id "
+		+ "		LEFT JOIN products_spicy ON product.id=products_spicy.product_id "
+		+ "WHERE  id= 5 ";
 	public Product selectProductById(String id)throws BlackCakeException {
 		Product p = null;
 		try(
@@ -204,7 +205,7 @@ class ProductsDAO {
 					if(spicyName!=null) {
 						Spicy spicy = new Spicy();
 						spicy.setName(spicyName);
-						spicy.setId(rs.getInt(""));
+						spicy.setStock(rs.getInt("spicy_stock"));
 					}
 				}
 			}

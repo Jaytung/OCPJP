@@ -45,7 +45,7 @@ public class CaptchaServlet extends HttpServlet {
     		this.len=Integer.parseInt(len);
     		width = 16 * 2 + 12*this.len;
     	}
-	}
+    }
 
 	private BufferedImage generateImage(String rand, int width, int height) {
         //開始建立圖片
