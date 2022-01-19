@@ -52,8 +52,8 @@ public class TestOrder {
 			order.setShippingAddres("敦化北路158號");
 			
 			order.add(cart);
-			OrderService oService = new OrderService();
-			oService.createOrder(order);
+//			OrderService oService = new OrderService();
+//			oService.createOrder(order);
 			System.out.println("********************************");
 			System.out.println(order);
 			

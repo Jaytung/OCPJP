@@ -217,4 +217,9 @@ class ProductsDAO {
 		}
 		return p;
 	}
+	private static final String SELECT_PRODUCT_REAL_TIME_STOCK="";
+	public int selectProductRealTimeStock(int id, String sizeName, String spicyName) {
+		//TODO:即時庫存查詢
+		return 0;
+	}
 }

@@ -11,4 +11,4 @@ SELECT orders.id, member_id, created_date, created_time,
 			JOIN  product ON order_items.product_id = product.id
 				LEFT JOIN products_sizes ON order_items.product_id = products_sizes.product_id
                 AND order_items.size_name = products_sizes.size_name
-WHERE member_id='jimmy@gmail.com' AND orders.id='7'
+WHERE member_id='jimmy@gmail.com' AND orders.id='9'

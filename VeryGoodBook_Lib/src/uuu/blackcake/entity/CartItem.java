@@ -61,7 +61,7 @@ public class CartItem {
 				throw new DataInvalidException("明細中查無資料");
 			}
 		}else {
-			return size.getListPrice();
+			return size.getPrice();
 		}
 	}
 	@Override

@@ -31,13 +31,17 @@ class OrdersDAO {
 	void insert(Order order) throws BlackCakeException {
 		if (order == null)
 			throw new IllegalArgumentException("新增訂單不能為null");
-		try {
+		try (
 			// 1,2 取得連線
 			Connection connection = RDBConnection.getConnection();
 			// 讀回自動給號的號碼,不然無法取得單號
 			PreparedStatement pstmt1 = connection.prepareStatement(INSERT_ORDER, Statement.RETURN_GENERATED_KEYS);// 3.準備pstmt
 			PreparedStatement pstmt2 = connection.prepareStatement(INSERT_ORDER_ITEM, Statement.RETURN_GENERATED_KEYS);
-
+			){
+					
+			connection.setAutoCommit(false);//begain trans
+			try {
+			//新增鄧單
 			// 3.1準備?的值
 			pstmt1.setInt(1, order.getId());
 			pstmt1.setString(2, order.getMember().getEmail());
@@ -58,11 +62,11 @@ class OrdersDAO {
 			// 讀取key...
 			try (ResultSet rs = pstmt1.getGeneratedKeys();) {
 				while (rs.next()) {
-//					int id = rs.getInt(1)
 					order.setId(rs.getInt(1));
 
 				}
 			}
+			
 			// 新增訂單
 			for (OrderItem orderItem : order.getOrderItemSet()) {
 				Product p = orderItem.getProduct();
@@ -78,6 +82,15 @@ class OrdersDAO {
 				// 4.執行pstmt2指令
 				pstmt2.executeUpdate();
 
+			}
+			 
+			connection.commit();//commit
+			}catch(Exception e) {
+			//或rollback	
+				connection.rollback();
+				throw e;//rollback後交給下方Exception處理
+			}finally {
+				connection.setAutoCommit(true);
 			}
 		} catch (SQLException e) {
 			throw new BlackCakeException("新增訂單失敗", e);

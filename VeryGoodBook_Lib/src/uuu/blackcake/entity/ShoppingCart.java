@@ -99,7 +99,7 @@ public class ShoppingCart {
 		double sum =0;
 		for(CartItem item:cartMap.keySet()) {
 //			double sizePrice = item.getSize().getPrice();
-			double price = item.getProduct().getUnitPrice();
+			double price = item.getListPirce();
 			Integer qty = cartMap.get(item);
 			if(qty!=null)sum= sum+price*qty;
 		}

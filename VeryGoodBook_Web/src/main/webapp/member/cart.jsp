@@ -114,7 +114,7 @@ td>img {
 						<td><%=spicy!=null?spicy.getName():""%></td>
 <!-- 						size.getPrice()!=0?size.getPrice(): -->
 						<%//TODO:改為sizePrice %>
-						<td><%=p instanceof Outlet ? ((Outlet) p).getListPrice() : p.getUnitPrice()%></td>
+						<td><%=p.getName()%></td>
 						<td><%=p instanceof Outlet ? ((Outlet) p).getDiscountString() : ""%></td>
 <!-- 						size.getPrice()!=0?size.getPrice(): -->
 						<td><%=p.getUnitPrice()%></td>

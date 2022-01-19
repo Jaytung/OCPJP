@@ -3,6 +3,8 @@ package uuu.blackcake.service;
 import java.util.List;
 
 import uuu.blackcake.entity.Product;
+import uuu.blackcake.entity.Size;
+import uuu.blackcake.entity.Spicy;
 import uuu.blackcake.exception.BlackCakeException;
 
 public class ProductService {
@@ -18,5 +20,10 @@ public class ProductService {
 	}
 	public Product selectProductById(String id) throws BlackCakeException {
 		return dao.selectProductById(id);
-}
+	}
+	public int getProductStock(Product p,Size size, Spicy spicy) {
+		String sizeName = size!=null?size.getName():"";
+		String spicyName = spicy!=null?spicy.getName():"";
+		return dao.selectProductRealTimeStock(p.getId(),sizeName,spicyName);
+	}
 }
