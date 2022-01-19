@@ -30,8 +30,9 @@ public class TestOrder {
 			cart.addToCart(p1, null, null, 1);
 //			System.out.println(cart);
 			
-			Product p5 =pService.selectProductById("1");
-			cart.addToCart(p5,"",null, 3);
+			Product p5 =pService.selectProductById("2");
+			cart.addToCart(p5,null,"大辣", 3);
+			cart.add(p5, null, null, 0);
 
 			System.out.println(cart);
 			System.out.println("**********************************");

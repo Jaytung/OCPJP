@@ -43,7 +43,7 @@ public class ShoppingCart {
 	}
 	
 	//mutator
-	public void addToCart(Product product , String sizeName,String spicy,int quantity) {
+	public void addToCart(Product product, String sizeName, String spicyName, int quantity) {
 		if(product==null)
 			throw new IllegalArgumentException("加入購物車產品不得為null");
 		
@@ -53,7 +53,10 @@ public class ShoppingCart {
 		}
 		//TODO:檢查前端傳入sizeName與後端產品的清單對應是否正確
 //		else if() {...}
-		if(spicy==null) spicy="";
+		Spicy spicy = null;
+		if(spicyName!=null&&spicyName.length()>0){
+			spicy = product.getspicy(spicyName);
+		}
 		
 		if(quantity<=0) throw new IllegalArgumentException("加入購物車數量不能小於1");
 		CartItem item = new CartItem();

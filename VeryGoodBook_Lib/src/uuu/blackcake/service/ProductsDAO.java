@@ -146,11 +146,12 @@ class ProductsDAO {
 		+ "products_spicy.spicy_name AS spicy_name,"
 		+ "products_spicy.stock AS spicy_stock, "
 		+ "product.stock,products_sizes.stock AS size_stock, "
-		+ "product.photo_url,products_sizes.photo_url AS photo_url "
+		+ "product.photo_url,products_sizes.photo_url AS photo_url, "
+		+ "product.photo_url_1 "
 		+ "FROM product "
 		+ "	LEFT JOIN products_sizes ON product.id=product_id "
 		+ "		LEFT JOIN products_spicy ON product.id=products_spicy.product_id "
-		+ "WHERE  id= 5 ";
+		+ "WHERE  id= ?";
 	public Product selectProductById(String id)throws BlackCakeException {
 		Product p = null;
 		try(
@@ -206,6 +207,8 @@ class ProductsDAO {
 						Spicy spicy = new Spicy();
 						spicy.setName(spicyName);
 						spicy.setStock(rs.getInt("spicy_stock"));
+						System.out.println(spicy);
+						p.add(spicy);
 					}
 				}
 			}

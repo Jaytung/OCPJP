@@ -154,13 +154,23 @@
 		$(".smallPic").removeClass("selected");
 		$(this).addClass("selected");
 	}
-	function changeData(theObj) {
+	function changeSizeData(theObj) {
 		// 				alert($(theObj).attr("src"));
 		// 				alert($(theObj).attr("title"));
 		// 				alert($(theObj).attr("data-price"));
 
 		$(".sizePrice").text(
 				$(theObj).attr("title") + $(theObj).attr("data-price") + "元");
+		$("#sizeStock").text(
+				$(theObj).attr("title") + "剩餘" + $(theObj).attr("data-stock")
+						+ "個");
+		$("input[name='quantity']").attr("max", $(theObj).attr("data-stock"));
+		// 				$(".price").attr("text", $(theObj).attr("data-price"));
+	}
+	function changeSpciyData(theObj) {
+		// 				alert($(theObj).attr("src"));
+		// 				alert($(theObj).attr("title"));
+		// 				alert($(theObj).attr("data-price"));
 		$("#sizeStock").text(
 				$(theObj).attr("title") + "剩餘" + $(theObj).attr("data-stock")
 						+ "個");
@@ -265,7 +275,7 @@
 									id="<%=size.getName()%>" title='<%=size.getName()%>'
 									data-stock='<%=size.getStock()%>'
 									data-price='<%=size.getPrice()%>' Value="<%=size.getName()%>"
-									onclick='changeData(this)' required="required"> <%=size.getName()%>
+									onclick='changeSizeData(this)' required="required"> <%=size.getName()%>
 								</label>
 								<%
 								}
@@ -277,10 +287,10 @@
 								for(Spicy spicy :p.getSpicy()){
 								%>
 									<label class="btn btn-dark" for="<%=spicy.getName()%>"> <input
-									type="radio" name="size" value="<%=spicy.getName()%>"
+									type="radio" name="spicy" value="<%=spicy.getName()%>" 
 									id="<%=spicy.getName()%>" title='<%=spicy.getName()%>'
 									data-stock='<%=spicy.getStock()%>' Value="<%=spicy.getName()%>"
-									onclick='changeData(this)' required="required"> <%=spicy.getName()%>
+									onclick='changeSpciyData(this)' required="required"> <%=spicy.getName()%>
 								</label>
 								<%} %>
 								<%} %>

@@ -1,9 +1,11 @@
 package uuu.blackcake.entity;
 
+import uuu.blackcake.exception.DataInvalidException;
+
 public class CartItem {
 	private Product product;//Pkey
 	private Size size;//Pkey
-	private String Spicy="";//Pkey
+	private Spicy spicy;//Pkey
 	
 	public Product getProduct() {
 		return product;
@@ -15,9 +17,7 @@ public class CartItem {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Spicy == null) ? 0 : Spicy.hashCode());
-		result = prime * result + ((product == null) ? 0 : product.hashCode());
-		result = prime * result + ((size == null) ? 0 : size.hashCode());
+		result = prime * result + ((spicy == null) ? 0 : spicy.hashCode());
 		return result;
 	}
 	@Override
@@ -32,25 +32,11 @@ public class CartItem {
 			return false;
 		}
 		CartItem other = (CartItem) obj;
-		if (Spicy == null) {
-			if (other.Spicy != null) {
+		if (spicy == null) {
+			if (other.spicy != null) {
 				return false;
 			}
-		} else if (!Spicy.equals(other.Spicy)) {
-			return false;
-		}
-		if (product == null) {
-			if (other.product != null) {
-				return false;
-			}
-		} else if (!product.equals(other.product)) {
-			return false;
-		}
-		if (size == null) {
-			if (other.size != null) {
-				return false;
-			}
-		} else if (!size.equals(other.size)) {
+		} else if (!spicy.equals(other.spicy)) {
 			return false;
 		}
 		return true;
@@ -61,14 +47,25 @@ public class CartItem {
 	public void setSize(Size size) {
 		this.size = size;
 	}
-	public String getSpicy() {
-		return Spicy;
+	public Spicy getSpicy() {
+		return spicy;
 	}
-	public void setSpicy(String spicy) {
-		Spicy = spicy;
+	public void setSpicy(Spicy spicy) {
+		this.spicy = spicy;
+	}
+	public double getListPirce() {
+		if(size==null) {
+			if(product!=null) {
+				return product.getUnitPrice();
+			}else {
+				throw new DataInvalidException("明細中查無資料");
+			}
+		}else {
+			return size.getListPrice();
+		}
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName()+ "CartItem: \n product=" + product + ", \n Spicy=" + Spicy;
+		return this.getClass().getSimpleName()+ "CartItem: \n product=" + product + ", \n Spicy=" + spicy;
 	}
 }

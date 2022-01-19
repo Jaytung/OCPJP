@@ -24,7 +24,7 @@
 <!-- Custom CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/app.css">
 <style>
-body {
+.container {
 	margin-top: 12vh;
 }
 

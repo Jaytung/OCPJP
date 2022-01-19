@@ -18,10 +18,10 @@ public class TestShoppingCart {
 		ProductService pService = new ProductService();
 		try {
 			Customer member = cService.login("jimmy@gmail.com","asd12345");
-			Product p1 = pService.selectProductById("1");
+			Product p1 = pService.selectProductById("2");
 			ShoppingCart cart = new ShoppingCart();
 			cart.setMember(member);
-			cart.addToCart(p1, null, null, 1);
+			cart.addToCart(p1, null, "大辣", 1);
 			System.out.println(cart);
 			
 			Product p5 =pService.selectProductById("5");

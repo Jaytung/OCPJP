@@ -3,7 +3,7 @@ package uuu.blackcake.entity;
 public class OrderItem {
 	private Product product;//Pkey
 	private Size size;//Pkey
-	private String spicy;//Pkey
+	private Spicy spicy;//Pkey
 	private double price;//交易價
 	private int quantity;
 	
@@ -63,10 +63,10 @@ public class OrderItem {
 	public void setSize(Size size) {
 		this.size = size;
 	}
-	public String getSpicy() {
+	public Spicy getSpicy() {
 		return spicy;
 	}
-	public void setSpicy(String spicy) {
+	public void setSpicy(Spicy spicy) {
 		this.spicy = spicy;
 	}
 	public double getPrice() {

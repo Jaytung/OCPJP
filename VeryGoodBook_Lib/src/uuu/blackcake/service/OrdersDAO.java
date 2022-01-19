@@ -17,6 +17,7 @@ import uuu.blackcake.entity.PaymentType;
 import uuu.blackcake.entity.Product;
 import uuu.blackcake.entity.ShippingType;
 import uuu.blackcake.entity.Size;
+import uuu.blackcake.entity.Spicy;
 import uuu.blackcake.exception.BlackCakeException;
 
 class OrdersDAO {
@@ -66,12 +67,12 @@ class OrdersDAO {
 			for (OrderItem orderItem : order.getOrderItemSet()) {
 				Product p = orderItem.getProduct();
 				Size size = orderItem.getSize();
-				String spicy = orderItem.getSpicy();
+				Spicy spicy = orderItem.getSpicy();
 				// 3.1傳入pstmt2 ? 的值
 				pstmt2.setInt(1, order.getId());
 				pstmt2.setInt(2, p.getId());
 				pstmt2.setString(3, size != null ? size.getName() : "");
-				pstmt2.setString(4, spicy != null ? spicy : "");
+				pstmt2.setString(4, spicy != null ? spicy.getName(): "");
 				pstmt2.setDouble(5, orderItem.getPrice());
 				pstmt2.setInt(6, orderItem.getQuantity());
 				// 4.執行pstmt2指令
@@ -225,10 +226,15 @@ class OrdersDAO {
 						size.setPhotoURL(rs.getString("size_photo"));
 						orderItem.setSize(size);
 					}
-					orderItem.setSpicy(rs.getString("spicy"));
+					String spicyName=rs.getString("spicy");
+					Spicy spicy=null;
+					if(spicyName!=null) {
+						spicy = new Spicy();
+						spicy.setName(rs.getString("spicy"));
+						orderItem.setSpicy(spicy);
+					}
 					orderItem.setPrice(rs.getDouble("price"));
-					orderItem.setQuantity(rs.getInt("quantity"));
-					
+					orderItem.setQuantity(rs.getInt("quantity"));					
 					order.add(orderItem);
 				}
 			}

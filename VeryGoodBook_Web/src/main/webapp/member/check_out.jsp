@@ -4,6 +4,7 @@
 <%@page import="uuu.blackcake.entity.ShoppingCart"%>
 <%@page import="uuu.blackcake.entity.Outlet"%>
 <%@page import="uuu.blackcake.entity.Size"%>
+<%@page import="uuu.blackcake.entity.Spicy"%>
 <%@page import="uuu.blackcake.entity.Product"%>
 <%@page import="uuu.blackcake.entity.CartItem"%>
 <%@page import="uuu.blackcake.entity.ShoppingCart"%>
@@ -137,7 +138,7 @@ td>img {
 							for (CartItem item : cart.getCartItemSet()) {
 								Product p = item.getProduct();
 								Size size = item.getSize();
-								String spicy = item.getSpicy();
+								Spicy spicy = item.getSpicy();
 								int qty = cart.getQuantity(item);
 								int stock = size != null ? size.getStock() : p.getStock();
 							%>
@@ -145,7 +146,7 @@ td>img {
 								<td><img src="/blackcake/<%=p.getPhotoUrl()%>"><%=p.getName()%>
 									<span>庫存剩餘:<%=stock%></span></td>
 								<td><%=size != null ? size.getName() : ""%></td>
-								<td><%=spicy%></td>
+								<td><%=spicy!=null?spicy.getName():""%></td>
 								<!-- 								size.getPrice() != 0 ? size.getPrice() :  -->
 								<td><%=p instanceof Outlet ? ((Outlet) p).getListPrice() : p.getUnitPrice()%></td>
 								<td><%=p instanceof Outlet ? ((Outlet) p).getDiscountString() : ""%></td>

@@ -5,6 +5,7 @@
 <%@page import="uuu.blackcake.entity.ShoppingCart"%>
 <%@page import="uuu.blackcake.entity.Outlet"%>
 <%@page import="uuu.blackcake.entity.Size"%>
+<%@page import="uuu.blackcake.entity.Spicy"%>
 <%@page import="uuu.blackcake.entity.Product"%>
 <%@page import="uuu.blackcake.entity.CartItem"%>
 <%@page import="uuu.blackcake.entity.ShoppingCart"%>
@@ -140,6 +141,7 @@
 							<%for(OrderItem orderItem:order.getOrderItemSet()){
 								Product p = orderItem.getProduct();
 								Size size = orderItem.getSize();
+								Spicy spicy = orderItem.getSpicy();
 							%>
 								<div class="row item border-bottom">
 									<div class="col-md-2 ">
@@ -149,7 +151,7 @@
 										 <br>
 										 <br>
 										 <br>
-										<%=p.getName() %>
+										<%=p.getName()%><%=spicy!=null?spicy.getName():""%><%=size!=null?size.getName():"" %>
 									</div>
 									<div class="col-md-3 qty text-right">
 										共<%=orderItem.getQuantity() %>件
