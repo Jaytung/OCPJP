@@ -74,7 +74,6 @@ public class LoginServlet extends HttpServlet {
 			try {
 				Customer c = cService.login(account,password);
 				//3.1 forward(內部轉交)to view: login_ok.jsp(/login_ok.jsp)
-				//request.setAttribute("member",c); 改用session來記錄會員
 				session.setAttribute("member", c);
 //				session.setMaxInactiveInterval(10*60);//連線逾時時間設為10分鐘
 				
@@ -95,8 +94,15 @@ public class LoginServlet extends HttpServlet {
 				response.addCookie(autoCookie);
 				
 //				3. 作法1:(內部)轉交給login_ok.jsp
+				String uri = (String)session.getAttribute("previous_uri");
+				String queryString = (String)session.getAttribute("previous_query_string");
+
+				if(uri!=null) request.setAttribute("previous_uri", uri);
+				if(queryString!=null)request.setAttribute("previous_query_string", queryString);
+				session.removeAttribute("previous_uri");
+				session.removeAttribute("previous_query_string");	
 				RequestDispatcher dispatcher = 
-						request.getRequestDispatcher("login_ok.jsp");
+						request.getRequestDispatcher("/login_ok.jsp");
 				dispatcher.forward(request, response);
 				
 				//3. 做法2 轉交外部網址
@@ -118,14 +124,6 @@ public class LoginServlet extends HttpServlet {
 		RequestDispatcher dispatcher = 
 				request.getRequestDispatcher("login.jsp");
 		dispatcher.forward(request, response);
-//		response.setContentType("text/html");
-//		response.setCharacterEncoding("UTF-8");
-//		try(PrintWriter out = response.getWriter();){
-//			out.println("<!DOCTYPE html>");
-//			out.println("<html>");
-//			out.println("<body>");
-//			out.println("登入失敗: "+errors);
-//			out.println("</body>");
-//			out.println("</html>");
+
 		}
 	}

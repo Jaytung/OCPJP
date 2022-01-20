@@ -110,7 +110,8 @@ public class CheckOutServlet extends HttpServlet {
 				
 				
 				//3.1 成功redirect至歷史訂單
-				response.sendRedirect("order_history.jsp");
+				session.removeAttribute("cart");
+				response.sendRedirect("order.jsp?orderId="+order.getId());
 				return;
 		}catch(BlackCakeException e) {
 			this.log("建立訂單失敗");

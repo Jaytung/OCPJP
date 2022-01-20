@@ -22,9 +22,6 @@
 <!-- Custom CSS -->
 <link rel="stylesheet" href="css/app.css">
 <style>
-/* body { */
-/* 	margin-top: 7vh; */
-/* } */
 
 section {
 	margin-top: 6vh;

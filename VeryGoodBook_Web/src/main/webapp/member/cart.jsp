@@ -51,6 +51,9 @@ td>img {
     function goBackShop() {
 		location.href="<%=request.getContextPath()%>/shoplist.jsp";
 	}
+    function checkStock(){
+    	
+    }
 </script>
 <title>購物車</title>
 </head>
@@ -64,6 +67,7 @@ td>img {
 
 	<jsp:include page="/subviews/navbar.jsp" />
 	<%
+	Customer member = (Customer)session.getAttribute("member");
 	ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 	if (cart == null || cart.isEmpty()) {
 	%>
@@ -77,7 +81,7 @@ td>img {
 	%>
 
 	<div class="container">
-		<h1 class="text-center">購物明細</h1>
+		<h1 class="text-center">購物車</h1>
 		<form action="<%=request.getContextPath()%>/member/update_cart.do"
 			method="POST">
 			<button type="button" class="btn btn-lg btn-dark mb-1"
@@ -98,31 +102,29 @@ td>img {
 				</thead>
 				<tbody>
 					<%
-					ProductService pSerive = new ProductService();
+					ProductService pService = new ProductService();
+					
 					for (CartItem item : cart.getCartItemSet()) {
 						Product p = item.getProduct();
 						Size size = item.getSize();
-						Spicy spicy = item.getSpicy();
+						String spicy = item.getSpicy();
 						int qty = cart.getQuantity(item);
-						int stock = size != null ? size.getStock() : p.getStock();
+						int stock = pService.getProductStock(p, size, spicy);
 		
 					%>
 					<tr>
-						<td><img src="/blackcake/<%=p.getPhotoUrl()%>"><%=p.getName()%>
+						<td><img src="/blackcake/<%=item.getPhotoUrl()%>"><%=p.getName()%>
 							<span>庫存剩餘:<%=stock%></span></td>
 						<td><%=size != null ? size.getName() : ""%></td>
-						<td><%=spicy!=null?spicy.getName():""%></td>
-<!-- 						size.getPrice()!=0?size.getPrice(): -->
+						<td><%=spicy%></td>
 						<%//TODO:改為sizePrice %>
-						<td><%=p instanceof Outlet ? ((Outlet) p).getListPrice() : p.getUnitPrice()%></td>
-						<td><%=p instanceof Outlet ? ((Outlet) p).getDiscountString() : ""%></td>
-<!-- 						size.getPrice()!=0?size.getPrice(): -->
-						<td><%=p.getUnitPrice()%></td>
+						<td><%=item.getListPrice()%></td>
+						<td><%=item.getDiscountString()%></td>
+						<td><%=item.getUnitPrice()%></td>
 						<td><input type="number" name="quantity<%=item.hashCode()%>"
 							value="<%=qty%>" required min="<%=stock > 0 ? 1 : 0%>"
 							max="<%=stock > 10 ? 10 : stock%>"></td>
-<!-- 							size.getPrice() != 0 ? size.getPrice(): -->
-						<td><%=p.getUnitPrice() * qty%> </td>
+						<td><%=item.getUnitPrice() * qty%> </td>
 						<td><input type="checkbox" name="delete<%=item.hashCode()%>"
 							class=""></td>
 					</tr>
@@ -145,7 +147,7 @@ td>img {
 						<td><input type="submit" class="btn btn-dark btn-lg"
 							value="修改購物車"></td>
 						<td colspan="6"></td>
-						<td><button type="button" class="btn btn-dark btn-lg">查詢庫存</button></td>
+						<td><button type="button" class="btn btn-dark btn-lg"onclick="checkStock()" >查詢庫存</button></td>
 						<td><button type='submit' value='結帳'
 							class="btn btn-dark btn-lg" name="checkout"
 							onclick='location.href="check_out.jsp"'>結帳</button></td>

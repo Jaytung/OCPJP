@@ -19,25 +19,74 @@ import uuu.blackcake.entity.ShippingType;
 import uuu.blackcake.entity.Size;
 import uuu.blackcake.entity.Spicy;
 import uuu.blackcake.exception.BlackCakeException;
+import uuu.blackcake.exception.BlackCakeStockShortageException;
 
 class OrdersDAO {
+	
+	private static final String UPDATE_PRODUCT_STOCK="UPDATE product "
+			+ "SET stock=stock-? WHERE stock>=? AND id = ?";	
+	private static final String UPDATE_PRODUCTS_SIZES_STOCK="UPDATE products_sizes "
+			+ "SET stock=stock-? WHERE stock>=? AND product_id=? AND size_name=?";
+	private static final String UPDATE_PRODUCTS_SPICY_STOCK="UPDATE products_spicy "
+			+ "SET stock=stock-? WHERE stock>=? AND product_id = ? AND spicy_name=?";
+	
 	private static final String INSERT_ORDER = "INSERT INTO orders "
 			+ "(id, member_id, created_date, created_time, receipt_name, "
 			+ "receipt_email, receipt_phone, shipping_addres, payment_type, "
-			+ "payment_fee, shipping_type, shipping_fee, status) " + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			+ "payment_fee, shipping_type, shipping_fee, status) " 
+			+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String INSERT_ORDER_ITEM = "INSERT INTO order_items "
-			+ "(order_id, product_id, size_name, spicy, price, quantity) " + "VALUES(?,?,?,?,?,?)";
+			+ "(order_id, product_id, size_name, spicy_name, price, quantity) " 
+			+ "VALUES(?,?,?,?,?,?)";
 
 	void insert(Order order) throws BlackCakeException {
 		if (order == null)
 			throw new IllegalArgumentException("新增訂單不能為null");
-		try {
+		try (
 			// 1,2 取得連線
 			Connection connection = RDBConnection.getConnection();
 			// 讀回自動給號的號碼,不然無法取得單號
-			PreparedStatement pstmt1 = connection.prepareStatement(INSERT_ORDER, Statement.RETURN_GENERATED_KEYS);// 3.準備pstmt
-			PreparedStatement pstmt2 = connection.prepareStatement(INSERT_ORDER_ITEM, Statement.RETURN_GENERATED_KEYS);
-
+			PreparedStatement pstmt01=connection.prepareStatement(UPDATE_PRODUCT_STOCK);
+			PreparedStatement pstmt02=connection.prepareStatement(UPDATE_PRODUCTS_SIZES_STOCK);
+			PreparedStatement pstmt03=connection.prepareStatement(UPDATE_PRODUCTS_SPICY_STOCK);
+			PreparedStatement pstmt1 = connection.prepareStatement(
+					INSERT_ORDER, Statement.RETURN_GENERATED_KEYS);// 3.準備pstmt
+			PreparedStatement pstmt2 = connection.prepareStatement(INSERT_ORDER_ITEM);
+			){
+			connection.setAutoCommit(false); //類似begin trans
+			try {
+				//修改庫存
+				for(OrderItem orderItem:order.getOrderItemSet()) {
+					Product p = orderItem.getProduct();
+					Size size = orderItem.getSize();
+					String spicy = orderItem.getSpicy();
+					int qty = orderItem.getQuantity();
+					
+					
+//					if(size!=null && spicy!=null && spicy.length()>0 ||
+//							size==null && spicy!=null && spicy.length()>0) {
+//						pstmt0 = pstmt03;							
+//						pstmt0.setString(4, spicy);						
+//						pstmt0.setString(5, size!=null?size.getName():"");
+					PreparedStatement pstmt0;
+					if(spicy!=null && spicy.length()>0) {
+						pstmt0 = pstmt03;							
+						pstmt0.setString(4, spicy);						
+					}else if(size!=null && (spicy==null||spicy.length()==0)) {
+						pstmt0 = pstmt02;
+						pstmt0.setString(4, size.getName());
+					}else{
+						pstmt0 = pstmt01;
+					}
+					
+					pstmt0.setInt(1, qty);
+					pstmt0.setInt(2, qty);
+					pstmt0.setInt(3, p.getId());
+					
+					int row=pstmt0.executeUpdate();
+					if(row==0) throw new BlackCakeStockShortageException(orderItem);						
+				}	
+			
 			// 3.1準備?的值
 			pstmt1.setInt(1, order.getId());
 			pstmt1.setString(2, order.getMember().getEmail());
@@ -52,11 +101,14 @@ class OrdersDAO {
 			pstmt1.setString(11, order.getShippingType().name());
 			pstmt1.setDouble(12, order.getShippingFee());
 			pstmt1.setInt(13, order.getStatus());
-
+			
+			int rows = pstmt1.executeUpdate();
 			// 4.執行pstmt1,只要不是select就用executeUpdat
-			pstmt1.executeUpdate();
+//			pstmt1.executeUpdate();
 			// 讀取key...
-			try (ResultSet rs = pstmt1.getGeneratedKeys();) {
+			try (
+					ResultSet rs = pstmt1.getGeneratedKeys();
+				) {
 				while (rs.next()) {
 //					int id = rs.getInt(1)
 					order.setId(rs.getInt(1));
@@ -67,17 +119,24 @@ class OrdersDAO {
 			for (OrderItem orderItem : order.getOrderItemSet()) {
 				Product p = orderItem.getProduct();
 				Size size = orderItem.getSize();
-				Spicy spicy = orderItem.getSpicy();
+				String spicy = orderItem.getSpicy();
 				// 3.1傳入pstmt2 ? 的值
 				pstmt2.setInt(1, order.getId());
 				pstmt2.setInt(2, p.getId());
 				pstmt2.setString(3, size != null ? size.getName() : "");
-				pstmt2.setString(4, spicy != null ? spicy.getName(): "");
-				pstmt2.setDouble(5, orderItem.getPrice());
+				pstmt2.setString(4, spicy);
+				pstmt2.setDouble(5, size!=null?orderItem.getSize().getUnitPrice():orderItem.getPrice());
 				pstmt2.setInt(6, orderItem.getQuantity());
 				// 4.執行pstmt2指令
 				pstmt2.executeUpdate();
 
+			}
+			connection.commit();//commit
+			}catch(Exception e) {
+				connection.rollback();//rollback
+				throw e;
+			}finally {
+				connection.setAutoCommit(true);
 			}
 		} catch (SQLException e) {
 			throw new BlackCakeException("新增訂單失敗", e);
@@ -153,7 +212,7 @@ class OrdersDAO {
 			+ " order_id, order_items.product_id, product.name as product_name,product.photo_url,\r\n"
 			+ " order_items.size_name, products_sizes.size_name as p_size_name,\r\n"
 			+ " products_sizes.photo_url as size_photo,\r\n"
-			+ " spicy, price, quantity\r\n"
+			+ " spicy_name, price, quantity\r\n"
 			+ " FROM orders JOIN order_items ON orders.id=order_items.order_id\r\n"
 			+ "			JOIN  product ON order_items.product_id = product.id\r\n"
 			+ "				LEFT JOIN products_sizes ON order_items.product_id = products_sizes.product_id\r\n"
@@ -226,13 +285,7 @@ class OrdersDAO {
 						size.setPhotoURL(rs.getString("size_photo"));
 						orderItem.setSize(size);
 					}
-					String spicyName=rs.getString("spicy");
-					Spicy spicy=null;
-					if(spicyName!=null) {
-						spicy = new Spicy();
-						spicy.setName(rs.getString("spicy"));
-						orderItem.setSpicy(spicy);
-					}
+					orderItem.setSpicy(rs.getString("spicy_name"));
 					orderItem.setPrice(rs.getDouble("price"));
 					orderItem.setQuantity(rs.getInt("quantity"));					
 					order.add(orderItem);

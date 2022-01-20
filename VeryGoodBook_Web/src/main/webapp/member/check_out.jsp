@@ -1,4 +1,5 @@
 <%@page import="uuu.blackcake.entity.ShippingType"%>
+<%@page import="uuu.blackcake.service.ProductService"%>
 <%@page import="uuu.blackcake.entity.PaymentType"%>
 <%@page import="uuu.blackcake.entity.CartItem"%>
 <%@page import="uuu.blackcake.entity.ShoppingCart"%>
@@ -33,62 +34,129 @@
 
 <!-- Custom CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/app.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/checkout.css">
 
 <script src="https://code.jquery.com/jquery-3.0.0.js"
 	integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo="
 	crossorigin="anonymous"></script>
 <style>
-.container {
-	margin-top: 8vh;
-}
-
-td>img {
-	width: 100px;
-}
-
-#finalCalAmount {
-	font-size: 1.2rem;
-}
-
-#finalCalAmount span {
-	color: #20A720;
-}
 </style>
 <script>
 
     function goBackShop() {
 		location.href="<%=request.getContextPath()%>/shoplist.jsp";
 	}
-    function copyMember() {
-    	if(${not empty sessionScope.member}){
-    		$("input[name=name]").val('${sessionScope.member.name}');
-    		$("input[name=phone]").val('${sessionScope.member.phone}');
-    		$("input[name=email]").val('${sessionScope.member.email}');
-    		$("input[name=shippingAddress]").val('${sessionScope.member.address}');	
-    	}else{
-    		alert("請先登入");
-    	}
+	$(init);
+	function init(){
+		<%if ("POST".equals(request.getMethod())) {%>
+		repopulateFormDate();
+		<%}%>
 	}
- 	function changePaymentType(theObj){
- 		alert($("select[name='paymentType'] option:selected").attr("data-fee"));
- 		$("#feePrice").text($("select[name='paymentType'] option:selected").attr("data-fee") + "元");		
- 		totalfee();
- 	}
-
-	
- 	function changeShippingType(theObj1){
- 		alert($("select[name='shippingType'] option:selected").attr("data-ship"));
- 		$("#shipPrice").text($("select[name='shippingType'] option:selected").attr("data-ship") + "元");
- 		totalfee();
- 	}
- 	function totalfee() {
-		var feePrice = Number($("select[name='paymentType'] option:selected").attr("data-fee"));
-		var shipPrice = Number($("select[name='shippingType'] option:selected").attr("data-ship"));
-		var total = ('${sessionScope.cart.getTotalAmount()}');
-		$("#totalAmount").text(Number(total)+feePrice+shipPrice);
+	function repopulateFormDate(){
+		$("select[name='paymentType']").val('<%=request.getParameter("paymentType")%>');
+		changePaymentType();
+		$("select[name='shippingType']").val('<%=request.getParameter("shippingType")%>');
+		var theShippingType = document.getElementById("shippingType"); 
+		changeShippingType(theShippingType);
 		
+		$("input[name='name']").val('<%=request.getParameter("name")%>');
+		$("input[name='email']").val('<%=request.getParameter("email")%>');
+		$("input[name='phone']").val('<%=request.getParameter("phone")%>');
+		$("input[name='shippingAddress']").val('<%=request.getParameter("shippingAddress")%>');
 	}
-<!-- </script>
+	function copyMember(){
+		if(${ empty sessionScope.member}){
+			alert("請先登入");
+		}else{
+			$("input[name='name']").val('${sessionScope.member.getName()}');
+			$("input[name='phone']").val('${sessionScope.member.phone}');
+			$("input[name='email']").val('${sessionScope.member.email}');
+			var shipping = $("select[name='shippingType']").val();
+			if(shipping=='HOME'){
+				$("input[name='shippingAddress']").val('${sessionScope.member.address}');
+			}
+		}	
+	}
+	function calculateFee(){
+		console.log($("select[name='shippingType'] option:selected").val(), 
+				$("select[name='shippingType'] option:selected").val());
+		
+		var totalAmnt = Number($("#totalAmount").text());
+		var totalFee=0;
+		if($("select[name='paymentType'] option:selected").val()!=""){
+			totalFee += Number($("select[name='paymentType'] option:selected").attr('data-fee'));
+			
+		}
+		if($("select[name='shippingType'] option:selected").val()!=""){
+			totalFee += Number($("select[name='shippingType'] option:selected").attr('data-fee'));
+		}
+		
+		console.log(totalAmnt+totalFee);
+		$("#amountTitle").text("總金額(+手續費): ");
+		$("#totalAmountWithFee").text(totalAmnt+totalFee+" 元");
+	}
+	function changePaymentType(thePaymentType){
+		disableShippingTypeOptions();
+		calculateFee();
+	}
+	function disableShippingTypeOptions(){
+		var dataShipping = $("select[name='paymentType'] option:selected").attr("data-shipping");
+		var selectedShipping = $("select[name='shippingType']").val();
+		
+		console.log( "付款: ", $("select[name='paymentType'] option:selected").val(),dataShipping);
+		console.log( "貨運: ", selectedShipping);
+		if(dataShipping) dataShipping=dataShipping.split(",");
+		$("select[name='shippingType'] option").prop('disabled', false);
+		if(dataShipping.length>0){				 
+			$("select[name='shippingType'] option").prop('disabled', true);
+			for(i=0;i<dataShipping.length;i++){
+				console.log($("select[name='shippingType'] option[value='"+dataShipping[i]+"']").val(),
+						$("select[name='shippingType'] option[value='"+dataShipping[i]+"']").prop('disabled'));
+				$("select[name='shippingType'] option[value='"+dataShipping[i]+"']").prop('disabled', false);
+			}
+		}
+		$("select[name='shippingType']").val('');
+		if(selectedShipping){
+			if($("select[name='shippingType'] option[value='"+selectedShipping+"']").prop('disabled')!=true){
+				$("select[name='shippingType']").val(selectedShipping);
+			}
+		}
+	}
+	function changeShippingType(theShippingType){
+		changeAddressInput(theShippingType);
+		calculateFee();	
+	}
+	function changeAddressInput(theShippingType){
+		var shipping = $(theShippingType).val();
+		//alert(shipping);
+		$('input[name="shippingAddress"]').attr('autocomplete','off');
+		$("#chooseStoreBtn").css('display','none');
+		if(shipping=='STORE'){
+			$('input[name="shippingAddress"]').val('')
+			$('input[name="shippingAddress"]').attr('list', "storelist");
+			$("#chooseStoreBtn").css('display','inline');
+		}else if(shipping=='SHOP'){
+			$('input[name="shippingAddress"]').val('')
+			$('input[name="shippingAddress"]').attr('list', "shoplist");
+		}else{
+			$('input[name="shippingAddress"]').removeAttr('list');
+			$('input[name="shippingAddress"]').attr('autocomplete','on');
+		}
+		resizeAddress();
+	}
+	function resizeAddress(){
+		var phoneWidth = Number($("input[name='phone']").css('width').replace('px', ''));
+		console.log(phoneWidth);
+		if($("select[name='shippingType']").val()=="STORE"){
+			$("input[name='shippingAddress']").css('width',Number(phoneWidth)-73.5);
+		}else{
+			$("input[name='shippingAddress']").css('width',phoneWidth);
+		}
+	}
+	$(window).on("resize", resizeAddress);
+    	
+
+</script>
 <title>結帳</title>
 </head>
 
@@ -97,14 +165,14 @@ td>img {
 		<jsp:param value="結帳" name="subheader" />
 	</jsp:include>
 
-	<section class="container-fulid px-0">
+	<section class="container-fluid px-0 mt-0 mb-0">
 		<div class="row align-items-center">
 			<%
 			ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 			if (cart == null || cart.isEmpty()) {
 			%>
 
-			<div class="container text-center">
+			<div class="container text-center container-fulid px-0">
 				<h2 class="text-center">購物車是空的!</h2>
 				<a href="<%=request.getContextPath()%>/index.jsp">返回首頁</a>
 			</div>
@@ -115,14 +183,23 @@ td>img {
 			List<String> errors = (List<String>) request.getAttribute("errors");
 			%>
 			<div class="container">
-				<p>
-					<%=errors != null ? errors : ""%>
-				</p>
+				<%
+				if (errors != null && errors.size() > 0) {
+					for (int i = 0; i < errors.size(); i++) {
+						String msg = (String) errors.get(i);
+				%>
+				<div class="alert alert-danger text-center" role="alert"><h4><%=msg%>!</h4>
+				</div>
+				<%
+				}
+				}
+				%>
 				<h1 class="text-center">購物明細</h1>
 				<form action="check_out.do" method="POST" id="cartForm">
-					<table class="table table-hover">
+					<table class="table table-hover table-striped table-rwd">
 						<thead class="thead-dark  text-center">
 							<tr>
+								<th scope="col">圖示</th>
 								<th scope="col">名稱</th>
 								<th scope="col">大小</th>
 								<th scope="col">口味</th>
@@ -135,26 +212,25 @@ td>img {
 						</thead>
 						<tbody class="text-center">
 							<%
+							ProductService pService = new ProductService();
 							for (CartItem item : cart.getCartItemSet()) {
 								Product p = item.getProduct();
 								Size size = item.getSize();
-								Spicy spicy = item.getSpicy();
+								String spicy = item.getSpicy();
+								Spicy spicyObj = item.getSpicyObj();
 								int qty = cart.getQuantity(item);
-								int stock = size != null ? size.getStock() : p.getStock();
+								int stock = pService.getProductStock(p, size, spicy);
 							%>
 							<tr>
-								<td><img src="/blackcake/<%=p.getPhotoUrl()%>"><%=p.getName()%>
-									<span>庫存剩餘:<%=stock%></span></td>
-								<td><%=size != null ? size.getName() : ""%></td>
-								<td><%=spicy!=null?spicy.getName():""%></td>
-								<!-- 								size.getPrice() != 0 ? size.getPrice() :  -->
-								<td><%=p instanceof Outlet ? ((Outlet) p).getListPrice() : p.getUnitPrice()%></td>
-								<td><%=p instanceof Outlet ? ((Outlet) p).getDiscountString() : ""%></td>
-								<!-- 								size.getPrice() != 0 ? size.getPrice() :  -->
-								<td><%=p.getUnitPrice()%></td>
-								<td><%=qty%></td>
-								<!-- 								size.getPrice() != 0 ? size.getPrice() :  -->
-								<td><%=p.getUnitPrice() * qty%></td>
+								<td data-th="圖示"><img src="/blackcake/<%=item.getPhotoUrl()%>"></td>
+								<td data-th="名稱"><%=p.getName()%><br><span>庫存剩餘:<%=stock%></span></td>
+								<td data-th="大小"><%=size != null ? size.getName() : ""%></td>
+								<td data-th="口味"><%=spicy%></td>
+								<td data-th="定價"><%=item.getListPrice()%></td>
+								<td data-th="折扣"><%=item.getDiscountString()%></td>
+								<td data-th="售價"><%=item.getUnitPrice()%></td>
+								<td data-th="數量"><%=qty%></td>
+								<td data-th="小記"><%=item.getUnitPrice() * qty%></td>
 							</tr>
 							<%
 							}
@@ -164,18 +240,16 @@ td>img {
 							<tr class="text-center">
 								<td colspan="6"></td>
 								<td><%=cart.size() + "項" + "共" + cart.getTotalQuantity() + "件"%></td>
-								<td>總金額: <%=cart.getTotalAmount()%>元
+								<td>總金額:<span id='totalAmount'><%=cart.getTotalAmount()%></span>元
 								</td>
 							</tr>
 						</tfoot>
 					</table>
 					<hr>
-					<div>
-						<div class="text-monospace text-center" id="finalCalAmount">
-							商品總金額:<span><%=cart.getTotalAmount()%></span>元&nbsp; 手續費:<span
-								id="feePrice"></span>&nbsp; 運費:<span id="shipPrice"></span><br>
-							總付款金額:<span id="totalAmount"></span>
-						</div>
+					<div class="col col-md-12 text-right ">
+						<span id='amountTitle' class='border-bottom border-success '></span>
+						<span id='totalAmountWithFee'
+							class='border-bottom border-success '></span>
 					</div>
 					<table class="table table-borderless">
 						<thead>
@@ -193,10 +267,14 @@ td>img {
 										for (PaymentType pType : PaymentType.values()) {
 										%>
 										<option value='<%=pType.name()%>'
+											data-shipping='<%=pType.getShippingArrayString()%>'
 											data-fee="<%=pType.getFee()%>"><%=pType.toString()%></option>
 										<%
 										}
 										%>
+										<!-- 							<option value='ATM' data-shipping='STORE,HOME'>ATM轉帳</option> -->
+										<!-- 							<option value='STORE' data-shipping='STORE'>超商付款</option> -->
+										<!-- 							<option value='HOME' data-fee='80'>貨到付款, 80元</option>							 -->
 								</select></td>
 								<td><label>貨運方式:</label> <select name='shippingType'
 									class="form-control" onchange='changeShippingType(this)'
@@ -206,7 +284,7 @@ td>img {
 										for (ShippingType sType : ShippingType.values()) {
 										%>
 										<option value='<%=sType.name()%>'
-											data-ship='<%=sType.getFee()%>'><%=sType.toString()%></option>
+											data-fee='<%=sType.getFee()%>'><%=sType.toString()%></option>
 										<%
 										}
 										%>
@@ -222,22 +300,22 @@ td>img {
 										<div class="col-6 mb-3">
 											<label for="validationDefault01">姓名</label> <input
 												type="text" class="form-control" placeholder="姓名"
-												name='bName' value="<%=member.getName()%>" readonly>
+												name='name' value="<%=member.getName()%>" readonly>
 										</div>
 										<div class="col-6 mb-3">
 											<label for="validationDefault02">電話</label> <input
 												type="text" class="form-control" placeholder="phone"
-												name='bPhone' value="<%=member.getPhone()%>" readonly>
+												name='phone' value="<%=member.getPhone()%>" readonly>
 										</div>
 										<div class="col-6 mb-3">
 											<label for="validationDefault02">信箱</label> <input
 												type="text" class="form-control" placeholder="email"
-												name='bEmail' value="<%=member.getEmail()%>" readonly>
+												name='email' value="<%=member.getEmail()%>" readonly>
 										</div>
 										<div class="col-6 mb-3">
 											<label for="validationDefault02">地址</label> <input
 												type="text" class="form-control" placeholder="收件地址"
-												name='bAddress' value="<%=member.getAddress()%>" readonly>
+												name='address' value="<%=member.getAddress()%>" readonly>
 										</div>
 									</div>
 								</td>
@@ -263,8 +341,17 @@ td>img {
 										</div>
 										<div class="col-6 mb-3">
 											<label for="validationDefault04">收件地址</label> <input
-												type="text" class="form-control" placeholder="收件地址"
+												type="search" class="form-control" placeholder="收件地址"
 												name='shippingAddress' required>
+											<datalist id="shoplist">
+												<option value="台北市復興北路99號12F(台北總公司)">復北門市:台北市復興北路99號12F</option>
+												<option value="台中市西區臺灣大道二段309號2樓(台中門市)">台中門市:台中市西區臺灣大道二段309號2樓</option>
+												<option value="高雄市前鎮區中山二路2號25樓(高雄門市)">高雄門市:高雄市前鎮區中山二路2號25樓</option>
+											</datalist>
+											<datalist id="storelist">
+												<option value="全家慶成店">
+												<option value="7-11松慶店">
+											</datalist>
 										</div>
 									</div>
 								</td>

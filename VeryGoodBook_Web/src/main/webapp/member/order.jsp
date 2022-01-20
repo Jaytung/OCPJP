@@ -37,14 +37,14 @@
 
 <!-- Custom CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/app.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/receipt.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/order.css">
 <script src="https://code.jquery.com/jquery-3.0.0.js"
 	integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo="
 	crossorigin="anonymous"></script>
 <style>
- .container { 
- 	margin-top: 2vh;
-} 
+/*  .receipt-content {  */
+/*  	margin-top: 2vh; */
+/* }  */
 .imgs{
 	width: 150px;
 	height: auto;
@@ -132,26 +132,22 @@
 							<div class="headers clearfix">
 								<div class="row">
 									<div class="col-md-2"></div>
-									<div class="col-md-4">詳細/</div>
+									<div class="col-md-4 text-right">詳細/</div>
 									<div class="col-md-3 text-right">數量/</div>
-									<div class="col-md-3 text-right">小記</div>
+									<div class="col-md-3 text-right">小記/</div>
 								</div>
 							</div>
 							<div class="items">
 							<%for(OrderItem orderItem:order.getOrderItemSet()){
 								Product p = orderItem.getProduct();
 								Size size = orderItem.getSize();
-								Spicy spicy = orderItem.getSpicy();
 							%>
-								<div class="row item border-bottom">
+								<div class="row item">
 									<div class="col-md-2 ">
 										<img class="imgs" src='<%=request.getContextPath()%>/<%=size!=null&&size.getPhotoURL()!=null?size.getPhotoURL():p.getPhotoUrl() %>'>
 									</div>
-									<div class="col-md-4 text-center desc">
-										 <br>
-										 <br>
-										 <br>
-										<%=p.getName()%><%=spicy!=null?spicy.getName():""%><%=size!=null?size.getName():"" %>
+									<div class="col-md-4 text-right desc">
+										<%=p.getName()%><%=orderItem.getSpicy()%><%=size!=null?size.getName():"" %>
 									</div>
 									<div class="col-md-3 qty text-right">
 										共<%=orderItem.getQuantity() %>件
@@ -171,10 +167,10 @@
 <%-- 									小記 <span>$<%=orderItem.getPrice()*orderItem.getQuantity() %></span> --%>
 <!-- 								</div> -->
 								<div class="field">
-									運費 <span>$<%=order.getShippingFee()>0?order.getShippingFee():"" %></span>
+									運費 <span>$<%=order.getShippingFee()>0?order.getShippingFee():"0" %></span>
 								</div>
 								<div class="field">
-									手續費 <span>$<%=order.getPaymentFee()>0?order.getPaymentFee():"" %></span>
+									手續費 <span>$<%=order.getPaymentFee()>0?order.getPaymentFee():"0" %></span>
 								</div>
 								<div class="field grand-total">
 									總金額 <span>$<%=order.getTotalAmountWithFee() %></span>

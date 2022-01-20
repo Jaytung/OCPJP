@@ -105,7 +105,7 @@ div h2{
     font-family: "Nuntio", sans-serif;
 }
 .loginForm {
-    margin-top: 18vh;
+    margin-top: 5vh;
 }
 /* .carousel-control-next-icon, .carousel-control-prev-icon { */
 /* 	filter: invert(1); */
@@ -124,6 +124,7 @@ ul {
     font-family: "Nuntio", sans-serif;
     border:0;
 }
+
  @media screen and (max-width: 768px){
     #mainNavbar{
         background:#e0e1dd;

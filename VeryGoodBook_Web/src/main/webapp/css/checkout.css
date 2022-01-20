@@ -1,0 +1,92 @@
+@charset "UTF-8";
+.container {
+	margin-top: 8vh;
+}
+
+td>img {
+	width: 100px;
+}
+
+#amountTitle {
+	font-size: 1.1rem;
+	font-weight: 500;
+}
+
+#totalAmountWithFee {
+	color: #20A720;
+	font-size: 1.2rem;
+	font-weight: 500;
+}
+
+@media (max-width: 736px) {
+  .table-rwd{min-width: 100%;}
+  /*針對tr去做隱藏*/
+  tr.tr-only-hide {display: none !important;}
+  /*讓tr變成區塊主要讓他有個區塊*/
+  .table-rwd tr{
+    display: block;
+    border: 1px solid #ddd;
+    margin-top: 5px;
+  }
+  .table-rwd td {
+    text-align: left;
+    font-size: 15px;
+    overflow: hidden;
+    width: 100%;
+    display: block;
+	}
+}
+  /*當RWD縮小的時候.table-bordered 會有兩條線，所以針對.table-bordered去做修正*/
+  .table-rwd.table-bordered td,.table-rwd.table-bordered th,.table-rwd.table-bordered{border:0;}
+  
+/*  table ul
+------------------------------- */
+
+/* .table ul { */
+/*   padding: 20px; */
+/*   margin: 0; */
+/*   text-align: left; */
+/* } */
+/* .table ul li { */
+/*   padding: 5px; */
+/*   position: relative; */
+/*   list-style-type: none; */
+/* } */
+
+/*  Responsive
+------------------------------- */
+
+@media (max-width: 767px) {
+/*   .table-wrapper { */
+/*     margin: 30px 15px; */
+/*   } */
+
+  .table thead {
+     display: none;
+  }
+
+  .table td {
+    display: block; 
+    padding: 0;
+    border: none;
+  }
+
+  .table td:before {
+    content: attr(data-title);
+    display: inline-block;
+    width: 100%;
+    font-weight: 500;
+    font-size:1.3rem;
+    padding: 6px 0;
+  }
+	.table-rwd td:before {
+    /*最重要的就是這串*/
+    content: attr(data-th) " ";
+    /*最重要的就是這串*/
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: bold;
+	  margin-right: 10px;
+    color: #D20B2A;
+  }
+}

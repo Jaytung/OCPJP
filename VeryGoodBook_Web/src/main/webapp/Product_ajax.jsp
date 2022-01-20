@@ -128,6 +128,17 @@
 		width: 150px;
 	}
 }
+
+input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button
+	{
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+	-moz-appearance: textfield;
+}
 </style>
 <script>
 	$(document).ready(init);
@@ -237,7 +248,7 @@
 						</p>
 						<hr>
 						<h3>
-							特價:<%=p instanceof Outlet ? ((Outlet) p).getDiscountString() : ""%>
+							優惠價:<%=p instanceof Outlet ? ((Outlet) p).getDiscountString() : ""%>
 							<span class="sizePrice"> <%=Math.round(p.getUnitPrice())%>元
 								&nbsp;&nbsp;&nbsp;&nbsp;
 							</span>
@@ -269,31 +280,35 @@
 								<%
 								for (Size size : p.getSizes()) {
 								%>
-								<label class="btn btn-dark" for="<%=size.getName()%>"> 
-								<input
+								<label class="btn btn-dark" for="<%=size.getName()%>"> <input
 									type="radio" name="size" value="<%=size.getName()%>"
 									id="<%=size.getName()%>" title='<%=size.getName()%>'
 									data-stock='<%=size.getStock()%>'
-									data-price='<%=size.getPrice()%>' Value="<%=size.getName()%>"
-									onclick='changeSizeData(this)' required="required"> <%=size.getName()%>
+									data-price='<%=size.getUnitPrice()%>'
+									Value="<%=size.getName()%>" onclick='changeSizeData(this)'
+									required="required"> <%=size.getName()%>
 								</label>
 								<%
 								}
 								%>
 								<%
-								}else if(p.getSpicyMapSize()>0){
+								} else if (p.getSpicyMapSize() > 0) {
 								%>
 								<%
-								for(Spicy spicy :p.getSpicy()){
+								for (Spicy spicy : p.getSpicy()) {
 								%>
-									<label class="btn btn-dark" for="<%=spicy.getName()%>"> <input
-									type="radio" name="spicy" value="<%=spicy.getName()%>" 
+								<label class="btn btn-dark" for="<%=spicy.getName()%>">
+									<input type="radio" name="spicy" value="<%=spicy.getName()%>"
 									id="<%=spicy.getName()%>" title='<%=spicy.getName()%>'
 									data-stock='<%=spicy.getStock()%>' Value="<%=spicy.getName()%>"
 									onclick='changeSpciyData(this)' required="required"> <%=spicy.getName()%>
 								</label>
-								<%} %>
-								<%} %>
+								<%
+								}
+								%>
+								<%
+								}
+								%>
 							</div>
 						</div>
 					</div>
@@ -328,7 +343,7 @@
 				<%
 				}
 				%>
-				
+
 				<%
 				}
 				%>
@@ -342,10 +357,10 @@
 								id="minus">
 								<span class="cartPlusAndMinus">-</span>
 							</button>
-						</span> <input type="text"
+						</span> <input type="number"
 							class="form-control form-control-lg text-center rounded col-sm-12 col-md-4 col-lg-3"
-							aria-label="" value="0" id="quantity" name="quantity"> <span
-							class="input-group-addon">
+							aria-label="" value="0" id="quantity" name="quantity" min="1">
+						<span class="input-group-addon">
 							<button class="btn btn-dark btn-lg ml-1 cartBtn" type="button"
 								id="plus">
 								<span class="cartPlusAndMinus">+</span>

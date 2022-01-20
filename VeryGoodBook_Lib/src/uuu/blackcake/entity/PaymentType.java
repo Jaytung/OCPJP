@@ -1,30 +1,54 @@
 package uuu.blackcake.entity;
 
 public enum PaymentType {
-	SHOP("門市付款",0),
-	ATM("ATM轉帳",0),
-	STORE("超商付款",30),
-	HOME("貨到付款",80);
+	SHOP("門市付款",0,new ShippingType[]{ShippingType.SHOP}),
+	ATM("ATM轉帳", ShippingType.STORE,ShippingType.HOME),
+	STORE("超商付款",ShippingType.STORE),
+	HOME("貨到付款", 80,new ShippingType[] {ShippingType.HOME}),
+	CARD("信用卡",new ShippingType[] {ShippingType.STORE,ShippingType.HOME});
 	
-	private final String paymentName;
+	private final String description;
 	private final double fee;
+	private final ShippingType[] shippingTypeArray;
 	
-	public String getPaymentName() {
-		return paymentName;
+	
+	private PaymentType(String description, ShippingType... shippingTypeArray) {
+		this(description,0,shippingTypeArray);
+	}
+
+	private PaymentType(String description, double fee,
+			ShippingType[] shippingTypeArray) {
+		this.description = description;
+		this.fee = fee;
+		this.shippingTypeArray = shippingTypeArray;
+	}
+
+	public String getDescription() {
+		return description;
 	}
 
 	public double getFee() {
-		return fee;	
+		return fee;
+	}
+
+	public ShippingType[] getShippingTypeArray() {
+		return shippingTypeArray.clone();
 	}
 	
-	private PaymentType(String paymentName, double fee) {
-		this.paymentName = paymentName;
-		this.fee = fee;
+	public String getShippingArrayString() {
+		String data="";
+		for(ShippingType sType:shippingTypeArray) {
+			if(data.length()>0) data+=",";
+			data+=sType.name();
+		}
+		return data;
 	}
 
 	@Override
-	public String toString() {
-		return paymentName+(fee>0?","+fee+"元":"0"+"元");
+	public String toString() {		
+		return description + (fee>0?"," + fee + "元":"");
 	}
 	
+	
 }
+

@@ -27,12 +27,12 @@ public class TestOrder {
 			Product p1 = pService.selectProductById("1");
 			ShoppingCart cart = new ShoppingCart();
 			cart.setMember(member);
-			cart.addToCart(p1, null, null, 1);
+//			cart.addToCart(p1, null, null, 1);
 //			System.out.println(cart);
 			
 			Product p5 =pService.selectProductById("2");
-			cart.addToCart(p5,null,"大辣", 3);
-			cart.add(p5, null, null, 0);
+			cart.addToCart(p5,null,"不辣", 1);
+//			cart.add(p5, null, null, 0);
 
 			System.out.println(cart);
 			System.out.println("**********************************");
@@ -40,12 +40,11 @@ public class TestOrder {
 			order.setMember(member);
 			order.setCreateDate(LocalDate.now());
 			order.setCreatTime(LocalTime.now());
-			PaymentType pType = PaymentType.valueOf("STORE");
+			PaymentType pType = PaymentType.valueOf("ATM");
 			order.setPaymentType(pType);
 			order.setPaymentFee(pType.getFee());
-			ShippingType sType= ShippingType.valueOf("BLACKCAT");
-			order.setShippingType(sType);
-			order.setShippingFee(sType.getFee());
+			order.setShippingType(ShippingType.valueOf("HOME"));
+			order.setShippingFee(ShippingType.valueOf("HOME").getFee());
 			order.setReceiptName("Jimmy");
 			order.setReceiptEmail("Jimmy@gmail.com");
 			order.setReceiptPhone("0988665209");		

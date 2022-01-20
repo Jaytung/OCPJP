@@ -1,17 +1,15 @@
 package uuu.blackcake.entity;
 
 public enum ShippingType {
-	BLACKCAT("黑貓宅急便",80),
-	SEVENELEVEN("7-11",60),
-	HILIFE("萊爾富",50),
-	OK("OK Mart",45),
-	FAMILY("全家",60);
+	SHOP("門市取貨",0),
+	STORE("超商取貨", 60),
+	HOME("黑貓宅急便", 100);
 	
-	private final String shippingName;
+	private final String description;
 	private final double fee;
 	
 	public String getShippingName() {
-		return shippingName;
+		return description;
 	}
 
 	public double getFee() {
@@ -19,13 +17,13 @@ public enum ShippingType {
 	}
 	
 	private ShippingType(String shippingName, double fee) {
-		this.shippingName = shippingName;
+		this.description = shippingName;
 		this.fee = fee;
 	}
 
 	@Override
 	public String toString() {
-		return shippingName+(fee>0?","+fee+"元":"");
+		return description+(fee>0?","+fee+"元":"");
 	}
 	
 }

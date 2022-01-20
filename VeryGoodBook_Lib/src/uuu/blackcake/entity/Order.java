@@ -62,7 +62,6 @@ public class Order {
 
 	public double getTotalAmount() {
 		if (orderItemSet.size() > 0) {
-
 			double sum = 0;
 			for (OrderItem item : orderItemSet) {
 				sum += item.getPrice() * item.getQuantity();
@@ -210,6 +209,28 @@ public class Order {
 				+ shippingType + ",\n shippingFee=" + shippingFee + ",\n shippingNote=" + shippingNote
 				+ ",\n orderItemSet=" + orderItemSet + ",\n 項數=" + getSize() + ",\n 件數=" + getTotalQuantity()
 				+ ",\n 商品金額=" + getTotalAmount() + ",\n 應付金額=" + getTotalAmountWithFee();
+	}
+	public enum Status{
+		NEW("新訂單"),TRANSFORED("已轉帳"),PAID("已入帳"),
+		SHIPPED("已出貨"),ARRIVED("已到貨"),CHECKED("已簽收"),COMPLETE("完結");
+		
+		private final String description;
+
+		private Status(String description) {
+			this.description = description;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+		
+		public static String getDescription(int status) {
+			if(status>=0 && status<values().length)
+				return values()[status].getDescription();
+			else {
+				return String.valueOf(status);
+			}
+		}
 	}
 
 }

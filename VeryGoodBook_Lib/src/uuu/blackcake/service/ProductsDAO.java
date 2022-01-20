@@ -13,6 +13,7 @@ import uuu.blackcake.entity.Product;
 import uuu.blackcake.entity.Size;
 import uuu.blackcake.entity.Spicy;
 import uuu.blackcake.exception.BlackCakeException;
+import uuu.blackcake.exception.DataInvalidException;
 
 class ProductsDAO {
 	private static final String SELECT_ALL_PRODUCTS=
@@ -141,7 +142,7 @@ class ProductsDAO {
 	//大小價格查詢
 	private static final String SELECT_PRODUCT_BY_ID=
 		"SELECT id, name, unit_price,  description, shelf_date, unit_Discount, category, brand, "
-		+ "products_sizes.product_id, size_name,  icon_url, "
+		+ "products_sizes.product_id, products_sizes.size_name,  icon_url, "
 		+ "products_sizes.size_price AS size_price, "
 		+ "products_spicy.spicy_name AS spicy_name,"
 		+ "products_spicy.stock AS spicy_stock, "
@@ -216,5 +217,34 @@ class ProductsDAO {
 			throw new BlackCakeException("[商品分類查詢]失敗",e);
 		}
 		return p;
+	}
+	private static final String SELECT_PRODUCT_REAL_TIME_STOCK=
+			"SELECT id, the_size_name, spicy_name, real_time_stock"
+			+ " FROM blackcake.product_real_time_stock"
+			+ "	WHERE id=? AND the_size_name=? AND spicy_name=?";
+	public int selectProductRealTimeStock(int id, String sizeName, String spicyName)
+					throws BlackCakeException{
+		int stock=0;
+		try(
+				Connection connection = RDBConnection.getConnection();//1,2取得連線
+				PreparedStatement pstmt = connection.prepareStatement(SELECT_PRODUCT_REAL_TIME_STOCK);
+				){
+			//3.1傳入?
+			pstmt.setInt(1,id);
+			pstmt.setString(2, sizeName);
+			pstmt.setString(3, spicyName);
+			int i = 0;
+			try(ResultSet rs = pstmt.executeQuery()){
+				while(rs.next()) {
+					i++;
+					stock = rs.getInt("real_time_stock");
+				}
+				if(i!=1)throw new DataInvalidException(
+						"查詢["+id+','+sizeName+','+spicyName+"]realtime stock第("+i+")錯誤");
+				return stock;
+			}
+		}catch(SQLException e) {
+			throw new BlackCakeException("查詢產品size list失敗");
+		}
 	}
 }
