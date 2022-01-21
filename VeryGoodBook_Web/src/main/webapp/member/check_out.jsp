@@ -34,7 +34,8 @@
 
 <!-- Custom CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/app.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/checkout.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/checkout.css">
 
 <script src="https://code.jquery.com/jquery-3.0.0.js"
 	integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo="
@@ -56,6 +57,7 @@
 		$("select[name='paymentType']").val('<%=request.getParameter("paymentType")%>');
 		changePaymentType();
 		$("select[name='shippingType']").val('<%=request.getParameter("shippingType")%>');
+		var store = ($("select[name='shippingType'] option:selected").attr("value"));
 		var theShippingType = document.getElementById("shippingType"); 
 		changeShippingType(theShippingType);
 		
@@ -63,6 +65,9 @@
 		$("input[name='email']").val('<%=request.getParameter("email")%>');
 		$("input[name='phone']").val('<%=request.getParameter("phone")%>');
 		$("input[name='shippingAddress']").val('<%=request.getParameter("shippingAddress")%>');
+		if(store=="STORE"){
+			document.getElementById('chooseStoreBtn').style.display="";	
+		}
 	}
 	function copyMember(){
 		if(${ empty sessionScope.member}){
@@ -148,7 +153,7 @@
 		var phoneWidth = Number($("input[name='phone']").css('width').replace('px', ''));
 		console.log(phoneWidth);
 		if($("select[name='shippingType']").val()=="STORE"){
-			$("input[name='shippingAddress']").css('width',Number(phoneWidth)-73.5);
+// 			$("input[name='shippingAddress']").css('width',Number(phoneWidth)-73.5);
 		}else{
 			$("input[name='shippingAddress']").css('width',phoneWidth);
 		}
@@ -188,7 +193,9 @@
 					for (int i = 0; i < errors.size(); i++) {
 						String msg = (String) errors.get(i);
 				%>
-				<div class="alert alert-danger text-center" role="alert"><h4><%=msg%>!</h4>
+				<div class="alert alert-danger text-center" role="alert">
+					<h4><%=msg%>!
+					</h4>
 				</div>
 				<%
 				}
@@ -222,8 +229,9 @@
 								int stock = pService.getProductStock(p, size, spicy);
 							%>
 							<tr>
-								<td data-th="圖示"><img src="/blackcake/<%=item.getPhotoUrl()%>"></td>
-								<td data-th="名稱"><%=p.getName()%><br><span>庫存剩餘:<%=stock%></span></td>
+								<td data-th="圖示"><img
+									src="/blackcake/<%=item.getPhotoUrl()%>"></td>
+								<td data-th="名稱"><%=p.getName()%><br> <span>庫存剩餘:<%=stock%></span></td>
 								<td data-th="大小"><%=size != null ? size.getName() : ""%></td>
 								<td data-th="口味"><%=spicy%></td>
 								<td data-th="定價"><%=item.getListPrice()%></td>
@@ -352,6 +360,10 @@
 												<option value="全家慶成店">
 												<option value="7-11松慶店">
 											</datalist>
+											<div class="storeBtn">
+											<input id='chooseStoreBtn' type='button' class="form-control btn btn-dark"
+												value='選擇超商' style='display: none' onclick='goEzShip()'>
+												</div>
 										</div>
 									</div>
 								</td>
@@ -364,6 +376,42 @@
 							</tr>
 						</tbody>
 					</table>
+				</form>
+				<script>                        	
+			function goEzShip() {//前往EZShip選擇門市
+				$("input[name='name']").val($("input[name='name']").val().trim());
+				$("input[name='email']").val($("input[name='email']").val().trim());
+				$("input[name='phone']").val($("input[name='phone']").val().trim());
+				$("input[name='shippingAddress']").val($("input[name='shippingAddress']").val().trim());
+				
+				var protocol = "<%=request.getProtocol().toLowerCase().substring(0, request.getProtocol().indexOf("/"))%>";
+				var ipAddress = "<%=java.net.InetAddress.getLocalHost().getHostAddress()%>";
+				var url = protocol + "://" + ipAddress + ":" + location.port + "<%=request.getContextPath()%>/member/ezship_callback.jsp";                   
+				$("#rtURL").val(url);
+				
+				//$("#webPara").val($("form[action='check_out.do']").serialize()); 
+				$("#webPara").val($("#cartForm").serialize());
+				
+				alert(url); //測試用，測試完畢後請將此行comment
+				alert($("#webPara").val()) //測試用，測試完畢後請將此行comment
+				
+				$("#ezForm").submit();
+			}
+		</script>
+				<form id="ezForm" method="post" name="simulation_from"
+					action="http://map.ezship.com.tw/ezship_map_web.jsp">
+					<input type="hidden" name="suID" value="test@vgb.com">
+					<!-- 業主在 ezShip 使用的帳號, 隨便寫 -->
+					<input type="hidden" name="processID" value="VGB202107050000005">
+					<!-- 購物網站自行產生之訂單編號, 隨便寫 -->
+					<input type="hidden" name="stCate" value="">
+					<!-- 取件門市通路代號 -->
+					<input type="hidden" name="stCode" value="">
+					<!-- 取件門市代號 -->
+					<input type="hidden" name="rtURL" id="rtURL" value="">
+					<!-- 回傳路徑及程式名稱 -->
+					<input type="hidden" id="webPara" name="webPara" value="">
+					<!-- 結帳網頁中cartForm中的輸入欄位資料。ezShip將原值回傳，才能帶回結帳網頁 -->
 				</form>
 				<%
 				}

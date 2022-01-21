@@ -39,7 +39,7 @@
 
 <style>
 .container {
-	margin-top: 12vh;
+	margin-top: 5vh;
 }
 
 td>img {
@@ -92,8 +92,8 @@ td>img {
 						<th scope="col">名稱</th>
 						<th scope="col">大小</th>
 						<th scope="col">口味</th>
-						<th scope="col">定價</th>
-						<th scope="col">折扣</th>
+<!-- 						<th scope="col">定價</th> -->
+<!-- 						<th scope="col">折扣</th> -->
 						<th scope="col">售價</th>
 						<th scope="col">數量</th>
 						<th scope="col">小記</th>
@@ -117,9 +117,8 @@ td>img {
 							<span>庫存剩餘:<%=stock%></span></td>
 						<td><%=size != null ? size.getName() : ""%></td>
 						<td><%=spicy%></td>
-						<%//TODO:改為sizePrice %>
-						<td><%=item.getListPrice()%></td>
-						<td><%=item.getDiscountString()%></td>
+<%-- 						<td><%=item.getListPrice()%></td> --%>
+<%-- 						<td><%=item.getDiscountString()%></td> --%>
 						<td><%=item.getUnitPrice()%></td>
 						<td><input type="number" name="quantity<%=item.hashCode()%>"
 							value="<%=qty%>" required min="<%=stock > 0 ? 1 : 0%>"
@@ -134,20 +133,20 @@ td>img {
 				</tbody>
 				<tfoot>
 					<tr>
-						<th colspan="7"></th>
+						<th colspan="5"></th>
 						<th>數量</th>
 						<th>總金額</th>
 					</tr>
 					<tr>
-						<td colspan="7">
+						<td colspan="5">
 						<td><%=cart.size() + "項" + "共" + cart.getTotalQuantity() + "件"%></td>
 						<td><%=cart.getTotalAmount()%>元</td>
 					</tr>
 					<tr>
 						<td><input type="submit" class="btn btn-dark btn-lg"
 							value="修改購物車"></td>
-						<td colspan="6"></td>
-						<td><button type="button" class="btn btn-dark btn-lg"onclick="checkStock()" >查詢庫存</button></td>
+						<td colspan="4"></td>
+						<td><button type="button" class="btn btn-dark btn-lg" onclick="checkStock()" >查詢庫存</button></td>
 						<td><button type='submit' value='結帳'
 							class="btn btn-dark btn-lg" name="checkout"
 							onclick='location.href="check_out.jsp"'>結帳</button></td>

@@ -1,9 +1,10 @@
 package uuu.blackcake.entity;
 
-public class Spicy {
+public class Spicy implements Comparable<Spicy> {
 	private int id;//Pkey
 	private String name;
 	private int stock;
+	private int ordinal;
 	
 	
 	public int getId() {
@@ -12,6 +13,7 @@ public class Spicy {
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
@@ -24,6 +26,12 @@ public class Spicy {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
+	public int getOrdinal() {
+		return ordinal;
+	}
+	public void setOrdinal(int ordinal) {
+		this.ordinal = ordinal;
+	}
 	@Override
 	public String toString() {
 		return "辣度 [產品ID:" + id + ",\n 辣度:" + name + ",\n 辣度庫存:" + stock + "]";
@@ -34,6 +42,10 @@ public class Spicy {
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
+	}
+	@Override
+	public int compareTo(Spicy another) {
+		return this.ordinal-another.ordinal;
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -51,5 +63,6 @@ public class Spicy {
 			return false;
 		return true;
 	}
+
 	
 }

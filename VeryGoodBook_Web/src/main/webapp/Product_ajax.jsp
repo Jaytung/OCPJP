@@ -89,7 +89,8 @@
 	margin-left: 0px;
 }
 
-#sizeStock {
+#stock {
+	font-size:1.2rem;
 	color: #e63946;
 }
 
@@ -172,7 +173,7 @@ input[type=number] {
 
 		$(".sizePrice").text(
 				$(theObj).attr("title") + $(theObj).attr("data-price") + "元");
-		$("#sizeStock").text(
+		$("#stock").text(
 				$(theObj).attr("title") + "剩餘" + $(theObj).attr("data-stock")
 						+ "個");
 		$("input[name='quantity']").attr("max", $(theObj).attr("data-stock"));
@@ -182,7 +183,7 @@ input[type=number] {
 		// 				alert($(theObj).attr("src"));
 		// 				alert($(theObj).attr("title"));
 		// 				alert($(theObj).attr("data-price"));
-		$("#sizeStock").text(
+		$("#stock").text(
 				$(theObj).attr("title") + "剩餘" + $(theObj).attr("data-stock")
 						+ "個");
 		$("input[name='quantity']").attr("max", $(theObj).attr("data-stock"));
@@ -257,7 +258,7 @@ input[type=number] {
 						if (p instanceof Outlet) {
 						%>
 						<h4>
-							定價:<span class="sizePrice"> <%=((Outlet) p).getListPrice() + ""%>
+							定價:<span class="sizePrice"> <%=((Outlet) p).getListPrice()+""%>
 							</span>
 						</h4>
 
@@ -268,8 +269,8 @@ input[type=number] {
 						<hr>
 						<h3>庫存:</h3>
 						<p>
-							總數:<%=p.getStock() + "個"%>
-							&nbsp;&nbsp;&nbsp;&nbsp;<span id="sizeStock"></span>
+							<%-- 							總數:<%=p.getStock() + "個"%> --%>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span id="stock"></span>
 						</p>
 						<hr>
 						<div class="col-md-6 order-4 order-md-4" style="max-width: 100%;">

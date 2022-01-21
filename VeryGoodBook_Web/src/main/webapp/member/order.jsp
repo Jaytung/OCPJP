@@ -7,14 +7,15 @@
 <%@page import="uuu.blackcake.entity.Size"%>
 <%@page import="uuu.blackcake.entity.Spicy"%>
 <%@page import="uuu.blackcake.entity.Product"%>
+<%@page import="uuu.blackcake.entity.PaymentType"%>
 <%@page import="uuu.blackcake.entity.CartItem"%>
 <%@page import="uuu.blackcake.entity.ShoppingCart"%>
 <%@page import="java.util.List"%>
 <%@ page import="uuu.blackcake.entity.Customer"%>
 <%@page import="java.time.LocalDateTime"%>
-<%@page import="java.time.format.DateTimeFormatter" %>
+<%@page import="java.time.format.DateTimeFormatter"%>
 <%@ page pageEncoding="UTF-8"%>
-<%! private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss"); %>
+<%!private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");%>
 <!doctype html>
 <html lang="en">
 
@@ -37,7 +38,8 @@
 
 <!-- Custom CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/app.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/order.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/order.css">
 <script src="https://code.jquery.com/jquery-3.0.0.js"
 	integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo="
 	crossorigin="anonymous"></script>
@@ -45,7 +47,7 @@
 /*  .receipt-content {  */
 /*  	margin-top: 2vh; */
 /* }  */
-.imgs{
+.imgs {
 	width: 150px;
 	height: auto;
 }
@@ -62,35 +64,39 @@
 	<%
 	Customer member = (Customer) session.getAttribute("member");
 	String orderId = request.getParameter("orderId");
-	Order order =null;
-	if(member!=null && orderId!=null){
+	Order order = null;
+	if (member != null && orderId != null) {
 		OrderService oService = new OrderService();
 		order = oService.getOrderById(member, orderId);
 	}
 	%>
-		<div class="receipt-content">
+	<div class="receipt-content">
 		<div class="container">
-			<%if(order==null){ %>
-			<h2>查無此訂單(<%=orderId%>)</h2>
-			<%}else{%>
+			<%
+			if (order == null) {
+			%>
+			<h2>
+				查無此訂單(<%=orderId%>)
+			</h2>
+			<%
+			} else {
+			%>
 			<div class="row">
 				<div class="col-md-12">
 					<div class="invoice-wrapper">
 						<div class="intro">
-							您好 <strong><%=member!=null?member.getName():"" %></strong>,
-							<br>
-							本次訂單共 <strong><%=order.getTotalAmountWithFee() %></strong> (元) 感謝您的購買
+							您好 <strong><%=member != null ? member.getName() : ""%></strong>, <br>
+							本次訂單共 <strong><%=order.getTotalAmountWithFee()%></strong> (元)
+							感謝您的購買
 						</div>
 
 						<div class="payment-info">
 							<div class="row">
 								<div class="col-sm-6">
-									<span></span>
-									<strong>NO.<%=order.getId() %></strong>
+									<span></span> <strong>NO.<%=order.getId()%></strong>
 								</div>
 								<div class="col-sm-6 text-right">
-									<span>建立時間</span>
-									<strong><%=order.getCreateDate()%>  <%=order.getCreatTime().format(formatter) %></strong>
+									<span>建立時間</span> <strong><%=order.getCreateDate()%> <%=order.getCreatTime().format(formatter)%></strong>
 								</div>
 							</div>
 						</div>
@@ -98,30 +104,22 @@
 						<div class="payment-details">
 							<div class="row">
 								<div class="col-sm-6">
-									<span>購買人</span>
-									<strong>
-										<%=member!=null?member.getName():"" %>
+									<span>購買人</span> <strong> <%=member != null ? member.getName() : ""%>
 									</strong>
 									<p>
-										地址:<%=member!=null?member.getAddress():"" %>
-										<br>
-										電話:<%=member!=null?member.getPhone():"" %>
-										<br>
-										Email:<%=member!=null?member.getEmail():"" %>
+										地址:<%=member != null ? member.getAddress() : ""%>
+										<br> 電話:<%=member != null ? member.getPhone() : ""%>
+										<br> Email:<%=member != null ? member.getEmail() : ""%>
 										<br>
 									</p>
 								</div>
 								<div class="col-sm-6 text-right">
-									<span>收件人</span>
-									<strong>
-										<%=order.getReceiptName() %>
+									<span>收件人</span> <strong> <%=order.getReceiptName()%>
 									</strong>
 									<p>
-										地址:<%=order.getShippingAddres() %>
-										<br>
-										電話:<%=order.getReceiptPhone() %>
-										<br>
-										Email:<%=order.getReceiptEmail() %>
+										地址:<%=order.getShippingAddres()%>
+										<br> 電話:<%=order.getReceiptPhone()%>
+										<br> Email:<%=order.getReceiptEmail()%>
 										<br>
 									</p>
 								</div>
@@ -138,62 +136,71 @@
 								</div>
 							</div>
 							<div class="items">
-							<%for(OrderItem orderItem:order.getOrderItemSet()){
-								Product p = orderItem.getProduct();
-								Size size = orderItem.getSize();
-							%>
+								<%
+								for (OrderItem orderItem : order.getOrderItemSet()) {
+									Product p = orderItem.getProduct();
+									Size size = orderItem.getSize();
+								%>
 								<div class="row item">
 									<div class="col-md-2 ">
-										<img class="imgs" src='<%=request.getContextPath()%>/<%=size!=null&&size.getPhotoURL()!=null?size.getPhotoURL():p.getPhotoUrl() %>'>
+										<img class="imgs"
+											src='<%=request.getContextPath()%>/<%=size != null && size.getPhotoURL() != null ? size.getPhotoURL() : p.getPhotoUrl()%>'>
 									</div>
 									<div class="col-md-4 text-right desc">
-										<%=p.getName()%><%=orderItem.getSpicy()%><%=size!=null?size.getName():"" %>
+										<%=p.getName()%><%=orderItem.getSpicy()%><%=size != null ? size.getName() : ""%>
 									</div>
 									<div class="col-md-3 qty text-right">
-										共<%=orderItem.getQuantity() %>件
+										共<%=orderItem.getQuantity()%>件
 									</div>
 									<div class="col-md-3 amount text-right">
-										<%=orderItem.getPrice()*orderItem.getQuantity() %>
+										<%=orderItem.getPrice() * orderItem.getQuantity()%>
 									</div>
 								</div>
-							<%} %>
+								<%
+								}
+								%>
 							</div>
 							<div class="total text-right">
 								<p class="extra-notes">
 									<strong>備註</strong>
-									<%=order.getShippingNote()!=null?order.getShippingNote():"" %>
+									<%=order.getShippingNote() != null ? order.getShippingNote() : ""%>
 								</p>
-<!-- 								<div class="field"> -->
-<%-- 									小記 <span>$<%=orderItem.getPrice()*orderItem.getQuantity() %></span> --%>
-<!-- 								</div> -->
+								<!-- 								<div class="field"> -->
+								<%-- 									小記 <span>$<%=orderItem.getPrice()*orderItem.getQuantity() %></span> --%>
+								<!-- 								</div> -->
 								<div class="field">
-									運費 <span>$<%=order.getShippingFee()>0?order.getShippingFee():"0" %></span>
+									運費 <span>$<%=order.getShippingFee() > 0 ? order.getShippingFee() : "0"%></span>
 								</div>
 								<div class="field">
-									手續費 <span>$<%=order.getPaymentFee()>0?order.getPaymentFee():"0" %></span>
+									手續費 <span>$<%=order.getPaymentFee() > 0 ? order.getPaymentFee() : "0"%></span>
 								</div>
 								<div class="field grand-total">
-									總金額 <span>$<%=order.getTotalAmountWithFee() %></span>
+									總金額 <span>$<%=order.getTotalAmountWithFee()%></span>
 								</div>
 							</div>
-						
+
 							<div class="print">
-								<a href="#">
-									<i class="fa fa-print"></i>
-									Print this receipt
-								</a>
+								<%
+								if (order.getPaymentType() == PaymentType.ATM && order.getStatus() == 0) {
+								%>
+								(<a href='atm_transfered.jsp?orderId=<%=order.getId()%>'>通知已轉帳</a>)
+								<%
+								}
+								%>
 							</div>
 						</div>
 					</div>
 
 					<div class="footer">
-						<%@ include file='/subviews/footer.jsp' %>
+						<%@ include file='/subviews/footer.jsp'%>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<%} %>
+	<%
+	}
+	%>
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script
