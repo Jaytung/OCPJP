@@ -2,6 +2,7 @@
 <%@page import="uuu.blackcake.entity.Order"%>
 <%@page import="uuu.blackcake.service.OrderService"%>
 <%@page import="uuu.blackcake.entity.Customer"%>
+<%@page import="java.util.List"%>
 <%@ page pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +10,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ATM轉帳</title>
+<title>通知已轉帳</title>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
 	integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
@@ -23,10 +24,10 @@
 <script src="https://code.jquery.com/jquery-3.0.0.js"
 	integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo="
 	crossorigin="anonymous"></script>
-	<script>
+<script>
 	$(init);
 	function init(){
-		<% if("POST".equals(request.getMethod())){ %>
+		<%if ("POST".equals(request.getMethod())) {%>
 			repopulateForm();
 		<%}%>
 	}
@@ -41,75 +42,113 @@
 	}	
 	</script>
 </head>
-<%
-String orderId = request.getParameter("orderID");
-Customer member = (Customer)session.getAttribute("member");
-OrderService oService = new OrderService();
-Order order = null;
-if(member!=null&&orderId!=null){
-	order=oService.getOrderById(member,orderId);
-}
-%>
 <body>
-	<%if(order!=null){ %>
+	<jsp:include page="/subviews/navbar.jsp">
+		<jsp:param value="通知轉帳" name="subheader" />
+	</jsp:include>
+	<%
+	String orderId = request.getParameter("orderId");
+	Customer member = (Customer) session.getAttribute("member");
+	OrderService oService = new OrderService();
+	Order order = null;
+	if (member != null && orderId != null) {
+		order = oService.getOrderById(member, orderId);
+	}
+	%>
+	<%
+	if (order != null) {
+	%>
 	${requestScope.errors}
 	<div class="container mt-5">
 		<form class="needs-validation atmForm" action="atm_transfered.do"
 			method="POST" novalidate>
+			${requestScope.errors}
 			<h1 class="text-center">ATM轉帳</h1>
-			<h3 class="text-center mt-5"><%=order.getId() %></h3>
+			<h3 class="text-center mt-5"><%="訂單編號:" + order.getId()%></h3>
 			<div class="form-row mt-5">
 				<div class="col-md-6 mb-3">
-					<label for="transBank" >轉帳銀行</label>
-					 <input type="text" class="form-control" id="transBank" 
-					 name="bank" value="${param.bank} " placeholder="請輸入轉帳銀行" required>
+					<label for="transBank">轉帳銀行</label> <input type="text"
+						class="form-control" id="transBank" name="bank"
+						value="${param.bank}" placeholder="請輸入轉帳銀行" required>
 					<div class="invalid-feedback">請填寫轉帳銀行</div>
 					<div class="valid-feedback">正確!</div>
 				</div>
 				<div class="col-md-6 mb-3">
-					<label for="last5Code">帳號後五碼</label>
-						 <input type="text" class="form-control" id="last5Code"
-						 name="last5Code" value="${param.last5Code} " placeholder="請輸入轉帳後五碼" required>
+					<label for="last5Code">帳號後五碼</label> <input type="text"
+						class="form-control" id="last5Code" name="last5Code"
+						value="${param.last5Code}" placeholder="請輸入轉帳後五碼" required>
 					<div class="invalid-feedback">請輸入轉帳後五碼</div>
 					<div class="valid-feedback">正確!</div>
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="col-md-6 mb-3">
-					<label for="transAmount">轉帳金額</label> 
-					<input type="number" class="form-control" id="transAmount" min="1"
-						  name="amount" value="<%=request.getParameter("amount")==null?order.getTotalAmountWithFee():request.getParameter("amount") %>" required>
+					<label for="transAmount">轉帳金額</label> <input type="number"
+						class="form-control" id="transAmount" min="1" name="amount"
+						value="<%=request.getParameter("amount") == null ? order.getTotalAmountWithFee() : request.getParameter("amount")%>"
+						placeholder="應付款金額為:<%=request.getParameter("amount") == null ? order.getTotalAmountWithFee() : request.getParameter("amount")%>"
+						required>
 					<div class="valid-feedback">正確!</div>
 					<div class="invalid-feedback">必須輸入轉帳金額</div>
 				</div>
 				<div class="col-md-6 mb-3">
-					<label for="transDate">轉帳日期</label> 
-					<input type="date" class="form-control" id="transDate" min="<%=order.getCreateDate() %>" max="<%=LocalDate.now() %>"
-						 value="${param.date }" required> </select>
+					<label for="transDate">轉帳日期</label> <input type="date"
+						class="form-control" name="date" id="transDate"
+						min="<%=order.getCreateDate() %>" max="<%=LocalDate.now() %>"
+						value="${param.date}" required>
 					<div class="valid-feedback">正確!</div>
 					<div class="invalid-feedback">請選擇轉帳日期</div>
 				</div>
 				<div class="col-md-6 mb-3">
-					<label for="time">轉帳時間</label>
-					<select class="form-control">
+					<label for="time">轉帳時間</label> <select class="form-control"
+						name="time">
 						<option value="">請選擇...</option>
-						<%for(int i=0;i<24;i++){ %>
-						<option value="<%=i%>:00"><%=i%>:00</option>
-						<option value="<%=i%>:30"><%=i%>:30</option>
-						<%} %>
+						<%
+						for (int i = 0; i < 24; i++) {
+						%>
+						<option value="<%=i%>:00"><%=i%>:00
+						</option>
+						<option value="<%=i%>:30"><%=i%>:30
+						</option>
+						<%
+						}
+						%>
 					</select>
-					~
 				</div>
 			</div>
 			<div class="d-flex justify-content-end">
 				<button class="btn btn-dark btn-lg mr-1" type="reset">還原</button>
 				<button class="btn btn-dark btn-lg" type="submit">確定</button>
 			</div>
+			 <input type="hidden" readonly name="orderId" value="<%= order.getId() %>">
 		</form>
-		<%}else{ %>
-			<h3 class="text-center mt-5">查無此訂單</h3>
-		<%} %>
-		<script>
+	</div>
+	<%
+	} else {
+	%>
+	<h3 class="text-center mt-5">查無此訂單</h3>
+	<div class="container mt-5">
+		<%
+		List<String> errors = (List<String>) request.getAttribute("errors");
+		%>
+		<div class="container">
+			<%
+			if (errors != null && errors.size() > 0) {
+				for (int i = 0; i < errors.size(); i++) {
+					String msg = (String) errors.get(i);
+			%>
+			<div class="alert alert-danger text-center" role="alert">
+				<h4><%=msg%>!
+				</h4>
+			</div>
+			<%
+			}
+			}
+			%>
+			<%
+			}
+			%>
+			<script>
 			$(
 					function() {
 						$(document).scroll(
@@ -120,7 +159,7 @@ if(member!=null&&orderId!=null){
 								})
 					})
 		</script>
-		<script>
+			<script>
 			// Example starter JavaScript for disabling form submissions if there are invalid fields
 					(
 							function() {
@@ -158,20 +197,20 @@ if(member!=null&&orderId!=null){
 												}, false);
 							})();
 		</script>
-	</div>
+		</div>
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
-		integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
-		crossorigin="anonymous"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+			integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+			crossorigin="anonymous"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+			integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+			crossorigin="anonymous"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
+			integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
+			crossorigin="anonymous"></script>
 </body>
 
 </html>

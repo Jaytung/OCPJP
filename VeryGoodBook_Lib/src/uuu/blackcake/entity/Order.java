@@ -7,9 +7,9 @@ import java.util.Set;
 
 public class Order {
 	private int id;// Pkey,Auto-Increment
+	private Customer member;// required
 	private LocalDate createDate;// required
 	private LocalTime creatTime = LocalTime.now();// required
-	private Customer member;// required
 	private String receiptName;// required
 	private String receiptEmail;// required
 	private String receiptPhone;// required
@@ -76,23 +76,22 @@ public class Order {
 		return getTotalAmount() + paymentFee + shippingFee;
 	}
 
-	public void add(OrderItem Item) {
+	public void add(OrderItem Item) {// for OrdersDAO: 查詢訂單明細後將orderItem記錄在order物件中
 		orderItemSet.add(Item);
 	}
 
 	public void add(ShoppingCart cart) {
 		if (cart == null || cart.isEmpty()) {
 			throw new IllegalArgumentException("購物車不得為null,或必須有明細");
-		} else {
-			for (CartItem cartItem : cart.getCartItemSet()) {
-				OrderItem orderItem = new OrderItem();
-				orderItem.setProduct(cartItem.getProduct());
-				orderItem.setSize(cartItem.getSize());
-				orderItem.setSpicy(cartItem.getSpicy());
-				orderItem.setPrice(cartItem.getProduct().getUnitPrice());
-				orderItem.setQuantity(cart.getQuantity(cartItem));
-				orderItemSet.add(orderItem);
-			}
+		}
+		for (CartItem cartItem : cart.getCartItemSet()) {
+			OrderItem orderItem = new OrderItem();
+			orderItem.setProduct(cartItem.getProduct());
+			orderItem.setSize(cartItem.getSize());
+			orderItem.setSpicy(cartItem.getSpicy());
+			orderItem.setPrice(cartItem.getProduct().getUnitPrice());
+			orderItem.setQuantity(cart.getQuantity(cartItem));
+			orderItemSet.add(orderItem);
 		}
 	}
 
@@ -152,12 +151,28 @@ public class Order {
 		this.status = status;
 	}
 
+	public String getStatusString() {
+		return Status.getDescription(status);
+	}
+
+	public String getStatusString(int status) {
+		return Status.getDescription(status);
+	}
+	public ShippingType getShippingType() {
+		return shippingType;
+	}
+
 	public double getShippingFee() {
 		return shippingFee;
 	}
 
 	public void setShippingFee(double shippingFee) {
 		this.shippingFee = shippingFee;
+	}
+	
+	
+	public PaymentType getPaymentType() {
+		return paymentType;
 	}
 
 	public double getPaymentFee() {
@@ -184,13 +199,6 @@ public class Order {
 		this.shippingNote = shippingNote;
 	}
 
-	public PaymentType getPaymentType() {
-		return paymentType;
-	}
-
-	public ShippingType getShippingType() {
-		return shippingType;
-	}
 
 	public void setPaymentType(PaymentType paymentType) {
 		this.paymentType = paymentType;
@@ -202,18 +210,19 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "訂單Order id=" + id + ",\n createDate=" + createDate + ",\n creatTime=" + creatTime + ",\n member="
-				+ member + ",\n receiptName=" + receiptName + ",\n receiptEmail=" + receiptEmail + ",\n receiptPhone="
-				+ receiptPhone + ",\n shippingAddres=" + shippingAddres + ",\n status=" + status + ",\n paymentType="
-				+ paymentType + ",\n paymentFee=" + paymentFee + ",\n paymentNote=" + paymentNote + ",\n shippingType="
-				+ shippingType + ",\n shippingFee=" + shippingFee + ",\n shippingNote=" + shippingNote
-				+ ",\n orderItemSet=" + orderItemSet + ",\n 項數=" + getSize() + ",\n 件數=" + getTotalQuantity()
-				+ ",\n 商品金額=" + getTotalAmount() + ",\n 應付金額=" + getTotalAmountWithFee();
+		return "訂單[編號=" + id + ", 訂購日期時間=" + createDate + " " + creatTime + ", 處理狀態=" + status + ",\n 訂購人=" + member
+				+ ",\n 收件人 " + receiptName + "," + receiptEmail + "," + receiptPhone + ",\n 收件地址=" + shippingAddres
+				+ ",\n 付款方式與費用=" + paymentType.getDescription() + "," + paymentFee + "元," + ",\n 付款資訊=" + paymentNote
+				+ ",\n 收件方式與費用=" + shippingType.getDescription() + "," + shippingFee + "元," + " 出貨資訊=" + shippingNote
+				+ ",\n" + orderItemSet + ",\n 共" + getSize() + "項, " + getTotalQuantity() + "件" + ",\n 總金額"
+				+ getTotalAmount() + ",\n 總金額(+手續費)=" + getTotalAmountWithFee() + "]";
 	}
-	public enum Status{
-		NEW("新訂單"),TRANSFORED("已轉帳"),PAID("已入帳"),
-		SHIPPED("已出貨"),ARRIVED("已到貨"),CHECKED("已簽收"),COMPLETE("完結");
-		
+
+	public enum Status {
+		NEW("新訂單"), TRANSFORED("已轉帳"), PAID("已入帳"),
+		SHIPPED("已出貨"), ARRIVED("已到貨"), CHECKED("已簽收"),
+		COMPLETE("完結");
+
 		private final String description;
 
 		private Status(String description) {
@@ -223,9 +232,9 @@ public class Order {
 		public String getDescription() {
 			return description;
 		}
-		
+
 		public static String getDescription(int status) {
-			if(status>=0 && status<values().length)
+			if (status >= 0 && status < values().length)
 				return values()[status].getDescription();
 			else {
 				return String.valueOf(status);

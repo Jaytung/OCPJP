@@ -48,7 +48,5 @@ public enum PaymentType {
 	public String toString() {		
 		return description + (fee>0?"," + fee + "元":"");
 	}
-	
-	
 }
 

@@ -15,6 +15,9 @@ public enum ShippingType {
 	public double getFee() {
 		return fee;
 	}
+	public String getDescription() {
+		return description;
+	}
 	
 	private ShippingType(String shippingName, double fee) {
 		this.description = shippingName;

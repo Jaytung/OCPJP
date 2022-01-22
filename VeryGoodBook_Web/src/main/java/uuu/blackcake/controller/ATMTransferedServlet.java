@@ -83,7 +83,8 @@ public class ATMTransferedServlet extends HttpServlet {
                 if(order!=null){
                     service.updateOrderStatusToTransfered(member,orderId, bank, last5Code, amount, date, time);                    
                     //3.1 redirect到歷史訂單
-                    response.sendRedirect("order.jsp?orderId="+orderId);
+                    response.sendRedirect("order_history.jsp");
+//                    response.sendRedirect("order.jsp?orderId="+orderId);
                     return;
                 }else{
                     errors.add("訂單編號不正確");

@@ -141,7 +141,7 @@ class OrdersDAO {
 			+ " receipt_name, receipt_email, receipt_phone, shipping_addres, "
 			+ " payment_type, payment_fee, payment_note, shipping_type, " + " shipping_fee, shipping_note, status,"
 			+ " product_id, size_name, price, quantity, SUM(price*quantity) as total_amount"
-			+ " FROM orders LEFT JOIN order_items ON id=order_id" + " WHERE member_id=? " + " GROUP BY orders.id"
+			+ " FROM orders LEFT JOIN order_items ON orders.id=order_items.order_id" + " WHERE member_id=? " + " GROUP BY orders.id"
 			+ " ORDER BY created_date DESC, created_time DESC;";
 
 	List<Order> selectOrderByCustomer(String email) throws BlackCakeException {
@@ -283,27 +283,27 @@ class OrdersDAO {
 		return order;
 	}
 
-	private static final String UPDATE_ORDER_STATUS_TO_TRANSFERED = "UPDATE orders SET status=1, " // 狀態設定為已通知付款
-			+ "payment_note=? WHERE id=? AND member_id=? " + "AND status=0 AND payment_type='" + PaymentType.ATM.name()
-			+ "'";
+	private static final String UPDATE_ORDER_STATUS_TO_TRANSFERED = 
+			"UPDATE blackcake.orders SET status=1, " //狀態設定為已通知付款
+            + "payment_note=? WHERE id=? AND member_id=? "
+            + "AND status=0 AND payment_type='" + PaymentType.ATM.name() + "'";
+	 void updateOrderStatusToTransfered(String customerId, int id,String paymentNote) throws BlackCakeException {
+	        try (Connection connection = RDBConnection.getConnection();
+	                PreparedStatement pstmt = connection.prepareStatement(UPDATE_ORDER_STATUS_TO_TRANSFERED);) {
 
-	void updateOrderStatusToTransfered(String customerId, int id, String paymentNote) throws BlackCakeException {
-		try (Connection connection = RDBConnection.getConnection();
-				PreparedStatement pstmt = connection.prepareStatement(UPDATE_ORDER_STATUS_TO_TRANSFERED);) {
+	            //3.1 傳入?的值
+	            pstmt.setString(1, paymentNote);            
+	            pstmt.setInt(2, id);
+	            pstmt.setString(3, customerId);
+	            //4.執行指令
+	            pstmt.executeUpdate();
 
-			// 3.1 傳入?的值
-			pstmt.setString(1, paymentNote);
-			pstmt.setInt(2, id);
-			pstmt.setString(3, customerId);
-			// 4.執行指令
-			pstmt.executeUpdate();
-
-		} catch (SQLException ex) {
-			throw new BlackCakeException("[修改訂單狀態為已轉帳]失敗", ex);
-		}
-	}
+	        } catch (SQLException ex) {
+	            throw new BlackCakeException("[修改訂單狀態為已轉帳]失敗", ex);
+	        }
+	    }
 	private static final String SELECT_ORDER_STATUS_LOG = "SELECT order_id, old_status, new_status, old_payment_note, "
-    		+ "new_payment_note, update_time FROM vgb.order_status_log WHERE order_id=?";
+    		+ "new_payment_note, update_time FROM blackcake.order_status_log WHERE order_id=?";
 	public List<OrderStatusLog> selectOrderStatusLog(String orderId)throws BlackCakeException {
 		List<OrderStatusLog>list= new ArrayList<>();
 		try(
@@ -320,7 +320,6 @@ class OrdersDAO {
 					log.setStatus(rs.getInt("new_status"));
 					log.setLogTime(rs.getString("update_time"));
 					list.add(log);
-					
 				}
 			}
 			return list;

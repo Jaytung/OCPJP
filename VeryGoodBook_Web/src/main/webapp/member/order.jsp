@@ -1,5 +1,6 @@
 <%@page import="uuu.blackcake.service.OrderService"%>
 <%@page import="uuu.blackcake.entity.Order"%>
+<%@page import="uuu.blackcake.entity.OrderStatusLog"%>
 <%@page import="uuu.blackcake.entity.OrderItem"%>
 <%@page import="uuu.blackcake.entity.CartItem"%>
 <%@page import="uuu.blackcake.entity.ShoppingCart"%>
@@ -65,8 +66,9 @@
 	Customer member = (Customer) session.getAttribute("member");
 	String orderId = request.getParameter("orderId");
 	Order order = null;
+	OrderService oService = new OrderService();
+	List<OrderStatusLog> logList = null;
 	if (member != null && orderId != null) {
-		OrderService oService = new OrderService();
 		order = oService.getOrderById(member, orderId);
 	}
 	%>
@@ -85,114 +87,132 @@
 				<div class="col-md-12">
 					<div class="invoice-wrapper">
 						<div class="intro">
-							您好 <strong><%=member != null ? member.getName() : ""%></strong>, <br>
-							本次訂單共 <strong><%=order.getTotalAmountWithFee()%></strong> (元)
-							感謝您的購買
+							您好 <strong><%=member != null ? member.getName() : ""%></strong>,
+							<br> 本次訂單共 <strong><%=order.getTotalAmountWithFee()%></strong>
+							(元) 感謝您的購買
 						</div>
 
 						<div class="payment-info">
 							<div class="row">
 								<div class="col-sm-6">
-									<span></span> <strong>NO.<%=order.getId()%></strong>
+									<span>訂單編號:</span> <strong>NO.<%=order.getId()%></strong> <span></span>
+									<strong
+										title='<%=order.getCreateDate()%> <%=order.getCreatTime()%>'>狀態:<%=order.getStatusString()%></strong>
+								</div>
+							</div>
+						</div>
+						<div class="payment-info">
+							<span>流程</span>
+							<div class="row">
+								<div class="row col-sm-6 ml-1">
+									<div class='statusDiv'
+										title='<%=order.getCreateDate()%> <%=order.getCreatTime()%>'>
+										<strong>已下單</strong>
+									</div>
+									<%
+									logList = oService.getOrderStatusLog(orderId);
+									if (logList != null && logList.size() > 0) {
+										for (OrderStatusLog log : logList) {
+									%>
+									<strong>&rarr;</strong>
+									<div class='statusDiv' title='<%=log.getLogTime()%>'>
+										<span></span><strong><%=order.getStatusString(log.getStatus())%></strong>
+									</div>
+									<%
+									}
+									}
+									%>
 								</div>
 								<div class="col-sm-6 text-right">
 									<span>建立時間</span> <strong><%=order.getCreateDate()%> <%=order.getCreatTime().format(formatter)%></strong>
 								</div>
 							</div>
-						</div>
-
-						<div class="payment-details">
-							<div class="row">
-								<div class="col-sm-6">
-									<span>購買人</span> <strong> <%=member != null ? member.getName() : ""%>
-									</strong>
-									<p>
-										地址:<%=member != null ? member.getAddress() : ""%>
-										<br> 電話:<%=member != null ? member.getPhone() : ""%>
-										<br> Email:<%=member != null ? member.getEmail() : ""%>
-										<br>
-									</p>
-								</div>
-								<div class="col-sm-6 text-right">
-									<span>收件人</span> <strong> <%=order.getReceiptName()%>
-									</strong>
-									<p>
-										地址:<%=order.getShippingAddres()%>
-										<br> 電話:<%=order.getReceiptPhone()%>
-										<br> Email:<%=order.getReceiptEmail()%>
-										<br>
-									</p>
-								</div>
-							</div>
-						</div>
-
-						<div class="line-items">
-							<div class="headers clearfix">
+							<div class="payment-details">
 								<div class="row">
-									<div class="col-md-2"></div>
-									<div class="col-md-4 text-right">詳細/</div>
-									<div class="col-md-3 text-right">數量/</div>
-									<div class="col-md-3 text-right">小記/</div>
-								</div>
-							</div>
-							<div class="items">
-								<%
-								for (OrderItem orderItem : order.getOrderItemSet()) {
-									Product p = orderItem.getProduct();
-									Size size = orderItem.getSize();
-								%>
-								<div class="row item">
-									<div class="col-md-2 ">
-										<img class="imgs"
-											src='<%=request.getContextPath()%>/<%=size != null && size.getPhotoURL() != null ? size.getPhotoURL() : p.getPhotoUrl()%>'>
+									<div class="col-sm-6">
+										<span>購買人</span> <strong> <%=member != null ? member.getName() : ""%>
+										</strong>
+										<p>
+											地址:<%=member != null ? member.getAddress() : ""%>
+											<br> 電話:<%=member != null ? member.getPhone() : ""%>
+											<br> Email:<%=member != null ? member.getEmail() : ""%>
+											<br>
+										</p>
 									</div>
-									<div class="col-md-4 text-right desc">
-										<%=p.getName()%><%=orderItem.getSpicy()%><%=size != null ? size.getName() : ""%>
+									<div class="col-sm-6 text-right">
+										<span>收件人</span> <strong> <%=order.getReceiptName()%>
+										</strong>
+										<p>
+											地址:<%=order.getShippingAddres()%>
+											<br> 電話:<%=order.getReceiptPhone()%>
+											<br> Email:<%=order.getReceiptEmail()%>
+											<br>
+										</p>
 									</div>
-									<div class="col-md-3 qty text-right">
-										共<%=orderItem.getQuantity()%>件
-									</div>
-									<div class="col-md-3 amount text-right">
-										<%=orderItem.getPrice() * orderItem.getQuantity()%>
-									</div>
-								</div>
-								<%
-								}
-								%>
-							</div>
-							<div class="total text-right">
-								<p class="extra-notes">
-									<strong>備註</strong>
-									<%=order.getShippingNote() != null ? order.getShippingNote() : ""%>
-								</p>
-								<!-- 								<div class="field"> -->
-								<%-- 									小記 <span>$<%=orderItem.getPrice()*orderItem.getQuantity() %></span> --%>
-								<!-- 								</div> -->
-								<div class="field">
-									運費 <span>$<%=order.getShippingFee() > 0 ? order.getShippingFee() : "0"%></span>
-								</div>
-								<div class="field">
-									手續費 <span>$<%=order.getPaymentFee() > 0 ? order.getPaymentFee() : "0"%></span>
-								</div>
-								<div class="field grand-total">
-									總金額 <span>$<%=order.getTotalAmountWithFee()%></span>
 								</div>
 							</div>
 
-							<div class="print">
-								<%
-								if (order.getPaymentType() == PaymentType.ATM && order.getStatus() == 0) {
-								%>
-								(<a href='atm_transfered.jsp?orderId=<%=order.getId()%>'>通知已轉帳</a>)
-								<%
-								}
-								%>
+							<div class="line-items">
+								<div class="headers clearfix">
+									<div class="row">
+										<div class="col-md-2"></div>
+										<div class="col-md-4 text-right">詳細/</div>
+										<div class="col-md-3 text-right">數量/</div>
+										<div class="col-md-3 text-right">小記/</div>
+									</div>
+								</div>
+								<div class="items">
+									<%
+									for (OrderItem orderItem : order.getOrderItemSet()) {
+										Product p = orderItem.getProduct();
+										Size size = orderItem.getSize();
+									%>
+									<div class="row item">
+										<div class="col-md-2 ">
+											<img class="imgs"
+												src='<%=request.getContextPath()%>/<%=size != null && size.getPhotoURL() != null ? size.getPhotoURL() : p.getPhotoUrl()%>'>
+										</div>
+										<div class="col-md-4 text-right desc">
+											<%=p.getName()%><%=orderItem.getSpicy()%><%=size != null ? size.getName() : ""%>
+										</div>
+										<div class="col-md-3 qty text-right">
+											共<%=orderItem.getQuantity()%>件
+										</div>
+										<div class="col-md-3 amount text-right">
+											<%=orderItem.getPrice() * orderItem.getQuantity()%>
+										</div>
+									</div>
+									<%
+									}
+									%>
+								</div>
+								<div class="total text-right">
+									<p class="extra-notes">
+										<strong>備註</strong>
+										<%=order.getShippingNote() != null ? order.getShippingNote() : ""%>
+									</p>
+									<div class="field">
+										運費 <span>$<%=order.getShippingFee() > 0 ? order.getShippingFee() : "0"%></span>
+									</div>
+									<div class="field">
+										手續費 <span>$<%=order.getPaymentFee() > 0 ? order.getPaymentFee() : "0"%></span>
+									</div>
+									<div class="field grand-total">
+										總金額 <span>$<%=order.getTotalAmountWithFee()%></span>
+									</div>
+								</div>
+
+								<div class="print">
+									<%if(order.getPaymentType() == PaymentType.ATM && order.getStatus()==0){%>
+									<a href='atm_transfered.jsp?orderId=<%= order.getId() %>'>通知已轉帳</a>
+									<%}%>
+								</div>
 							</div>
 						</div>
-					</div>
 
-					<div class="footer">
-						<%@ include file='/subviews/footer.jsp'%>
+						<div class="footer">
+							<%@ include file='/subviews/footer.jsp'%>
+						</div>
 					</div>
 				</div>
 			</div>

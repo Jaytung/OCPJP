@@ -168,6 +168,12 @@ public class Product {
 				sum+=size.getStock();
 			}
 			return sum;
+		}else if(spicyMap!=null&&spicyMap.size()>0) {
+			int sum=0;
+			for(Spicy spicy:spicyMap.values()) {
+				sum+=spicy.getStock();
+			}
+			return sum;
 		}
 		return stock;
 	}

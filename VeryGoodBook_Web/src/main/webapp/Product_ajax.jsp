@@ -3,6 +3,7 @@
 <%@page import="uuu.blackcake.entity.Outlet"%>
 <%@page import="uuu.blackcake.entity.Product"%>
 <%@page import="uuu.blackcake.service.ProductService"%>
+<%@page import="uuu.blackcake.entity.CartItem"%>
 <%@ page pageEncoding="UTF-8"%>
 <!--Product_ajax.jsp start -->
 <style>
@@ -90,7 +91,7 @@
 }
 
 #stock {
-	font-size:1.2rem;
+	font-size: 1.2rem;
 	color: #e63946;
 }
 
@@ -224,7 +225,6 @@ input[type=number] {
 	} else {
 	%>
 
-
 	<div class="container" id="product">
 		<form action="add_to_cart.do" method="POST" id="cartForm"
 			onsubmit="return submitCart()">
@@ -269,7 +269,7 @@ input[type=number] {
 						<hr>
 						<h3>庫存:</h3>
 						<p>
-							<%-- 							總數:<%=p.getStock() + "個"%> --%>
+							總數:<span class="stock"><%=p.getStock()%></span>
 							&nbsp;&nbsp;&nbsp;&nbsp;<span id="stock"></span>
 						</p>
 						<hr>
