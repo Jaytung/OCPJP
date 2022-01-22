@@ -120,7 +120,7 @@
 				<button class="btn btn-dark btn-lg mr-1" type="reset">還原</button>
 				<button class="btn btn-dark btn-lg" type="submit">確定</button>
 			</div>
-			 <input type="hidden" readonly name="orderId" value="<%= order.getId() %>">
+<%-- 			 <input type="hidden" readonly name="orderId" value="<%= order.getId() %>"> --%>
 		</form>
 	</div>
 	<%
