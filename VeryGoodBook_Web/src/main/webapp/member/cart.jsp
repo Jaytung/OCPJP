@@ -75,12 +75,27 @@ td>img {
 		<h2 class="text-center">購物車是空的!</h2>
 		<a href="<%=request.getContextPath()%>/index.jsp">返回首頁</a>
 	</div>
-
 	<%
 	} else {
 	%>
-
 	<div class="container">
+	<%
+		List<String> errors = (List<String>) request.getAttribute("errors");
+			%>
+			<div class="container">
+				<%
+				if (errors != null && errors.size() > 0) {
+					for (int i = 0; i < errors.size(); i++) {
+						String msg = (String) errors.get(i);
+				%>
+				<div class="alert alert-danger text-center" role="alert">
+					<h4><%=msg%>!
+					</h4>
+				</div>
+				<%
+				}
+				}
+				%>
 		<h1 class="text-center">購物車</h1>
 		<form action="<%=request.getContextPath()%>/member/update_cart.do"
 			method="POST">
@@ -122,7 +137,7 @@ td>img {
 						<td><%=item.getUnitPrice()%></td>
 						<td><input type="number" name="quantity<%=item.hashCode()%>"
 							value="<%=qty%>" required min="<%=stock > 0 ? 1 : 0%>"
-							max="<%=stock > 10 ? 10 : stock%>"></td>
+							max="<%=stock%>"></td>
 						<td><%=item.getUnitPrice() * qty%> </td>
 						<td><input type="checkbox" name="delete<%=item.hashCode()%>"
 							class=""></td>
@@ -158,7 +173,7 @@ td>img {
 		}
 		%>
 	</div>
-
+</div>
 
 
 

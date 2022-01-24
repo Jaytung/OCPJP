@@ -280,9 +280,6 @@
 										<%
 										}
 										%>
-										<!-- 							<option value='ATM' data-shipping='STORE,HOME'>ATM轉帳</option> -->
-										<!-- 							<option value='STORE' data-shipping='STORE'>超商付款</option> -->
-										<!-- 							<option value='HOME' data-fee='80'>貨到付款, 80元</option>							 -->
 								</select></td>
 								<td><label>貨運方式:</label> <select name='shippingType'
 									class="form-control" onchange='changeShippingType(this)'

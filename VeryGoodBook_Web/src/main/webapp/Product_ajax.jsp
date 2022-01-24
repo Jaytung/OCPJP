@@ -142,8 +142,18 @@ input[type=number] {
 	-moz-appearance: textfield;
 }
 </style>
+<%
+String productId = request.getParameter("productId");
+Product p = null;
+if (productId != null) {
+	ProductService pService = new ProductService();
+	p = pService.selectProductById(productId);
+}
+if (p != null) {
+%>
 <script>
 	$(document).ready(init);
+
 	function init() {
 		$("#minus").click(minusHandler);
 		$("#plus").click(plusHandler);
@@ -158,9 +168,12 @@ input[type=number] {
 	}
 	function plusHandler() {
 		var quantitiyValue = parseInt($("#quantity").val());
-
-		$("#quantity").val(quantitiyValue + 1);
+		
+		if (quantitiyValue < <%=p.getStock()%>) {
+			$("#quantity").val(quantitiyValue + 1);
+		}
 	}
+
 	function showHandler() {
 		var image = $(this).attr("src");
 		$("#main").attr("src", image);
@@ -190,46 +203,58 @@ input[type=number] {
 		$("input[name='quantity']").attr("max", $(theObj).attr("data-stock"));
 		// 				$(".price").attr("text", $(theObj).attr("data-price"));
 	}
-	function submitCart() {
-		//         		alert("#cartForm serialize(): " + $("#cartForm").serialize());
 
-		$.ajax({
-			url : $("#cartForm").attr('action') + '?ajax=',
-			method : 'POST',
-			data : $("#cartForm").serialize()
-		}).done(submitCartDoneHandler);
+	function submitCart(theForm) {
+		console.log(theForm.submited);
+		console.log("#cartForm serialize(): " + $(theForm).serialize());
 
-		return false;//取消原來同步的submit功能
+		if (!theForm.submited) {
+			$.ajax({
+				url : $(theForm).attr('action') + "?ajax=",
+				method : 'POST',
+				data : $(theForm).serialize()
+			}).done(submitCartDoneHandler);
+
+			return false; //false取消原來同步的submit功能, true還原原來同步的submit功能
+		}
 	}
+
 	function submitCartDoneHandler(data, status, xhr) {
-		alert("加入購物車成功");
-		$(".cartQuantity").html(data.totalQuantity);
+		alert("加入購物車成功!");
+		$(".cartQty").html(data.totalQty);
 	}
-</script>
+	// 	function submitCart() {
+	// 		//         		alert("#cartForm serialize(): " + $("#cartForm").serialize());
 
-		<% if(request.getRequestURI().lastIndexOf("_ajax.")>0) {%>
-		<jsp:include page="/subviews/navbar.jsp"/>
-		<% } %>
+	// 		$.ajax({
+	// 			url : $("#cartForm").attr('action') + '?ajax=',
+	// 			method : 'POST',
+	// 			data : $("#cartForm").serialize()
+	// 		}).done(submitCartDoneHandler);
+
+	// 		return false;//取消原來同步的submit功能
+	// 	}
+	// 	function submitCartDoneHandler(data, status, xhr) {
+	// 		alert("加入購物車成功");
+	// 		$(".cartQuantity").html(data.totalQuantity);
+	// 	}
+<%}%>
+	
+</script>
 <div class="productItem">
 	<%
-	String productId = request.getParameter("productId");
-	Product p = null;
-	if (productId != null) {
-		ProductService pService = new ProductService();
-		p = pService.selectProductById(productId);
-	}
 	if (p == null) {
 	%>
-	<p>
-		查無此商品(id=<%=productId%>)
-	</p>
+	<div class="container mt-5">
+		<h3 class="text-center">
+			查無此商品id=<%=productId%></h3>
+	</div>
 	<%
 	} else {
 	%>
-
 	<div class="container" id="product">
 		<form action="add_to_cart.do" method="POST" id="cartForm"
-			onsubmit="return submitCart()">
+			onsubmit="return submitCart(this)">
 
 			<input type='hidden' value='<%=p.getId()%>' name='productId'>
 			<div class="row">
@@ -347,9 +372,7 @@ input[type=number] {
 				}
 				%>
 
-				<%
-				}
-				%>
+
 			</div>
 			<div class="col-sm-12 col-md-6 order-8 mt-4 productInput">
 				<div class="text-center">
@@ -360,10 +383,11 @@ input[type=number] {
 								id="minus">
 								<span class="cartPlusAndMinus">-</span>
 							</button>
-						</span> <input type="number"
+						</span> 
+						<input type="number"
 							class="form-control form-control-lg text-center rounded col-sm-12 col-md-4 col-lg-3"
-							aria-label="" value="0" id="quantity" name="quantity" min="1">
-						<span class="input-group-addon">
+							aria-label="" value="0" id="quantity" name="quantity"
+							min="<%=p.getStock()%>" max="<%=p.getStock()%>" readonly>  <span class="input-group-addon">
 							<button class="btn btn-dark btn-lg ml-1 cartBtn" type="button"
 								id="plus">
 								<span class="cartPlusAndMinus">+</span>
@@ -372,17 +396,20 @@ input[type=number] {
 					</div>
 					<!-- /input-group -->
 				</div>
+
 				<!-- /.col-lg-6 -->
 				<div class="text-center" id="addToCart">
 					<br> <input class="btn btn-lg btn-dark" type="submit"
-						value="加入購物車"> 
-						<input type="submit" class="btn btn-lg btn-dark"
-						onclick='this.form.submited=true;' value='直接購買'>
+						value="加入購物車"> <input type="submit"
+						class="btn btn-lg btn-dark" onclick='this.form.submited=true;'
+						value='直接購買'>
 				</div>
 
 			</div>
 		</form>
 	</div>
 </div>
-
+<%
+}
+%>
 <!-- product_ajax.jsp end -->
