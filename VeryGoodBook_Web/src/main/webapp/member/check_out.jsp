@@ -386,7 +386,7 @@
 				
 				var protocol = "<%=request.getProtocol().toLowerCase().substring(0, request.getProtocol().indexOf("/"))%>";
 				var ipAddress = "<%=java.net.InetAddress.getLocalHost().getHostAddress()%>";
-				var url = protocol + "://" + ipAddress + ":" + location.port + "<%=request.getContextPath()%>/member/ezship_callback.jsp";                   
+				var url = "https://" + ipAddress + ":" + location.port + "<%=request.getContextPath()%>/member/ezship_callback.jsp";                   
 				$("#rtURL").val(url);
 				
 				//$("#webPara").val($("form[action='check_out.do']").serialize()); 
@@ -399,7 +399,7 @@
 			}
 		</script>
 				<form id="ezForm" method="post" name="simulation_from"
-					action="http://map.ezship.com.tw/ezship_map_web.jsp">
+					action="https://map.ezship.com.tw/ezship_map_web.jsp">
 					<input type="hidden" name="suID" value="test@vgb.com">
 					<!-- 業主在 ezShip 使用的帳號, 隨便寫 -->
 					<input type="hidden" name="processID" value="VGB202107050000005">

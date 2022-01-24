@@ -133,7 +133,7 @@
 										<span>購買人</span> <strong> <%=member != null ? member.getName() : ""%>
 										</strong>
 										<p>
-											地址:<%=member != null ? member.getAddress() : ""%>
+<%-- 											地址:<%=member != null ? member.getAddress() : ""%> --%>
 											<br> 電話:<%=member != null ? member.getPhone() : ""%>
 											<br> Email:<%=member != null ? member.getEmail() : ""%>
 											<br>
@@ -143,7 +143,7 @@
 										<span>收件人</span> <strong> <%=order.getReceiptName()%>
 										</strong>
 										<p>
-											地址:<%=order.getShippingAddres()%>
+											收件地址:<%=order.getShippingAddres()%>
 											<br> 電話:<%=order.getReceiptPhone()%>
 											<br> Email:<%=order.getReceiptEmail()%>
 											<br>

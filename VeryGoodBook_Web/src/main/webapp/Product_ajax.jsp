@@ -207,7 +207,9 @@ input[type=number] {
 	}
 </script>
 
-
+		<% if(request.getRequestURI().lastIndexOf("_ajax.")>0) {%>
+		<jsp:include page="/subviews/navbar.jsp"/>
+		<% } %>
 <div class="productItem">
 	<%
 	String productId = request.getParameter("productId");
@@ -258,7 +260,7 @@ input[type=number] {
 						if (p instanceof Outlet) {
 						%>
 						<h4>
-							定價:<span class="sizePrice"> <%=((Outlet) p).getListPrice()+""%>
+							定價:<span class="sizePrice"> <%=((Outlet) p).getListPrice() + ""%>
 							</span>
 						</h4>
 
@@ -373,10 +375,14 @@ input[type=number] {
 				<!-- /.col-lg-6 -->
 				<div class="text-center" id="addToCart">
 					<br> <input class="btn btn-lg btn-dark" type="submit"
-						value="加到購物車">
+						value="加入購物車"> 
+						<input type="submit" class="btn btn-lg btn-dark"
+						onclick='this.form.submited=true;' value='直接購買'>
 				</div>
+
 			</div>
 		</form>
 	</div>
 </div>
+
 <!-- product_ajax.jsp end -->

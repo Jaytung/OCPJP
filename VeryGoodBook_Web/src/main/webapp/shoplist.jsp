@@ -116,7 +116,7 @@ display: none;width:70%
 						<%=Math.round(p.getUnitPrice())%>元
 				</span> <br></a>
 				<a href='javascript:getProduct(<%=p.getId()%>)' value="加到購物車">
-				<button class="btn btn-lg btn-dark" onclick="href='javascript:getProduct(<%=p.getId()%>)'">加到購物車</button></li>
+				<button class="btn btn-lg btn-dark" onclick="href='javascript:getProduct(<%=p.getId()%>)'">直接購買</button></li>
 			<%
 			}
 			%>
