@@ -73,7 +73,9 @@ public class Order {
 	}
 
 	public double getTotalAmountWithFee() {// TODO:免運上限
-		return getTotalAmount() + paymentFee + shippingFee;
+		double sum = getTotalAmount();
+		sum += paymentFee + shippingFee;
+		return Math.round(sum);
 	}
 
 	public void add(OrderItem Item) {// for OrdersDAO: 查詢訂單明細後將orderItem記錄在order物件中

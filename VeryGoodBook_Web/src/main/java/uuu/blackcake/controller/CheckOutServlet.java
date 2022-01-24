@@ -27,69 +27,71 @@ import uuu.blackcake.service.OrderService;
 @WebServlet("/member/check_out.do")
 public class CheckOutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CheckOutServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public CheckOutServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		Customer member =(Customer)session.getAttribute("member");
-		ShoppingCart cart = (ShoppingCart)session.getAttribute("cart");
+		Customer member = (Customer) session.getAttribute("member");
+		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 		List<String> errors = new ArrayList<>();
-		//1.取的FormData
+		// 1.取的FormData
 		String paymentType = request.getParameter("paymentType");
 		String shippingType = request.getParameter("shippingType");
-		
+
 		String name = request.getParameter("name");
 		String phone = request.getParameter("phone");
 		String email = request.getParameter("email");
 		String shippingAddress = request.getParameter("shippingAddress");
-		
+
 		PaymentType pType = null;
 		ShippingType sType = null;
-		if(member==null&&cart.isEmpty()) {
+		if (member == null && cart.isEmpty()) {
 			errors.add("購物車是空的");
 		}
-		if(paymentType==null||paymentType.length()==0) {
+		if (paymentType == null || paymentType.length() == 0) {
 			errors.add("必須選擇付款方式");
-		}else {
+		} else {
 			try {
 				pType = PaymentType.valueOf(paymentType);
-			}catch(RuntimeException ex) {
+			} catch (RuntimeException ex) {
 				errors.add("付款方式不正確");
 			}
 		}
-		if(shippingType==null||shippingType.length()==0) {
+		if (shippingType == null || shippingType.length() == 0) {
 			errors.add("必須選擇貨運方式");
-		}else {
+		} else {
 			try {
 				sType = ShippingType.valueOf(shippingType);
-			}catch(RuntimeException ex) {
+			} catch (RuntimeException ex) {
 				errors.add("貨運方式不正確");
 			}
 		}
-		if(name==null||name.length()==0) {
+		if (name == null || name.length() == 0) {
 			errors.add("必輸輸入姓名");
 		}
-		
-		if(phone==null||phone.length()==0) {
+
+		if (phone == null || phone.length() == 0) {
 			errors.add("必須輸入電話");
 		}
-		if(email==null||email.length()==0) {
+		if (email == null || email.length() == 0) {
 			errors.add("必須輸入email");
 		}
-		if(shippingAddress==null||shippingAddress.length()==0) {
+		if (shippingAddress == null || shippingAddress.length() == 0) {
 			errors.add("必須輸入收件人地址");
 		}
-		if(errors.isEmpty()) {
+		if (errors.isEmpty()) {
 			Order order = new Order();
 			try {
 				order.setMember(member);
@@ -103,25 +105,31 @@ public class CheckOutServlet extends HttpServlet {
 				order.setReceiptPhone(phone);
 				order.setReceiptEmail(email);
 				order.setShippingAddres(shippingAddress);
-				
+
 				order.add(cart);
+				
 				OrderService oService = new OrderService();
 				oService.createOrder(order);
-				
-				
-				//3.1 成功redirect至歷史訂單
+
+				// 3.1 成功redirect至歷史訂單
 				session.removeAttribute("cart");
-				response.sendRedirect("order.jsp?orderId="+order.getId());
+				if (order.getPaymentType() == PaymentType.CARD) {
+					request.setAttribute("order", order);
+					request.getRequestDispatcher("/WEB-INF/credit_card.jsp").forward(request, response);
+					return;
+				}
+				
+				response.sendRedirect("order.jsp?orderId=" + order.getId());
 				return;
-		}catch(BlackCakeException e) {
-			this.log("建立訂單失敗");
-			errors.add(e.getMessage());
-		}catch(Exception e) {
-			this.log("建立訂單失敗發生非預期錯誤", e);
-			errors.add("建立訂單發生錯誤:"+e.getMessage());
+			} catch (BlackCakeException e) {
+				this.log("建立訂單失敗");
+				errors.add(e.getMessage());
+			} catch (Exception e) {
+				this.log("建立訂單失敗發生非預期錯誤", e);
+				errors.add("建立訂單發生錯誤:" + e.getMessage());
 			}
 		}
-		//3.2 errors:forward給check_out.jsp
+		// 3.2 errors:forward給check_out.jsp
 		request.setAttribute("errors", errors);
 		request.getRequestDispatcher("check_out.jsp").forward(request, response);
 	}

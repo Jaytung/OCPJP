@@ -302,6 +302,28 @@ class OrdersDAO {
 	            throw new BlackCakeException("[修改訂單狀態為已轉帳]失敗", ex);
 	        }
 	    }
+	 
+     private static final String UPDATE_STATUS_TO_ENTERED = 
+     		"UPDATE orders SET status=2" 
+     	            + ", payment_note=? WHERE id=? AND member_id=?"
+     	            + " AND status=0" + " AND payment_type='" + PaymentType.CARD.name() + "'"; 
+     
+     public void updateOrderStatusToPAID(String memberId, int orderId, String paymentNote) throws BlackCakeException {
+         try (Connection connection = RDBConnection.getConnection(); //2. 建立連線
+                 PreparedStatement pstmt = connection.prepareStatement(UPDATE_STATUS_TO_ENTERED) //3. 準備指令
+                 ) {
+             //3.1 傳入?的值
+             pstmt.setString(1, paymentNote);
+             pstmt.setInt(2, orderId);
+             pstmt.setString(3, memberId);
+
+             //4. 執行指令
+             pstmt.executeUpdate();
+         } catch (SQLException ex) {
+             System.out.println("修改信用卡付款入帳狀態失敗-" + ex);
+             throw new BlackCakeException("修改信用卡付款入帳狀態失敗!", ex);
+         }
+     }
 	private static final String SELECT_ORDER_STATUS_LOG = "SELECT order_id, old_status, new_status, old_payment_note, "
     		+ "new_payment_note, update_time FROM blackcake.order_status_log WHERE order_id=?";
 	public List<OrderStatusLog> selectOrderStatusLog(String orderId)throws BlackCakeException {

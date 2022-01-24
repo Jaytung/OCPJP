@@ -1,5 +1,6 @@
 package uuu.blackcake.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import uuu.blackcake.entity.Customer;
@@ -35,6 +36,20 @@ public class OrderService {
 
         dao.updateOrderStatusToTransfered(member.getEmail(), Integer.parseInt(id) , paymentNote);
     }
+	
+    public void updateOrderStatusToPAID(String memberId,String orderId, String cardF6, String cardL4,
+            String auth, String paymentDate, String amount) throws BlackCakeException {
+        StringBuilder paymentNote = new StringBuilder("信用卡號:");
+       paymentNote.append(cardF6==null?"4311-95":cardF6).append("**-****").append(cardL4==null?2222:cardL4);
+       paymentNote.append(",授權碼:").append(auth==null?"777777":auth);
+       paymentNote.append(",交易時間:").append(paymentDate==null?LocalDateTime.now():paymentDate);
+//        paymentNote.append(",刷卡金額:").append(amount);
+       System.out.println("orderId = " + orderId);
+       System.out.println("memberId = " + memberId);
+       System.out.println("paymentNote = " + paymentNote);
+       dao.updateOrderStatusToPAID(memberId, Integer.parseInt(orderId), paymentNote.toString());
+    }
+	
 	public List<OrderStatusLog> getOrderStatusLog(String orderId)throws BlackCakeException{
     	return dao.selectOrderStatusLog(orderId);
     }

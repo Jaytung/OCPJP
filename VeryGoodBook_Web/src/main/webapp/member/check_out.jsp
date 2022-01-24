@@ -176,14 +176,6 @@
 			ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 			if (cart == null || cart.isEmpty()) {
 			%>
-
-			<div class="container text-center container-fulid px-0">
-				<h2 class="text-center">購物車是空的!</h2>
-				<a href="<%=request.getContextPath()%>/index.jsp">返回首頁</a>
-			</div>
-			<%
-			} else {
-			%>
 			<%
 			List<String> errors = (List<String>) request.getAttribute("errors");
 			%>
@@ -201,180 +193,205 @@
 				}
 				}
 				%>
-				<h1 class="text-center">購物明細</h1>
-				<form action="check_out.do" method="POST" id="cartForm">
-					<table class="table table-hover table-striped table-rwd">
-						<thead class="thead-dark  text-center">
-							<tr>
-								<th scope="col">圖示</th>
-								<th scope="col">名稱</th>
-								<th scope="col">大小</th>
-								<th scope="col">口味</th>
-								<th scope="col">定價</th>
-								<th scope="col">折扣</th>
-								<th scope="col">售價</th>
-								<th scope="col">數量</th>
-								<th scope="col">小記</th>
-							</tr>
-						</thead>
-						<tbody class="text-center">
-							<%
-							ProductService pService = new ProductService();
-							for (CartItem item : cart.getCartItemSet()) {
-								Product p = item.getProduct();
-								Size size = item.getSize();
-								String spicy = item.getSpicy();
-								Spicy spicyObj = item.getSpicyObj();
-								int qty = cart.getQuantity(item);
-								int stock = pService.getProductStock(p, size, spicy);
-							%>
-							<tr>
-								<td data-th="圖示"><img
-									src="/blackcake/<%=item.getPhotoUrl()%>"></td>
-								<td data-th="名稱"><%=p.getName()%><br> <span>庫存剩餘:<%=stock%></span></td>
-								<td data-th="大小"><%=size != null ? size.getName() : ""%></td>
-								<td data-th="口味"><%=spicy%></td>
-								<td data-th="定價"><%=item.getListPrice()%></td>
-								<td data-th="折扣"><%=item.getDiscountString()%></td>
-								<td data-th="售價"><%=item.getUnitPrice()%></td>
-								<td data-th="數量"><%=qty%></td>
-								<td data-th="小記"><%=item.getUnitPrice() * qty%></td>
-							</tr>
-							<%
-							}
-							%>
-						</tbody>
-						<tfoot>
-							<tr class="text-center">
-								<td colspan="6"></td>
-								<td><%=cart.size() + "項" + "共" + cart.getTotalQuantity() + "件"%></td>
-								<td>總金額:<span id='totalAmount'><%=cart.getTotalAmount()%></span>元
-								</td>
-							</tr>
-						</tfoot>
-					</table>
-					<hr>
-					<div class="col col-md-12 text-right ">
-						<span id='amountTitle' class='border-bottom border-success '></span>
-						<span id='totalAmountWithFee'
-							class='border-bottom border-success '></span>
+				<div class="container text-center container-fulid px-0">
+					<h2 class="text-center">訂單是空的!</h2>
+					<a href="<%=request.getContextPath()%>/index.jsp">返回首頁</a>
+				</div>
+				<%
+				} else {
+				%>
+				<%
+				List<String> errors = (List<String>) request.getAttribute("errors");
+				%>
+				<div class="container">
+					<%
+					if (errors != null && errors.size() > 0) {
+						for (int i = 0; i < errors.size(); i++) {
+							String msg = (String) errors.get(i);
+					%>
+					<div class="alert alert-danger text-center" role="alert">
+						<h4><%=msg%>!
+						</h4>
 					</div>
-					<table class="table table-borderless">
-						<thead>
-							<tr>
-								<th><h2>結帳方式</h2></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td><label>付款方式:</label> <select name='paymentType'
-									class="form-control" onchange='changePaymentType(this)'
-									required>
-										<option value='' data-fee="0">請選擇...</option>
-										<%
-										for (PaymentType pType : PaymentType.values()) {
-										%>
-										<option value='<%=pType.name()%>'
-											data-shipping='<%=pType.getShippingArrayString()%>'
-											data-fee="<%=pType.getFee()%>"><%=pType.toString()%></option>
-										<%
-										}
-										%>
-								</select></td>
-								<td><label>貨運方式:</label> <select name='shippingType'
-									class="form-control" onchange='changeShippingType(this)'
-									required>
-										<option value='' data-ship="0">請選擇...</option>
-										<%
-										for (ShippingType sType : ShippingType.values()) {
-										%>
-										<option value='<%=sType.name()%>'
-											data-fee='<%=sType.getFee()%>'><%=sType.toString()%></option>
-										<%
-										}
-										%>
-								</select></td>
-							</tr>
-							<%
-							Customer member = (Customer) session.getAttribute("member");
-							%>
-							<tr class="col-12">
-								<td class="col-md-6">
-									<h4>購買人:</h4>
-									<div class="form-row col">
-										<div class="col-6 mb-3">
-											<label for="validationDefault01">姓名</label> <input
-												type="text" class="form-control" placeholder="姓名"
-												name='name' value="<%=member.getName()%>" readonly>
+					<%
+					}
+					}
+					%>
+					<h1 class="text-center">購物明細</h1>
+					<form action="check_out.do" method="POST" id="cartForm">
+						<table class="table table-hover table-striped table-rwd">
+							<thead class="thead-dark  text-center">
+								<tr>
+									<th scope="col">圖示</th>
+									<th scope="col">名稱</th>
+									<th scope="col">大小</th>
+									<th scope="col">口味</th>
+									<th scope="col">定價</th>
+									<th scope="col">折扣</th>
+									<th scope="col">售價</th>
+									<th scope="col">數量</th>
+									<th scope="col">小記</th>
+								</tr>
+							</thead>
+							<tbody class="text-center">
+								<%
+								ProductService pService = new ProductService();
+								for (CartItem item : cart.getCartItemSet()) {
+									Product p = item.getProduct();
+									Size size = item.getSize();
+									String spicy = item.getSpicy();
+									Spicy spicyObj = item.getSpicyObj();
+									int qty = cart.getQuantity(item);
+									int stock = pService.getProductStock(p, size, spicy);
+								%>
+								<tr>
+									<td data-th="圖示"><img
+										src="/blackcake/<%=item.getPhotoUrl()%>"></td>
+									<td data-th="名稱"><%=p.getName()%><br> <span>庫存剩餘:<%=stock%></span></td>
+									<td data-th="大小"><%=size != null ? size.getName() : ""%></td>
+									<td data-th="口味"><%=spicy%></td>
+									<td data-th="定價"><%=item.getListPrice()%></td>
+									<td data-th="折扣"><%=item.getDiscountString()%></td>
+									<td data-th="售價"><%=item.getUnitPrice()%></td>
+									<td data-th="數量"><%=qty%></td>
+									<td data-th="小記"><%=item.getUnitPrice() * qty%></td>
+								</tr>
+								<%
+								}
+								%>
+							</tbody>
+							<tfoot>
+								<tr class="text-center">
+									<td colspan="6"></td>
+									<td><%=cart.size() + "項" + "共" + cart.getTotalQuantity() + "件"%></td>
+									<td>總金額:<span id='totalAmount'><%=cart.getTotalAmount()%></span>元
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+						<hr>
+						<div class="col col-md-12 text-right ">
+							<span id='amountTitle' class='border-bottom border-success '></span>
+							<span id='totalAmountWithFee'
+								class='border-bottom border-success '></span>
+						</div>
+						<table class="table table-borderless">
+							<thead>
+								<tr>
+									<th><h2>結帳方式</h2></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><label>付款方式:</label> <select name='paymentType'
+										class="form-control" onchange='changePaymentType(this)'
+										required>
+											<option value='' data-fee="0">請選擇...</option>
+											<%
+											for (PaymentType pType : PaymentType.values()) {
+											%>
+											<option value='<%=pType.name()%>'
+												data-shipping='<%=pType.getShippingArrayString()%>'
+												data-fee="<%=pType.getFee()%>"><%=pType.toString()%></option>
+											<%
+											}
+											%>
+									</select></td>
+									<td><label>貨運方式:</label> <select name='shippingType'
+										class="form-control" onchange='changeShippingType(this)'
+										required>
+											<option value='' data-ship="0">請選擇...</option>
+											<%
+											for (ShippingType sType : ShippingType.values()) {
+											%>
+											<option value='<%=sType.name()%>'
+												data-fee='<%=sType.getFee()%>'><%=sType.toString()%></option>
+											<%
+											}
+											%>
+									</select></td>
+								</tr>
+								<%
+								Customer member = (Customer) session.getAttribute("member");
+								%>
+								<tr class="col-12">
+									<td class="col-md-6">
+										<h4>購買人:</h4>
+										<div class="form-row col">
+											<div class="col-6 mb-3">
+												<label for="validationDefault01">姓名</label> <input
+													type="text" class="form-control" placeholder="姓名"
+													name='name' value="<%=member.getName()%>" readonly>
+											</div>
+											<div class="col-6 mb-3">
+												<label for="validationDefault02">電話</label> <input
+													type="text" class="form-control" placeholder="phone"
+													name='phone' value="<%=member.getPhone()%>" readonly>
+											</div>
+											<div class="col-6 mb-3">
+												<label for="validationDefault02">信箱</label> <input
+													type="text" class="form-control" placeholder="email"
+													name='email' value="<%=member.getEmail()%>" readonly>
+											</div>
+											<div class="col-6 mb-3">
+												<label for="validationDefault02">地址</label> <input
+													type="text" class="form-control" placeholder="收件地址"
+													name='address' value="<%=member.getAddress()%>" readonly>
+											</div>
 										</div>
-										<div class="col-6 mb-3">
-											<label for="validationDefault02">電話</label> <input
-												type="text" class="form-control" placeholder="phone"
-												name='phone' value="<%=member.getPhone()%>" readonly>
-										</div>
-										<div class="col-6 mb-3">
-											<label for="validationDefault02">信箱</label> <input
-												type="text" class="form-control" placeholder="email"
-												name='email' value="<%=member.getEmail()%>" readonly>
-										</div>
-										<div class="col-6 mb-3">
-											<label for="validationDefault02">地址</label> <input
-												type="text" class="form-control" placeholder="收件地址"
-												name='address' value="<%=member.getAddress()%>" readonly>
-										</div>
-									</div>
-								</td>
-								<td class="col-md-6">
-									<h4>
-										收件人<a href='javascript:copyMember()'>同購買人</a>
-									</h4>
-									<div class="form-row col">
-										<div class="col-6 mb-3">
-											<label for="validationDefault01">姓名</label> <input
-												type="text" class="form-control" placeholder="姓名"
-												name='name' required>
-										</div>
-										<div class="col-6 mb-3">
-											<label for="validationDefault02">電話</label> <input
-												type="text" class="form-control" placeholder="phone"
-												name='phone' required>
-										</div>
-										<div class="col-6 mb-3">
-											<label for="validationDefault03">信箱</label> <input
-												type="text" class="form-control" placeholder="email"
-												name='email' required>
-										</div>
-										<div class="col-6 mb-3">
-											<label for="validationDefault04">收件地址</label> <input
-												type="search" class="form-control" placeholder="收件地址"
-												name='shippingAddress' required>
-											<datalist id="shoplist">
-												<option value="台北市復興北路99號12F(台北總公司)">復北門市:台北市復興北路99號12F</option>
-												<option value="台中市西區臺灣大道二段309號2樓(台中門市)">台中門市:台中市西區臺灣大道二段309號2樓</option>
-												<option value="高雄市前鎮區中山二路2號25樓(高雄門市)">高雄門市:高雄市前鎮區中山二路2號25樓</option>
-											</datalist>
-											<datalist id="storelist">
-												<option value="全家慶成店">
-												<option value="7-11松慶店">
-											</datalist>
-											<div class="storeBtn">
-											<input id='chooseStoreBtn' type='button' class="form-control btn btn-dark"
-												value='選擇超商' style='display: none' onclick='goEzShip()'>
+									</td>
+									<td class="col-md-6">
+										<h4>
+											收件人<a href='javascript:copyMember()'>同購買人</a>
+										</h4>
+										<div class="form-row col">
+											<div class="col-6 mb-3">
+												<label for="validationDefault01">姓名</label> <input
+													type="text" class="form-control" placeholder="姓名"
+													name='name' required>
+											</div>
+											<div class="col-6 mb-3">
+												<label for="validationDefault02">電話</label> <input
+													type="text" class="form-control" placeholder="phone"
+													name='phone' required>
+											</div>
+											<div class="col-6 mb-3">
+												<label for="validationDefault03">信箱</label> <input
+													type="text" class="form-control" placeholder="email"
+													name='email' required>
+											</div>
+											<div class="col-6 mb-3">
+												<label for="validationDefault04">收件地址</label> <input
+													type="search" class="form-control" placeholder="收件地址"
+													name='shippingAddress' required>
+												<datalist id="shoplist">
+													<option value="台北市復興北路99號12F(台北總公司)">復北門市:台北市復興北路99號12F</option>
+													<option value="台中市西區臺灣大道二段309號2樓(台中門市)">台中門市:台中市西區臺灣大道二段309號2樓</option>
+													<option value="高雄市前鎮區中山二路2號25樓(高雄門市)">高雄門市:高雄市前鎮區中山二路2號25樓</option>
+												</datalist>
+												<datalist id="storelist">
+													<option value="全家慶成店">
+													<option value="7-11松慶店">
+												</datalist>
+												<div class="storeBtn">
+													<input id='chooseStoreBtn' type='button'
+														class="form-control btn btn-dark" value='選擇超商'
+														style='display: none' onclick='goEzShip()'>
 												</div>
+											</div>
 										</div>
-									</div>
-								</td>
-							</tr>
-							<tr class="">
-								<td><input type='button' value='回商城繼續購物'
-									class='btn btn-lg btn-dark' onclick='goBackShop()'></td>
-								<td><input type='submit' value='送出訂單'
-									class='btn btn-lg btn-dark'></td>
-							</tr>
-						</tbody>
-					</table>
-				</form>
-				<script>                        	
+									</td>
+								</tr>
+								<tr class="">
+									<td><input type='button' value='回商城繼續購物'
+										class='btn btn-lg btn-dark' onclick='goBackShop()'></td>
+									<td><input type='submit' value='送出訂單'
+										class='btn btn-lg btn-dark'></td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+					<script>                        	
 			function goEzShip() {//前往EZShip選擇門市
 				$("input[name='name']").val($("input[name='name']").val().trim());
 				$("input[name='email']").val($("input[name='email']").val().trim());
@@ -395,26 +412,26 @@
 				$("#ezForm").submit();
 			}
 		</script>
-				<form id="ezForm" method="post" name="simulation_from"
-					action="https://map.ezship.com.tw/ezship_map_web.jsp">
-					<input type="hidden" name="suID" value="test@vgb.com">
-					<!-- 業主在 ezShip 使用的帳號, 隨便寫 -->
-					<input type="hidden" name="processID" value="VGB202107050000005">
-					<!-- 購物網站自行產生之訂單編號, 隨便寫 -->
-					<input type="hidden" name="stCate" value="">
-					<!-- 取件門市通路代號 -->
-					<input type="hidden" name="stCode" value="">
-					<!-- 取件門市代號 -->
-					<input type="hidden" name="rtURL" id="rtURL" value="">
-					<!-- 回傳路徑及程式名稱 -->
-					<input type="hidden" id="webPara" name="webPara" value="">
-					<!-- 結帳網頁中cartForm中的輸入欄位資料。ezShip將原值回傳，才能帶回結帳網頁 -->
-				</form>
-				<%
-				}
-				%>
+					<form id="ezForm" method="post" name="simulation_from"
+						action="https://map.ezship.com.tw/ezship_map_web.jsp">
+						<input type="hidden" name="suID" value="test@vgb.com">
+						<!-- 業主在 ezShip 使用的帳號, 隨便寫 -->
+						<input type="hidden" name="processID" value="VGB202107050000005">
+						<!-- 購物網站自行產生之訂單編號, 隨便寫 -->
+						<input type="hidden" name="stCate" value="">
+						<!-- 取件門市通路代號 -->
+						<input type="hidden" name="stCode" value="">
+						<!-- 取件門市代號 -->
+						<input type="hidden" name="rtURL" id="rtURL" value="">
+						<!-- 回傳路徑及程式名稱 -->
+						<input type="hidden" id="webPara" name="webPara" value="">
+						<!-- 結帳網頁中cartForm中的輸入欄位資料。ezShip將原值回傳，才能帶回結帳網頁 -->
+					</form>
+					<%
+					}
+					%>
+				</div>
 			</div>
-		</div>
 	</section>
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
