@@ -26,7 +26,11 @@
 section {
 	margin-top: 6vh;
 }
-.titleSlide img{
+p.lead{
+	font-size:1.5rem;
+/* 	letter-spacing: 5px; */
+}
+/* .titleSlide img{ */
 /* 	min-height:200px; */
 }
 

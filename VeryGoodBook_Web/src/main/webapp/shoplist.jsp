@@ -85,6 +85,9 @@ display: none;width:70%
 		<h1 class="text-center">商品清單</h1>
 	</div>
 	<div class="productList row col-12 justify-content-center">
+	<div>
+		
+	</div>
 		<%
 		//1.取得requst的form data
 		String keyword = request.getParameter("keyword");
@@ -103,12 +106,13 @@ display: none;width:70%
 
 		if (list != null && list.size() > 0) {
 		%>
+		<div class="container-fulid px-0">
 		<ul class="row text-center">
 			<%
 			for (int i = 0; i < list.size(); i++) {
 				Product p = list.get(i);
 			%>
-			<li class="col-md-6 col-lg-4"><a
+			<li class="col-md-6 col-lg-3"><a
 				href='Product.jsp?productId=<%= p.getId()%>'><img
 					src='<%=p.getPhotoUrl()%>' onerror='getImg(this)'
 					class="productList img-fluid rounded">
@@ -121,7 +125,7 @@ display: none;width:70%
 			}
 			%>
 		</ul>
-		
+		</div>
 		<%
 		} else {
 		%>
