@@ -29,7 +29,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<link rel="stylesheet" href="<%=request.getContextPath() %>/css/app.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/app.css">
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"
@@ -49,11 +49,12 @@ td>img {
 
 <script>
     function goBackShop() {
-		location.href="<%=request.getContextPath()%>/shoplist.jsp";
+		location.href="<%=request.getContextPath()%>
+	/shoplist.jsp";
 	}
-    function checkStock(){
-    	
-    }
+	function checkStock() {
+
+	}
 </script>
 <title>購物車</title>
 </head>
@@ -67,7 +68,7 @@ td>img {
 
 	<jsp:include page="/subviews/navbar.jsp" />
 	<%
-	Customer member = (Customer)session.getAttribute("member");
+	Customer member = (Customer) session.getAttribute("member");
 	ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 	if (cart == null || cart.isEmpty()) {
 	%>
@@ -79,101 +80,99 @@ td>img {
 	} else {
 	%>
 	<div class="container">
-	<%
-		List<String> errors = (List<String>) request.getAttribute("errors");
-			%>
-			<div class="container">
-				<%
-				if (errors != null && errors.size() > 0) {
-					for (int i = 0; i < errors.size(); i++) {
-						String msg = (String) errors.get(i);
-				%>
-				<div class="alert alert-danger text-center" role="alert">
-					<h4><%=msg%>!
-					</h4>
-				</div>
-				<%
-				}
-				}
-				%>
-		<h1 class="text-center">購物車</h1>
-		<form action="<%=request.getContextPath()%>/member/update_cart.do"
-			method="POST">
-			<button type="button" class="btn btn-lg btn-dark mb-1"
-				onclick="goBackShop()">繼續購物</button>
-			<table class="table table-hover">
-				<thead class="thead-dark">
-					<tr>
-						<th scope="col">名稱</th>
-						<th scope="col">大小</th>
-						<th scope="col">口味</th>
-<!-- 						<th scope="col">定價</th> -->
-<!-- 						<th scope="col">折扣</th> -->
-						<th scope="col">售價</th>
-						<th scope="col">數量</th>
-						<th scope="col">小記</th>
-						<th scope="col">刪除</th>
-					</tr>
-				</thead>
-				<tbody>
-					<%
-					ProductService pService = new ProductService();
-					
-					for (CartItem item : cart.getCartItemSet()) {
-						Product p = item.getProduct();
-						Size size = item.getSize();
-						String spicy = item.getSpicy();
-						int qty = cart.getQuantity(item);
-						int stock = pService.getProductStock(p, size, spicy);
-		
-					%>
-					<tr>
-						<td><img src="/blackcake/<%=item.getPhotoUrl()%>"><%=p.getName()%>
-							<span>庫存剩餘:<%=stock%></span></td>
-						<td><%=size != null ? size.getName() : ""%></td>
-						<td><%=spicy%></td>
-<%-- 						<td><%=item.getListPrice()%></td> --%>
-<%-- 						<td><%=item.getDiscountString()%></td> --%>
-						<td><%=item.getUnitPrice()%></td>
-						<td><input type="number" name="quantity<%=item.hashCode()%>"
-							value="<%=qty%>" required min="<%=stock > 0 ? 1 : 0%>"
-							max="<%=stock%>"></td>
-						<td><%=item.getUnitPrice() * qty%> </td>
-						<td><input type="checkbox" name="delete<%=item.hashCode()%>"
-							class=""></td>
-					</tr>
-					<%
-					}
-					%>
-				</tbody>
-				<tfoot>
-					<tr>
-						<th colspan="5"></th>
-						<th>數量</th>
-						<th>總金額</th>
-					</tr>
-					<tr>
-						<td colspan="5">
-						<td><%=cart.size() + "項" + "共" + cart.getTotalQuantity() + "件"%></td>
-						<td><%=cart.getTotalAmount()%>元</td>
-					</tr>
-					<tr>
-						<td><input type="submit" class="btn btn-dark btn-lg"
-							value="修改購物車"></td>
-						<td colspan="4"></td>
-						<td><button type="button" class="btn btn-dark btn-lg" onclick="checkStock()" >查詢庫存</button></td>
-						<td><button type='submit' value='結帳'
-							class="btn btn-dark btn-lg" name="checkout"
-							onclick='location.href="check_out.jsp"'>結帳</button></td>
-					</tr>
-				</tfoot>
-			</table>
-		</form>
 		<%
-		}
+		List<String> errors = (List<String>) request.getAttribute("errors");
 		%>
+		<div class="container">
+			<%
+			if (errors != null && errors.size() > 0) {
+				for (int i = 0; i < errors.size(); i++) {
+					String msg = (String) errors.get(i);
+			%>
+			<div class="alert alert-danger text-center" role="alert">
+				<h4><%=msg%>!
+				</h4>
+			</div>
+			<%
+			}
+			}
+			%>
+			<h1 class="text-center">購物車</h1>
+			<form action="<%=request.getContextPath()%>/member/update_cart.do"
+				method="POST">
+				<!-- 			<button type="button" class="btn btn-lg btn-dark mb-1" -->
+				<!-- 				onclick="goBackShop()">繼續購物</button> -->
+				<table class="table table-hover">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">名稱</th>
+							<th scope="col">大小</th>
+							<th scope="col">口味</th>
+							<!-- 						<th scope="col">定價</th> -->
+							<!-- 						<th scope="col">折扣</th> -->
+							<th scope="col">售價</th>
+							<th scope="col">數量</th>
+							<th scope="col">小記</th>
+							<th scope="col">刪除</th>
+						</tr>
+					</thead>
+					<tbody>
+						<%
+						ProductService pService = new ProductService();
+
+						for (CartItem item : cart.getCartItemSet()) {
+							Product p = item.getProduct();
+							Size size = item.getSize();
+							String spicy = item.getSpicy();
+							int qty = cart.getQuantity(item);
+							int stock = pService.getProductStock(p, size, spicy);
+						%>
+						<tr>
+							<td><%=p.getName()%><br> <img
+								src="/blackcake/<%=item.getPhotoUrl()%>"><br> <span>庫存剩餘:<%=stock%></span></td>
+							<td><%=size != null ? size.getName() : ""%></td>
+							<td><%=spicy%></td>
+							<%-- 						<td><%=item.getListPrice()%></td> --%>
+							<%-- 						<td><%=item.getDiscountString()%></td> --%>
+							<td><%=item.getUnitPrice()%></td>
+							<td><input type="number" class="form-control" name="quantity<%=item.hashCode()%>"
+								value="<%=qty%>" required min="<%=stock > 0 ? 1 : 0%>"
+								max="<%=stock%>"><input type="submit" class="btn btn-dark form-control"
+								value="修改"></td>
+							<td><%=item.getUnitPrice() * qty%></td>
+							<td><input type="checkbox" name="delete<%=item.hashCode()%>"
+								class=""></td>
+						</tr>
+						<%
+						}
+						%>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th colspan="5"></th>
+							<th>數量</th>
+							<th>總金額</th>
+						</tr>
+						<tr>
+							<td colspan="5">
+							<td><%=cart.size() + "項" + "共" + cart.getTotalQuantity() + "件"%></td>
+							<td><%=cart.getTotalAmount()%>元<br><button type='submit' value='結帳'
+						class="btn btn-dark btn-lg d-flex justify-content-end"
+						name="checkout" onclick='location.href="check_out.jsp"'>結帳</button></td>
+						</tr>
+					</tfoot>
+				</table>
+<!-- 				<div class="col d-flex justify-content-end"> -->
+<!-- 					<button type='submit' value='結帳' -->
+<!-- 						class="btn btn-dark btn-lg d-flex justify-content-end" -->
+<!-- 						name="checkout" onclick='location.href="check_out.jsp"'>結帳</button> -->
+<!-- 				</div> -->
+			</form>
+			<%
+			}
+			%>
+		</div>
 	</div>
-</div>
 
 
 

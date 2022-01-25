@@ -24,13 +24,15 @@ td>img {
   tr.tr-only-hide {display: none !important;}
   /*讓tr變成區塊主要讓他有個區塊*/
   .table-rwd tr{
+  	text-align:left;
     display: block;
     border: 1px solid #ddd;
     margin-top: 5px;
+    border:none;
   }
   .table-rwd td {
-    text-align: left;
-    font-size: 15px;
+    text-align: center;
+    font-size: 25px;
     overflow: hidden;
     width: 100%;
     display: block;
@@ -38,21 +40,6 @@ td>img {
 }
   /*當RWD縮小的時候.table-bordered 會有兩條線，所以針對.table-bordered去做修正*/
   .table-rwd.table-bordered td,.table-rwd.table-bordered th,.table-rwd.table-bordered{border:0;}
-  
-/*  table ul
-------------------------------- */
-
-/* .table ul { */
-/*   padding: 20px; */
-/*   margin: 0; */
-/*   text-align: left; */
-/* } */
-/* .table ul li { */
-/*   padding: 5px; */
-/*   position: relative; */
-/*   list-style-type: none; */
-/* } */
-
 /*  Responsive
 ------------------------------- */
 
@@ -78,15 +65,17 @@ td>img {
     font-weight: 500;
     font-size:1.3rem;
     padding: 6px 0;
+
   }
 	.table-rwd td:before {
     /*最重要的就是這串*/
     content: attr(data-th) " ";
     /*最重要的就是這串*/
+    text-align:center;
     display: inline-block;
     text-transform: uppercase;
-    font-weight: bold;
-	  margin-right: 10px;
-    color: #D20B2A;
+    font-weight: 800;
+	margin-right: 10px;
+    color: #6B4F4F;
   }
 }
