@@ -51,7 +51,7 @@ display: none;width:70%
 		}).done(getProductDoneHandler);
 	}
 	function getProductDoneHandler(data, textStatus, jqXHR) {
-		alert(data);
+// 		alert(data);
 		$("#productDetail").html(data);
  		$("#productDetail").css('height','fit-content');
  		$.fancybox.open({

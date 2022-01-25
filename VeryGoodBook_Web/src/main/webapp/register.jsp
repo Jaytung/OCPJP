@@ -31,6 +31,9 @@
     max-width: 400px;
 /*     maintain aspect ratio */
 }
+.container{
+	margin-top:2vh;
+}
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
@@ -64,15 +67,29 @@
 </head>
 
 <body>
-    <% 
-    List<String> errors = (List<String>)request.getAttribute("errors");  
-    %>
 	<jsp:include page="subviews/navbar.jsp" />
 	<div class="container">
      <div id="formBackground">
+	<%
+		List<String> errors = (List<String>) request.getAttribute("errors");
+			%>
+			<div class="container">
+				<%
+				if (errors != null && errors.size() > 0) {
+					for (int i = 0; i < errors.size(); i++) {
+						String msg = (String) errors.get(i);
+				%>
+				<div class="alert alert-danger text-center" role="alert">
+					<h4><%=msg%>!
+					</h4>
+				</div>
+				<%
+				}
+				}
+				%>
         <div class="registerForm">
             <form method="post" action="register.do" class="col-10 col-md-10 col-lg-9 mr-auto ml-auto">
-                      <p><%=errors!=null?errors:"" %> </p>
+<%--                       <p><%=errors!=null?errors:"" %> </p> --%>
                      <ul class="errors">
 <%--             <% if(errors!=null&&errors.size()!=0){           	 --%>
 <!--             	 for(int i =0;i<errors.size();i++){  -->
@@ -164,10 +181,13 @@
                     </div>
                 </div>
                 <div class="form-row justify-content-center mr-3 mb-4">
-                    <div class="row col-md-9 justify-content-end">
-                        <button type="submit" class="btn btn-primary" id="submitRegister"><span>註冊</span></button>
-                    </div>
+<!--                     <div class="row col-md-9 justify-content-end"> -->
+<!--                         <button type="submit" class="btn btn-primary" id="submitRegister"><span>註冊</span></button> -->
+<!--                     </div> -->
                 </div>
+                    <div class="row col-md-12 ml-3 justify-content-end">
+                        <button type="submit" class="btn btn-dark" id="submitRegister"><span>註冊</span></button>
+                    </div>
             </form>
         </div>
      </div>

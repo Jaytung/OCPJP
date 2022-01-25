@@ -88,7 +88,7 @@ td>img {
 				<td><%=order.getCreateDate()%><%=order.getCreatTime()%></td>
 				<td><%=order.getPaymentType() %></td>
 				<td><%=order.getShippingType() %></td>
-				<td><%=order.getStatus() %></td>
+				<td><%=order.getStatusString() %></td>
 				<td><%=order.getTotalAmountWithFee() %></td>
 				<td><a href='order.jsp?orderId=<%=order.getId()%>'>訂單明細</a></td>
 			</tr>

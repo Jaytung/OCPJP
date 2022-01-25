@@ -30,6 +30,9 @@
 	width: 130;
 	max-width: 400px;
 }
+.container{
+ 	margain-top:10vh;
+ }
 </style>
 <script>
 	function changePwdDisplay() {
@@ -70,7 +73,7 @@
 				}
 				%>
 		<form action="login.do" method="post"
-			class="loginForm  col-md-6 ml-auto mr-auto mb-auto  border rounded shadow">
+			class="loginForm col-md-6 ml-auto mr-auto mb-auto border rounded shadow">
 			<div class="form-row justify-content-center mt-3">
 				<div class="form-group col-md-6 col-lg-5 ">
 					<label for="inputAccount"><span>帳號</span></label> <input

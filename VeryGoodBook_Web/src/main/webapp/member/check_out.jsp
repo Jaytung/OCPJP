@@ -226,8 +226,8 @@
 									<th scope="col">名稱</th>
 									<th scope="col">大小</th>
 									<th scope="col">口味</th>
-									<th scope="col">定價</th>
-									<th scope="col">折扣</th>
+<!-- 									<th scope="col">定價</th> -->
+<!-- 									<th scope="col">折扣</th> -->
 									<th scope="col">售價</th>
 									<th scope="col">數量</th>
 									<th scope="col">小記</th>
@@ -250,8 +250,8 @@
 									<td data-th="名稱"><%=p.getName()%><br> <span>庫存剩餘:<%=stock%></span></td>
 									<td data-th="大小"><%=size != null ? size.getName() : ""%></td>
 									<td data-th="口味"><%=spicy%></td>
-									<td data-th="定價"><%=item.getListPrice()%></td>
-									<td data-th="折扣"><%=item.getDiscountString()%></td>
+<%-- 									<td data-th="定價"><%=item.getListPrice()%></td> --%>
+<%-- 									<td data-th="折扣"><%=item.getDiscountString()%></td> --%>
 									<td data-th="售價"><%=item.getUnitPrice()%></td>
 									<td data-th="數量"><%=qty%></td>
 									<td data-th="小記"><%=item.getUnitPrice() * qty%></td>
@@ -262,7 +262,7 @@
 							</tbody>
 							<tfoot>
 								<tr class="text-center">
-									<td colspan="6"></td>
+									<td colspan="5"></td>
 									<td><%=cart.size() + "項" + "共" + cart.getTotalQuantity() + "件"%></td>
 									<td>總金額:<span id='totalAmount'><%=cart.getTotalAmount()%></span>元
 									</td>
@@ -406,8 +406,8 @@
 				//$("#webPara").val($("form[action='check_out.do']").serialize()); 
 				$("#webPara").val($("#cartForm").serialize());
 				
-				alert(url); //測試用，測試完畢後請將此行comment
-				alert($("#webPara").val()) //測試用，測試完畢後請將此行comment
+				//alert(url); //測試用，測試完畢後請將此行comment
+				//alert($("#webPara").val()) //測試用，測試完畢後請將此行comment
 				
 				$("#ezForm").submit();
 			}

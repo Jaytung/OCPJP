@@ -25,11 +25,11 @@ try {
 	obj.setChoosePayment("ALL");//必須是ALL       
 	obj.setClientBackURL(url);
 	obj.setCreditInstallment("");
-	obj.setItemName("非常好書信用卡-" + order.getId() + " $" + order.getTotalAmountWithFee() + "元");
+	obj.setItemName("BlackCake信用卡" + order.getId() + " $" + order.getTotalAmountWithFee() + "元");
 	obj.setMerchantID("2000132");//必須是2000132
 	obj.setMerchantTradeDate(
 	LocalDate.now().toString().replace('-', '/') + " " + LocalTime.now().toString().substring(0, 8));//必須是yyyy/MM/dd hh:mm:ss
-	String orderIdStr = "VGB" //請改成你的webapp名稱,產生一個allpay要求的訂單編號字串(必須<=20個英數字字元,且不得與之前的訂單重複)
+	String orderIdStr = "BK" //請改成你的webapp名稱,產生一個allpay要求的訂單編號字串(必須<=20個英數字字元,且不得與之前的訂單重複)
 	+ LocalDate.now().toString().replace("-", "") + String.format("%09d", order.getId());
 
 	obj.setMerchantTradeNo(orderIdStr);
