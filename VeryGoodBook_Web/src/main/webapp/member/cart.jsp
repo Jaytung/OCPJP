@@ -45,6 +45,13 @@
 td>img {
 	width: 100px;
 }
+#remove{
+background:url("<%=request.getContextPath()%>/imgs/trash.png")no-repeat;
+height:30px;
+width:30px;
+border:none;
+
+}
 </style>
 
 <script>
@@ -140,8 +147,7 @@ td>img {
 								max="<%=stock%>"><input type="submit" class="btn btn-dark form-control"
 								value="修改"></td>
 							<td><%=item.getUnitPrice() * qty%></td>
-							<td><input type="checkbox" name="delete<%=item.hashCode()%>"
-								class=""></td>
+							<td><input type="submit" id="remove" name="delete<%=item.hashCode()%>" value=''></td>
 						</tr>
 						<%
 						}

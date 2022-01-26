@@ -108,11 +108,10 @@ public class UpdateServlet extends HttpServlet {
 				
 				
 				// TODO:3.1轉交給update_ok.jsp
-				request.setAttribute("member", c);
+				session.setAttribute("member", c);
 				RequestDispatcher dispatcher=
 				request.getRequestDispatcher("update_ok.jsp");
 				dispatcher.forward(request, response);
-				request.getAttribute("member");
 				return;
 			} catch (DataInvalidException e) {
 				errors.add(e.getMessage());

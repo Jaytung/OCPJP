@@ -37,8 +37,8 @@
 	crossorigin="anonymous"></script>
 <script>
 	function refreshCaptcha() {
-	    // alert("refresh Captcha");
-	    captchaImg.src = "imgs/reg_captcha.jpg?test=" + parseInt(new Date().getTime() / 1000);
+// 	    alert("refresh Captcha");
+	    captchaImg.src = "<%=request.getContextPath()%>"+"/imgs/reg_captcha.jpg?test=" + parseInt(new Date().getTime() / 1000);
 	}
     $(document).ready(init);
     
@@ -62,41 +62,56 @@
 	<%} else {
 Customer member = (Customer) session.getAttribute("member");
 if (member != null) {%>
-<%-- 		$("input[name='id']").val('<%= member.getId()%>'); --%>
-// 		$("input[name='id']").val('${sessionScope.member.id}');
-<%-- 		$("input[name='name']").val('<%= member.getName()%>'); --%>
-// 		$("input[name='password1']").val('');
-// 		$("input[name='password2']").val('');
-// 		$("input[name='email']").val('');
-// 		$("input[name='birthday']").val('');
-// 		$("input[name='address']").val('');
-<%-- 		$("input[name='phone']").val('<%= member.getPhone()%>');					 --%>
-<%-- 		$("input[name='subscribed']").prop('checked', <%= member.isSubscribed() %>); --%>
-// 		$("select[name='gender']").val('${sessionScope.member.gender}');
-<%-- 		$(".gender[value='<%= member.getGender()%>']").prop('checked', true); --%>
-	<%} else {%>
-		alert('請先登入!');
-	<%}
+		$("input[name='id']").val('${sessionScope.member.id}');
+		$("input[name='name']").val('<%=member.getName()%>');
+		$("input[name='email']").val('<%=member.getEmail()%>');
+		$("input[name='birthday']").val('<%=member.getBirthday()%>');
+		$("input[name='address']").val('<%=member.getAddress()%>');
+		$("input[name='phone']").val('<%=member.getPhone()%>');
+		
+		$("input[name='subscribed']").prop('checked',<%=member.isSubscribed()%>);
+		$("select[name='gender']").val('${sessionScope.member.gender}');
+		$("select[name='subscribed']").val('${sessionScope.member.subscribed}');
+<%} else {%>
+	alert('請先登入!');
+<%}
 }%>
-    }
-    function changePwdDisplay() {
-        if (displayPwd.checked) {
-        	password.type="text"
-			password1.type="text";
-			password2.type="text";
-        } else {
-        	password.type="text"
-        	password1.type="password";
-			password2.type="password";
-        }
-    }
-    </script>
+	}
+	function changePwdDisplay() {
+		if (displayPwd.checked) {
+			password.type = "text"
+			password1.type = "text";
+			password2.type = "text";
+		} else {
+			password.type = "text"
+			password1.type = "password";
+			password2.type = "password";
+		}
+	}
+	function changePWD() {
+	<%Customer member = (Customer) session.getAttribute("member");%>
+		var changePWD1 = document.getElementById('changePWD1');
+		var changePWD2 = document.getElementById('changePWD2');
+
+		if(document.getElementById("changeMyPwd").checked){
+			changePWD1.style.display='';
+			changePWD2.style.display='';	
+			$("input[name='password1']").val('');
+			$("input[name='password2']").val('');
+		}else{
+			changePWD1.style.display='none';
+			changePWD2.style.display='none';
+			$("input[name='password1']").val('<%=member.getPassword()%>');
+			$("input[name='password2']").val('<%=member.getPassword()%>');
+		}
+	}
+</script>
 
 <title>修改會員資料</title>
 </head>
 <body>
 	<%
-	Customer member = (Customer) session.getAttribute("member");
+	member = (Customer) session.getAttribute("member");
 	%>
 	<%
 	List<String> errors = (List<String>) request.getAttribute("errors");
@@ -112,52 +127,69 @@ if (member != null) {%>
 					<h2 class="text-center">修改會員資料</h2>
 					<div class="form-row">
 						<div class="form-group col-md-4">
+							<!-- 							<input type="checkbox" value="變更密碼" id="changeMyPwd" onchange="changePWD()"> -->
 							<label for="password">原密碼</label> <input type="password"
 								id="password" name="password" class="form-control shadow"
 								placeholder="輸入原有的密碼">
-						</div>
-						<div class="form-group col-md-4 pt-5">
-							<div class="custom-control custom-switch">
+							<div class="custom-control custom-switch mt-2 mb-0 d-flex justify-content-end">
 								<input type="checkbox" class="custom-control-input"
-									id="displayPwd" onchange="changePwdDisplay()"> <label
-									class="custom-control-label" for="displayPwd">顯示密碼</label>
+								 id="changeMyPwd" onchange="changePWD()">
+								<label class="custom-control-label" for="changeMyPwd">更改密碼</label>
 							</div>
+						</div>
+						<!-- 						<div class="form-group col-md-4 pt-5"> -->
+						<!-- 							<div class="custom-control custom-switch"> -->
+						<!-- 								<input type="checkbox" class="custom-control-input" -->
+						<!-- 									id="displayPwd" onchange="changePwdDisplay()"> <label -->
+						<!-- 									class="custom-control-label" for="displayPwd">顯示密碼</label> -->
+						<!-- 							</div> -->
+						<!-- 						</div> -->
+						<div class="form-group col-md-4" style="display: none"
+							id="changePWD1">
+							<label for="password1">新密碼</label> <input type="password"
+								class="form-control shadow" id="password1" placeholder="輸入新的密碼"
+								name="password1" maxlength="<%=Customer.MAX_PWD_LENGTH%>"
+								value="<%=member.getPassword()%>" required>
+						</div>
+						<div class="form-group col-md-4" style="display: none"
+							id="changePWD2">
+							<label for="passwordCheck">確認密碼</label> <input type="password"
+								class="form-control shadow" id="password2" placeholder="確認您的密碼"
+								name="password2" value="<%=member.getPassword()%>" required>
 						</div>
 					</div>
 					<div class="border pl-1 pr-1 mb-1">
-						<div class="form-row justify-content-center">
+						<div class="form-row">
 							<div class="form-group col-md-4">
 								<label for="id">身分證字號</label> <input type="text"
 									class="form-control shadow" id="id" placeholder="輸入您的身分證"
-									name="id" value="<%=member.getId()%>"
-									pattern="[A-Z][1289][0-9]{8}" required readonly>
+									name="id" pattern="[A-Z][1289][0-9]{8}" required readonly>
 							</div>
 							<div class="form-group  col-md-4">
 								<label for="email">Email</label> <input type="email"
 									class="form-control shadow" id="email" placeholder="Email"
-									name="email" value="<%=member.getEmail()%>" required>
+									name="email" required>
 							</div>
 							<div class="form-group col-md-4">
 								<label for="phone">電話</label> <input type="tel"
 									class="form-control shadow" id="phone" placeholder="請輸入電話"
-									name="phone" value="<%=member.getPhone()%>" name="phone"
-									required>
+									name="phone" name="phone" required>
 							</div>
-							<div class="form-group col-md-4">
-								<label for="password1">新密碼</label> <input type="password"
-									class="form-control shadow" id="password1" placeholder="輸入新的密碼"
-									name="password1" maxlength="<%=Customer.MAX_PWD_LENGTH%>"
-									required>
-							</div>
-							<div class="form-group col-md-4">
-								<label for="passwordCheck">確認密碼</label> <input type="password"
-									class="form-control shadow" id="password2" placeholder="確認您的密碼"
-									name="password2" required>
-							</div>
+							<!-- 							<div class="form-group col-md-4"> -->
+							<!-- 								<label for="password1">新密碼</label> <input type="password" -->
+							<!-- 									class="form-control shadow" id="password1" placeholder="輸入新的密碼" -->
+							<%-- 									name="password1" maxlength="<%=Customer.MAX_PWD_LENGTH%>" --%>
+							<!-- 									required> -->
+							<!-- 							</div> -->
+							<!-- 							<div class="form-group col-md-4"> -->
+							<!-- 								<label for="passwordCheck">確認密碼</label> <input type="password" -->
+							<!-- 									class="form-control shadow" id="password2" placeholder="確認您的密碼" -->
+							<!-- 									name="password2" required> -->
+							<!-- 							</div> -->
 							<div class="form-group col-md-4">
 								<label for="name">姓名</label> <input type="text"
 									class="form-control shadow" id="name" placeholder="輸入您的姓名"
-									name="name" value="<%=member.getName()%>" required>
+									name="name" required>
 							</div>
 
 							<div class="form-group col-md-4">
@@ -175,13 +207,25 @@ if (member != null) {%>
 							<div class="form-group col-md-4">
 								<label for="birthday">生日/西元</label> <input type="date"
 									class="form-control shadow" id="birthday"
-									placeholder="eg:1990-11-25" value="<%=member.getBirthday()%>"
-									name="birthday" required>
+									placeholder="eg:1990-11-25" "
+									name="birthday"
+									required>
 							</div>
 							<div class="form-group col-md-4">
 								<label for="address">地址Address</label> <input type="text"
 									class="form-control shadow" id="address" placeholder="輸入您的地址"
-									name="address" value="<%=member.getAddress()%>" required>
+									name="address" required>
+							</div>
+							<div class="form-group col-md-4">
+								<div class="input-group-prepend">
+									<label for="gender">是否訂閱電子報</label>
+								</div>
+								<select id="subscribed" class="form-control shadow isSubscribed"
+									name="subscribed" required>
+									<option>選擇...</option>
+									<option value="true">是</option>
+									<option value="false">否</option>
+								</select>
 							</div>
 						</div>
 						<div class="form-row">
@@ -192,24 +236,14 @@ if (member != null) {%>
 							</div>
 							<div id="updateCaptchaImg"
 								class="form-group col-md-4 text-center pr-0">
-								<img id="captchaImg" src="<%=request.getContextPath() %>/imgs/reg_captcha.jpg" alt="驗證碼圖片"
-									class="border shadow rounded" style="vertical-align: bottom;">
-								<img src="" alt=""> <a class="text-start"
-									id="reCaptchaImg" href="javascript:refreshCaptcha()"> <i
+								<img id="captchaImg"
+									src="<%=request.getContextPath()%>/imgs/reg_captcha.jpg"
+									alt="驗證碼圖片" class="border shadow rounded"
+									style="vertical-align: bottom;"> <img src="" alt="">
+								<a class="text-start" id="reCaptchaImg"
+									href="javascript:refreshCaptcha()"> <i
 									class="fa fa-refresh fa-2x" aria-hidden="true"></i>
 								</a>
-							</div>
-							<div class="form-group col-md-4">
-								<div class="input-group-prepend">
-									<label for="gender">是否訂閱電子報</label>
-								</div>
-								<select id="subscribed" class="form-control shadow isSubscribed"
-									name="subscribed" required>
-									<option
-										value='<%=member.isSubscribed() ? member.isSubscribed() : ""%>'>選擇...</option>
-									<option value="true">是</option>
-									<option value="false">否</option>
-								</select>
 							</div>
 						</div>
 					</div>
@@ -249,12 +283,14 @@ if (member != null) {%>
 
 
 	<script>
-        $(function () {
-            $(document).scroll(function () {
-                var $nav = $("#mainNavbar");
-                $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
-            })
-        })
-    </script>
+		$(function() {
+			$(document).scroll(
+					function() {
+						var $nav = $("#mainNavbar");
+						$nav.toggleClass("scrolled", $(this).scrollTop() > $nav
+								.height());
+					})
+		})
+	</script>
 </body>
 </html>

@@ -15,7 +15,7 @@
 
 #product {
 	width: 100%;
-	margin: auto;
+	margin: auto; 
 	max-width: 1200px
 }
 
@@ -167,9 +167,10 @@ if (p != null) {
 		}
 	}
 	function plusHandler() {
+		var pStock = $("input[name='quantity']").attr("max");
 		var quantitiyValue = parseInt($("#quantity").val());
-		
-		if (quantitiyValue < <%=p.getStock()%>) {
+// 		alert(pStock)
+		if (quantitiyValue < pStock) {
 			$("#quantity").val(quantitiyValue + 1);
 		}
 	}
@@ -181,7 +182,7 @@ if (p != null) {
 		$(this).addClass("selected");
 	}
 	function changeSizeData(theObj) {
-		// 				alert($(theObj).attr("src"));
+// 						alert($(theObj).attr("data-stock"));
 		// 				alert($(theObj).attr("title"));
 		// 				alert($(theObj).attr("data-price"));
 
@@ -191,6 +192,7 @@ if (p != null) {
 				$(theObj).attr("title") + "剩餘" + $(theObj).attr("data-stock")
 						+ "個");
 		$("input[name='quantity']").attr("max", $(theObj).attr("data-stock"));
+
 		// 				$(".price").attr("text", $(theObj).attr("data-price"));
 	}
 	function changeSpciyData(theObj) {
@@ -221,7 +223,7 @@ if (p != null) {
 
 	function submitCartDoneHandler(data, status, xhr) {
 		alert("加入購物車成功!");
-		$(".cartQty").html(data.totalQty);
+		$(".cartQuantity").html(data.totalQuantity);
 	}
 	// 	function submitCart() {
 	// 		//         		alert("#cartForm serialize(): " + $("#cartForm").serialize());
@@ -242,6 +244,9 @@ if (p != null) {
 	
 </script>
 <div class="productItem">
+<% if(request.getRequestURI().lastIndexOf("_ajax.")>0) {%>
+		<jsp:include page="/subviews/navbar.jsp"/>
+		<% } %>
 	<%
 	if (p == null) {
 	%>
@@ -387,9 +392,9 @@ if (p != null) {
 						<input type="number"
 							class="form-control form-control-lg text-center rounded col-sm-12 col-md-4 col-lg-3"
 							aria-label="" value="0" id="quantity" name="quantity"
-							min="<%=p.getStock()%>" max="<%=p.getStock()%>" readonly>  <span class="input-group-addon">
+							min="<%=p.getStock()>0?1:0%>" max="<%=p.getStock()>0?p.getStock():0%>" readonly>  <span class="input-group-addon">
 							<button class="btn btn-dark btn-lg ml-1 cartBtn" type="button"
-								id="plus">
+								name="plue" id="plus">
 								<span class="cartPlusAndMinus">+</span>
 							</button>
 						</span>
@@ -399,10 +404,9 @@ if (p != null) {
 
 				<!-- /.col-lg-6 -->
 				<div class="text-center" id="addToCart">
-					<br> <input class="btn btn-lg btn-dark" type="submit"
-						value="加入購物車"> <input type="submit"
-						class="btn btn-lg btn-dark" onclick='this.form.submited=true;'
-						value='直接購買'>
+					<br> <input class="btn btn-lg btn-dark" type="submit" value="加入購物車"> 
+						<input type="submit"
+						class="btn btn-lg btn-dark" onclick='this.form.submited=true;' value='直接購買'>
 				</div>
 
 			</div>
