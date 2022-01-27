@@ -7,3 +7,9 @@
 - 購物車: 新增/修改/刪除 購物車內容
 - 訂單: 訂單明細、歷史訂單查詢
 - 結帳: ATM轉帳、EZShip、O'Pay信用卡
+## 使用工具
+![image]()
+## MVC
+![image]()
+## ER Digram
+![image]()
