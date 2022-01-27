@@ -127,4 +127,25 @@ class CustomersDAO {// package-friendly(不能加public)
 		throw new BlackCakeException("修改客戶失敗",e);
 		}
 	}
+	private static String SEND_PASSWORD="SELECT email, password "
+			+ " FROM customers "
+			+ " WHERE email = ?";
+	void sendPassword(String account) {
+		try(
+				Connection connection = RDBConnection.getConnection();
+				PreparedStatement pstmt = connection.prepareStatement(SEND_PASSWORD);
+				){
+			pstmt.setString(1,account);
+			try(
+					ResultSet rs = pstmt.executeQuery();
+					){
+				while(rs.next()) {
+					
+				}
+					
+			}
+		}catch(SQLException e) {
+			System.out.println("帳號不存在");
+		}
+	}
 }

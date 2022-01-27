@@ -31,4 +31,10 @@ public class CustomerService {
 		}
 		dao.update(c);
 	}
+	public void updatePassword(Customer c) throws BlackCakeException{
+		if(c==null) {
+			throw new IllegalArgumentException("修改customer物件不得為null");
+		}
+//		dao.sendPassword(c);
+	}
 }

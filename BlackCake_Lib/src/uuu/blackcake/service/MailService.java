@@ -32,6 +32,9 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import uuu.blackcake.entity.Customer;
+import uuu.blackcake.service.CustomerService;
+
 /**
  *
  * @author Administrator
@@ -85,6 +88,9 @@ public class MailService {
             Map<String, Object> map = new HashMap<>();
             map.put("title", "鮮記-BlackCake");
             String ipAddress = java.net.InetAddress.getLocalHost().getHostAddress();
+            CustomerService cService = new CustomerService();
+//            Customer c;
+//            String password = cService.
             map.put("host", ipAddress);
             map.put("hostname", "鮮記");
             map.put("contextPath", "blackcake");
