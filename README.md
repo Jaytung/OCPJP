@@ -8,8 +8,8 @@
 - 訂單: 訂單明細、歷史訂單查詢
 - 結帳: ATM轉帳、EZShip、O'Pay信用卡
 ## 使用工具
-![image]()
+![image](https://github.com/Jaytung/OCPJP/blob/main/BlackCake_Web/src/main/webapp/imgs/tools.jpg)
 ## MVC
-![image]()
+![image](https://github.com/Jaytung/OCPJP/blob/main/BlackCake_Web/src/main/webapp/imgs/MVC.JPG)
 ## ER Digram
-![image]()
+![image](https://github.com/Jaytung/OCPJP/blob/main/BlackCake_Web/src/main/webapp/imgs/ERDiagram.JPG)
