@@ -40,7 +40,7 @@ public class MailService {
 
     public static void sendHelloMailWithLogo(String to) {
         if (to == null || to.length()==0) {
-            throw new IllegalArgumentException("請填入一個可以收信的email!");
+            throw new IllegalArgumentException("fun8238@gmail.com");
         }
 
         //以下為寄件所需的SMTP伺服器與帳號設定，這裡使用gmail的SMTP Server
