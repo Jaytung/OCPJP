@@ -18,6 +18,7 @@ import uuu.blackcake.entity.Customer;
 import uuu.blackcake.exception.DataInvalidException;
 import uuu.blackcake.exception.BlackCakeException;
 import uuu.blackcake.service.CustomerService;
+import uuu.blackcake.service.MailService;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -109,6 +110,7 @@ public class RegisterServlet extends HttpServlet {
 				request.setAttribute("member", c);
 				RequestDispatcher dispatcher=
 						request.getRequestDispatcher("register_ok.jsp");
+				MailService.sendHelloMailWithLogo(c.getEmail());
 				dispatcher.forward(request, response);
 				return;
 			} catch (DataInvalidException e) {

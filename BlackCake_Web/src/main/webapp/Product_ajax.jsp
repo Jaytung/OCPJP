@@ -282,7 +282,7 @@ if (p != null) {
 						<hr>
 						<h3>
 							優惠價:<%=p instanceof Outlet ? ((Outlet) p).getDiscountString() : ""%>
-							<span class="sizePrice"> <%=Math.round(p.getUnitPrice())%>元
+							<span class="sizePrice"> <%=p.getUnitPrice()%>元
 								&nbsp;&nbsp;&nbsp;&nbsp;
 							</span>
 						</h3>
@@ -355,29 +355,6 @@ if (p != null) {
 							<img class="rounded shadow smallPic" src="<%=p.getPhotoUrl1()%>">
 						</div>
 					</div>
-					<%
-					if (p.getSizeMapSize() > 0) {
-					%>
-					<div id="album" class="row-9 rounded">
-						<%
-						for (Size size : p.getSizes()) {
-						%>
-						<div class="row row-6 row-sm-9 row-md-12 justify-content-center">
-							<img
-								src="<%=size.getPhotoURL() == null ? size.getPhotoURL() : size.getIconURL()%>"
-								class="rounded shadow smallPic" title='<%=size.getName()%>'
-								data-photo='<%=size.getPhotoURL()%>' />
-							<%
-							}
-							%>
-						</div>
-					</div>
-				</div>
-				<%
-				}
-				%>
-
-
 			</div>
 			<div class="col-sm-12 col-md-6 order-8 mt-4 productInput">
 				<div class="text-center">

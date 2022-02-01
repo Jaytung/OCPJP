@@ -120,14 +120,15 @@ ul {
     list-style-type: none;
 }
 .dropdown-menu{
-	background: #e0e1dd;
+	background: #cee5f2;
     font-family: "Nuntio", sans-serif;
     border:0;
+    transition:1s;
 }
 
  @media screen and (max-width: 768px){
     #mainNavbar{
-        background:#e0e1dd;
+        background:#cee5f2;
     }
 }
 @media screen and (min-width: 300px)and (max-width: 992px){
