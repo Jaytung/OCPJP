@@ -86,7 +86,7 @@ public class MailService {
             BodyPart messageBodyPart = new MimeBodyPart();
 
             Map<String, Object> map = new HashMap<>();
-            map.put("title", "鮮記-BlackCake");
+            map.put("title", "鮮記-澎湖名產");
             String ipAddress = java.net.InetAddress.getLocalHost().getHostAddress();
             CustomerService cService = new CustomerService();
 //            Customer c;
@@ -102,7 +102,7 @@ public class MailService {
             multipart.addBodyPart(messageBodyPart);
 
             // second part (the image)
-            String filename = "ftl/shoppingbag.png";
+            String filename = "ftl/logo.png";
             messageBodyPart = new MimeBodyPart();
 
             //取得網站上的圖檔

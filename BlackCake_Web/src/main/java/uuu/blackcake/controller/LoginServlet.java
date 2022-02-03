@@ -104,7 +104,6 @@ public class LoginServlet extends HttpServlet {
 				session.removeAttribute("previous_query_string");	
 				RequestDispatcher dispatcher = 
 						request.getRequestDispatcher("/login_ok.jsp");
-				MailService.sendHelloMailWithLogo(account);
 				dispatcher.forward(request, response);
 				
 				//3. 做法2 轉交外部網址

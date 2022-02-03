@@ -1,23 +1,24 @@
 <%@ page import="uuu.blackcake.entity.Customer"%>
 <%@ page pageEncoding="UTF-8"%>
-<%
-String uri = (String) request.getAttribute("previous_uri");
-String queryString = (String) request.getAttribute("previous_query_string");
-String title = "首頁";
-if (uri == null || uri.length() == 0) {
-	uri = "./";
-} else {
-	if (queryString != null && queryString.length() > 0) {
-		uri += "?" + queryString;
+<%	
+	String uri = (String)request.getAttribute("previous_uri");
+	String queryString = (String)request.getAttribute("previous_query_string");
+	String title = "首頁";
+	if(uri==null || uri.length()==0){
+		uri="./";		
+	}else{
+		if(queryString!=null && queryString.length()>0){
+			uri+="?"+queryString;
+		}
+		title = "指定網頁";
 	}
-	title = "指定網頁";
-}
+	
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="refresh" content="5;url=<%=uri%>">
+<meta http-equiv="refresh" content="5;url=<%= uri%>">
 <!-- Google Font -->
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700"
@@ -47,7 +48,7 @@ if (uri == null || uri.length() == 0) {
 	}
 		function callHomePage() {
 			//同步請求
-			location.href= "<%=uri%>"
+			location.href= '<%=uri%>';
 	}
 </script>
 <title>登入成功</title>

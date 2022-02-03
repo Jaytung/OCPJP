@@ -252,7 +252,7 @@ if (p != null) {
 						<hr>
 						<h3>
 							優惠價:<%=p instanceof Outlet ? ((Outlet) p).getDiscountString() : ""%>
-							<span class="sizePrice"> <%=Math.round(p.getUnitPrice())%>元
+							<span class="sizePrice"> <%=p.getUnitPrice()%>元
 								&nbsp;&nbsp;&nbsp;&nbsp;
 							</span>
 						</h3>

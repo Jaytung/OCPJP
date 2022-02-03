@@ -17,8 +17,7 @@ Customer member = (Customer) session.getAttribute("member");
 	<div class="collapse navbar-collapse" id="navLinks">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item nav-link order-md-1"><a
-				href='<%=request.getContextPath()%>/index.jsp' class="">首頁</a>
-			</li>
+				href='<%=request.getContextPath()%>/index.jsp' class="">首頁</a></li>
 			<li class="nav-item  order-3 order-md-2"><a
 				href="<%=request.getContextPath()%>/about_us.jsp" class="nav-link">關於我們</a>
 			</li>
@@ -27,8 +26,9 @@ Customer member = (Customer) session.getAttribute("member");
 				class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
 				data-toggle="dropdown" aria-expanded="false">商品</a>
 				<form>
-					<div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
-					<a class="nav-link"
+					<div class="dropdown-menu text-center"
+						aria-labelledby="navbarDropdown">
+						<a class="nav-link"
 							href="<%=request.getContextPath()%>/shoplist.jsp?">全部商品</a>
 						<div class="dropdown-divider"></div>
 						<a class="nav-link"
@@ -37,7 +37,8 @@ Customer member = (Customer) session.getAttribute("member");
 						<a class="nav-link"
 							href="<%=request.getContextPath()%>/shoplist.jsp?category=罐醬">罐醬類</a>
 						<div class="dropdown-divider"></div>
-						<a class="nav-link" href="<%=request.getContextPath()%>/shoplist.jsp?category=海鮮">海鮮類</a>
+						<a class="nav-link"
+							href="<%=request.getContextPath()%>/shoplist.jsp?category=海鮮">海鮮類</a>
 					</div>
 				</form></li>
 		</ul>
@@ -54,7 +55,7 @@ Customer member = (Customer) session.getAttribute("member");
 	<a
 						class="nav-link"
 						href='<%=request.getContextPath()%>/register.jsp'>註冊</a> <a
-						class="nav-link" href='<%=request.getContextPath()%>/login.jsp'>登入</a>
+						class="nav-link text-center" href='<%=request.getContextPath()%>/login.jsp'>登入</a>
 				</div></li>
 			<%
 			} else {
@@ -63,39 +64,43 @@ Customer member = (Customer) session.getAttribute("member");
 			<%
 			if (member != null) {
 			%>
-		
-<%-- 			<span class="nav-link order-1 order-md-1" id="loginName"> <%=member != null ? member.getName() : ""%> --%>
-<!-- 				你好 -->
-<!-- 			</span> -->
+
+			<%-- 			<span class="nav-link order-1 order-md-1" id="loginName"> <%=member != null ? member.getName() : ""%> --%>
+			<!-- 				你好 -->
+			<!-- 			</span> -->
 			<%
 			}
 			%>
-<!-- 			<div class="row ml-2"> -->
-<%-- 			<a class="nav-link order-1" href='<%=request.getContextPath()%>/member/cart.jsp'><img src="<%=request.getContextPath()%>/imgs/cart.png"></a> --%>
-<%-- 			<span class="cartQuantity order-2 ">${sessionScope.cart.getTotalQuantity()}</span> --%>
-<!-- 			</div> -->
+			<!-- 			<div class="row ml-2"> -->
+			<%-- 			<a class="nav-link order-1" href='<%=request.getContextPath()%>/member/cart.jsp'><img src="<%=request.getContextPath()%>/imgs/cart.png"></a> --%>
+			<%-- 			<span class="cartQuantity order-2 ">${sessionScope.cart.getTotalQuantity()}</span> --%>
+			<!-- 			</div> -->
 			<li class="nav-item dropdown"><span
 				class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
 				data-toggle="dropdown" aria-expanded="false"> 會員中心 </span>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="nav-link"><%=member!=null?member.getName()+"你好":"" %></a> 
-					<a class="nav-link" href="<%=request.getContextPath()%>/member/order_history.jsp">歷史訂單</a> 
-					<a class="nav-link" href="<%=request.getContextPath()%>/member/update.jsp">會員修改</a>
-					<a class="nav-link" href="<%=request.getContextPath()%>/logout.do">登出</a>
+					<a class="nav-link text-center"><%=member != null ? member.getName() + "你好" : ""%></a>
+					<a class="nav-link text-center"
+						href="<%=request.getContextPath()%>/member/order_history.jsp">歷史訂單</a>
+					<a class="nav-link text-center"
+						href="<%=request.getContextPath()%>/member/update.jsp">會員修改</a> <a
+						class="nav-link text-center" href="<%=request.getContextPath()%>/logout.do">登出</a>
 				</div></li>
 			<%
 			}
 			%>
-			<li class="nav-link">
-			<a class="order-1" href='<%=request.getContextPath()%>/member/cart.jsp'><img src="<%=request.getContextPath()%>/imgs/cart.png">
-			<span class="cartQuantity order-2 ">${sessionScope.cart.getTotalQuantity()}</span></a>
-			
+			<li class="nav-link"><a class="order-1"
+				href='<%=request.getContextPath()%>/member/cart.jsp'><img
+					src="<%=request.getContextPath()%>/imgs/cart.png"> <span
+					class="cartQuantity order-2 ">${sessionScope.cart.getTotalQuantity()}</span></a>
+
 			</li>
 		</ul>
 		<form class="form-inline my-2 my-lg-0 mr-1" action='shoplist.jsp'
 			method="get">
 			<input type="search" name="keyword" placeholder="SEARCH"
-				class="form-control mr-sm-2 ml-auto ml-md-3" value="${param.keyword}">
+				class="form-control mr-sm-2 ml-auto ml-md-3"
+				value="${param.keyword}">
 			<button class="btn btn btn-dark my-2 my-sm-0" type="submit">搜尋</button>
 		</form>
 	</div>

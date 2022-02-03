@@ -81,7 +81,7 @@ class CustomersDAO {// package-friendly(不能加public)
 			if(e.getMessage().indexOf("PRIMARY")>0) {
 				throw new DataInvalidException("身分證已重複註冊",e);
 			}else if(e.getMessage().indexOf("email_UNIQUE")>0) {
-				throw new DataInvalidException("email以重複註冊",e);
+				throw new DataInvalidException("email已重複註冊",e);
 			}else if(e.getMessage().indexOf("phone_UNIQUE")>0) {
 				throw new DataInvalidException("電話已重複註冊",e);
 				
@@ -127,25 +127,27 @@ class CustomersDAO {// package-friendly(不能加public)
 		throw new BlackCakeException("修改客戶失敗",e);
 		}
 	}
-	private static String SEND_PASSWORD="SELECT email, password "
-			+ " FROM customers "
-			+ " WHERE email = ?";
-	void sendPassword(String account) {
-		try(
-				Connection connection = RDBConnection.getConnection();
-				PreparedStatement pstmt = connection.prepareStatement(SEND_PASSWORD);
-				){
-			pstmt.setString(1,account);
-			try(
-					ResultSet rs = pstmt.executeQuery();
-					){
-				while(rs.next()) {
-					
-				}
-					
-			}
-		}catch(SQLException e) {
-			System.out.println("帳號不存在");
-		}
-	}
+//	private static String SEND_PASSWORD="SELECT email, password "
+//			+ " FROM customers "
+//			+ " WHERE email = ?";
+//	Customer sendPassword(String account) throws BlackCakeException {
+//		Customer c = new Customer();
+//		try(
+//				Connection connection = RDBConnection.getConnection();
+//				PreparedStatement pstmt = connection.prepareStatement(SEND_PASSWORD);
+//				){
+//			pstmt.setString(1,account);
+//			try(
+//					ResultSet rs = pstmt.executeQuery();
+//					){
+//				while(rs.next()) {
+//					c.setEmail(rs.getString("email"));
+//					c.setPassword(rs.getString("password"));
+//				}	
+//			}
+//		}catch(SQLException e) {
+//			System.out.println("帳號不存在");
+//		}
+//		return c;
+//	}
 }

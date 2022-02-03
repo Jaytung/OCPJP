@@ -137,6 +137,7 @@ div h2 {
 }
 
 ul {
+<<<<<<< HEAD
 	list-style-type: none;
 }
 
@@ -166,4 +167,33 @@ ul {
 	.partOne {
 		font-size: 2rem;
 	}
+=======
+    list-style-type: none;
+}
+.dropdown-menu{
+	background: #cee5f2;
+    font-family: "Nuntio", sans-serif;
+    border:0;
+    transition:1s;
+}
+
+ @media screen and (max-width: 768px){
+    #mainNavbar{
+        background:#cee5f2;
+    }
+}
+@media screen and (min-width: 300px)and (max-width: 992px){
+    #addToCart{
+        margin-top: 5px;
+    }
+}
+@media(max-width:1200px) {
+    #headingGroup h1{
+        font-weight: 100;
+        font-size: 3rem;
+    }
+    .partOne{
+        font-size: 2rem;
+    }
+>>>>>>> 4e3223cdef02c405e28377728275cd38906c118b
 }
