@@ -27,10 +27,9 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Google Font -->
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700"
-	rel="stylesheet">
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
@@ -48,6 +47,9 @@
 /*  .receipt-content {  */
 /*  	margin-top: 2vh; */
 /* }  */
+.statusDiv{
+	font-size:20px;
+}
 .imgs {
 	width: 150px;
 	height: auto;
@@ -88,7 +90,7 @@
 					<div class="invoice-wrapper">
 						<div class="intro">
 							您好 <strong><%=member != null ? member.getName() : ""%></strong>,
-							<br> 本次訂單共 <strong><%=order.getTotalAmountWithFee()%></strong>
+							<br> 本次訂單共 <strong><%=Math.round(order.getTotalAmountWithFee())%></strong>
 							(元) 感謝您的購買
 						</div>
 
@@ -107,7 +109,7 @@
 								<div class="row col-sm-6 ml-1">
 									<div class='statusDiv'
 										title='<%=order.getCreateDate()%> <%=order.getCreatTime()%>'>
-										<strong>已下單</strong>
+										<strong class="badge badge-success">已下單</strong>
 									</div>
 									<%
 									logList = oService.getOrderStatusLog(orderId);
@@ -116,7 +118,7 @@
 									%>
 									<strong>&rarr;</strong>
 									<div class='statusDiv' title='<%=log.getLogTime()%>'>
-										<span></span><strong><%=order.getStatusString(log.getStatus())%></strong>
+										<span></span><strong class="badge badge-success"><%=order.getStatusString(log.getStatus())%></strong>
 									</div>
 									<%
 									}
@@ -179,7 +181,7 @@
 											共<%=orderItem.getQuantity()%>件
 										</div>
 										<div class="col-md-3 amount text-right">
-											<%=orderItem.getPrice() * orderItem.getQuantity()%>
+											<%="$"+Math.round(orderItem.getPrice()) * orderItem.getQuantity()%>
 										</div>
 									</div>
 									<%
@@ -192,13 +194,13 @@
 										<%=order.getShippingNote() != null ? order.getShippingNote() : ""%>
 									</p>
 									<div class="field">
-										運費 <span>$<%=order.getShippingFee() > 0 ? order.getShippingFee() : "0"%></span>
+										運費 <span>$<%=order.getShippingFee() > 0 ? Math.round(order.getShippingFee()) : "0"%></span>
 									</div>
 									<div class="field">
-										手續費 <span>$<%=order.getPaymentFee() > 0 ? order.getPaymentFee() : "0"%></span>
+										手續費 <span>$<%=order.getPaymentFee() > 0 ? Math.round(order.getPaymentFee()) : "0"%></span>
 									</div>
 									<div class="field grand-total">
-										總金額 <span>$<%=order.getTotalAmountWithFee()%></span>
+										總金額 <span>$<%=Math.round(order.getTotalAmountWithFee())%></span>
 									</div>
 								</div>
 

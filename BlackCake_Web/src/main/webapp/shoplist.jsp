@@ -11,10 +11,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google Font -->
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700"
-	rel="stylesheet">
-	
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
@@ -112,7 +111,7 @@ display: none;width:70%
 			for (int i = 0; i < list.size(); i++) {
 				Product p = list.get(i);
 			%>
-			<li class="col-md-6 col-lg-3"><a
+			<li class="col-md-6 col-lg-4"><a
 				href='Product.jsp?productId=<%= p.getId()%>'><img
 					src='<%=p.getPhotoUrl()%>' onerror='getImg(this)'
 					class="productList img-fluid rounded">

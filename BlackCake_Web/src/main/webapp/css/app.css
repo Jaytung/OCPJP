@@ -1,146 +1,169 @@
-html{
-	scroll-behavior:smooth;
-	}
-a {
-    text-decoration: none;
+html {
+	scroll-behavior: smooth;
 }
-a:hover{
-    text-decoration: #bfc0c0;
-    transition:900ms;
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: #bfc0c0;
+	transition: 900ms;
 }
 /* .productList:hover{ */
 /* 	width:80%; */
 /* 	height:auto; */
 /* 	transition:900ms; */
 /* } */
-body{
-    background: #f1f1f1;
-    font-family: "Nuntio", sans-serif;
+body {
+	background: #f1f1f1;
+	font-family: 'Noto Sans TC', sans-serif;
 }
+
 .footer {
-   position:fix;
-   bottom:0;
-   width:100%;
+	position: fix;
+	bottom: 0;
+	width: 100%;
 }
-div h1{
-    color: #483434;
+
+div h1 {
+	color: #483434;
 }
-div h2{
-    color: #6B4F4F;
+
+div h2 {
+	color: #6B4F4F;
 }
-.partOne h2{
-    color: #483434;
-    font-weight: 100;
-    font-size: 2rem;
+
+.partOne h2 {
+	color: #483434;
+	font-weight: 100;
+	font-size: 2rem;
 }
-.partOne p{
-    color: #483434;
-    font-weight: 400;
-    font-size: 1.1rem;
-    line-height: 2;
+
+.partOne p {
+	color: #483434;
+	font-weight: 400;
+	font-size: 1.1rem;
+	line-height: 2;
 }
-.content{
-    margin-top: 100px;
-    margin-bottom: 100px;
+
+.content {
+	margin-top: 100px;
+	margin-bottom: 100px;
 }
-.navbar.scrolled{
-    background: #cee5f2;
-    transition: background 500ms;
+
+.navbar.scrolled {
+	background: #cee5f2;
+	transition: background 500ms;
 }
 /* .navbar.notScrolled{
     background:#bb8765;
     transition: background 500ms;
 } */
-.navbar-brand{
-    font-size: 2rem;
+.navbar-brand {
+	font-size: 2rem;
 }
 
-#mainNavbar{
-    font-size: 1.5rem;
-    font-weight: 600;
-    position: sticky;
-}
-#mainNavbar .nav-link{ 
-    color: #353535;
-}
-#mainNavbar .nav-link:hover{
-    color: #ea1C22;
-    transition: 400ms;
-}
-#mainNavbar .navbar-brand{
-    color: #e63946;
-}
-
-#headingGroup span{
-    color: #ea1C2c;
-}
-#headingGroup h1{
-    font-weight: 100;
-    font-size: 4rem;
-}
-#loginName{
-	
-	color:black;
-}
-#product{
-    margin-top: 10vh;
-/*     margin-bottom: 5vh; */
-}
-#product img{
-        display: block;
-        max-width: 100%;
-        height: auto;
-        justify-content: center;
-}
-.cartPlusAndMinus{
+#mainNavbar {
+	font-size: 1.6em;
 	font-weight: 600;
-/* 	font-size: 1.5rem; */
+	position: sticky;
 }
-.center_div{
-    margin: 10rem auto;
-    width:80%;
+
+#mainNavbar .nav-link {
+	color: #353535;
 }
-.registerForm{
-    color: #6B4F4F;
-    font-family: "Nuntio", sans-serif;
+
+#mainNavbar .nav-link:hover {
+	color: #ea1C22;
+	transition: 400ms;
 }
+
+#mainNavbar .navbar-brand {
+	color: #e63946;
+}
+
+#headingGroup span {
+	color: #ea1C2c;
+}
+
+#headingGroup h1 {
+	font-weight: 100;
+	font-size: 4rem;
+}
+
+#loginName {
+	color: black;
+}
+
+#product {
+	margin-top: 10vh;
+	/*     margin-bottom: 5vh; */
+}
+
+#product img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+	justify-content: center;
+}
+
+.cartPlusAndMinus {
+	font-weight: 600;
+	/* 	font-size: 1.5rem; */
+}
+
+.center_div {
+	margin: 10rem auto;
+	width: 80%;
+}
+
+.registerForm {
+	color: #6B4F4F;
+	font-family: "Nuntio", sans-serif;
+}
+
 .loginForm {
-    margin-top: 10vh;
+	margin-top: 10vh;
 }
 /* .carousel-control-next-icon, .carousel-control-prev-icon { */
 /* 	filter: invert(1); */
 /* } */
 #captchaImg {
-    height: 40px;
-    width: 130;
-    max-width: 400px;
-/*     maintain aspect ratio */
-}
-ul {
-    list-style-type: none;
-}
-.dropdown-menu{
-	background: #e0e1dd;
-    font-family: "Nuntio", sans-serif;
-    border:0;
+	height: 40px;
+	width: 130;
+	max-width: 400px;
+	/*     maintain aspect ratio */
 }
 
- @media screen and (max-width: 768px){
-    #mainNavbar{
-        background:#e0e1dd;
-    }
+ul {
+	list-style-type: none;
 }
-@media screen and (min-width: 300px)and (max-width: 992px){
-    #addToCart{
-        margin-top: 5px;
-    }
+
+.dropdown-menu {
+	background: #cee5f2;
+	font-family: "Nuntio", sans-serif;
+	border: 0;
 }
-@media(max-width:1200px) {
-    #headingGroup h1{
-        font-weight: 100;
-        font-size: 3rem;
-    }
-    .partOne{
-        font-size: 2rem;
-    }
+
+@media screen and (max-width: 768px) {
+	#mainNavbar {
+		background: #cee5f2;
+	}
+}
+
+@media screen and (min-width: 300px)and (max-width: 992px) {
+	#addToCart {
+		margin-top: 5px;
+	}
+}
+
+@media ( max-width :1200px) {
+	#headingGroup h1 {
+		font-weight: 100;
+		font-size: 3rem;
+	}
+	.partOne {
+		font-size: 2rem;
+	}
 }

@@ -22,9 +22,9 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Google Font -->
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700"
-	rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
@@ -89,7 +89,7 @@ td>img {
 				<td><%=order.getPaymentType() %></td>
 				<td><%=order.getShippingType() %></td>
 				<td><%=order.getStatusString() %></td>
-				<td><%=order.getTotalAmountWithFee() %></td>
+				<td><%=Math.round(order.getTotalAmountWithFee())+"元"%></td>
 				<td><a href='order.jsp?orderId=<%=order.getId()%>'>訂單明細</a></td>
 			</tr>
 			<%} %>

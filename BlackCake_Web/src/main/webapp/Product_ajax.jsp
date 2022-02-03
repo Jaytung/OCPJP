@@ -15,7 +15,7 @@
 
 #product {
 	width: 100%;
-	margin: auto; 
+	margin: auto;
 	max-width: 1200px
 }
 
@@ -62,11 +62,11 @@
 }
 
 #album {
-	width: 400px;
+	width: auto;
 	height: auto;
 	border: none;
 	padding: 10px;
-	background: #F0ECE3;
+	/* background: #F0ECE3; */
 	color: white;
 }
 
@@ -79,7 +79,7 @@
 	width: 150px;
 	padding: 5px;
 	background: white;
-	margin: 10px 2px;
+ 	margin: 10px 2px;
 }
 
 .selected {
@@ -93,42 +93,6 @@
 #stock {
 	font-size: 1.2rem;
 	color: #e63946;
-}
-
-@media screen and (min-width: 500px) and (max-width: 768px) {
-	#album {
-		width: 295px;
-	}
-	.smallPic {
-		width: 100px;
-	}
-}
-
-@media screen and (min-width: 768px) and (max-width: 1250px) {
-	#album {
-		width: 200px;
-	}
-	.smallPic {
-		width: 80px;
-	}
-}
-
-@media screen and (min-width: 860px) and (max-width: 1250px) {
-	#album {
-		width: 300px;
-	}
-	.smallPic {
-		width: 120px;
-	}
-}
-
-@media screen and (min-width: 1250px) and (max-width: 2000px) {
-	#album {
-		width: 450px;
-	}
-	.smallPic {
-		width: 150px;
-	}
 }
 
 input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button
@@ -169,7 +133,7 @@ if (p != null) {
 	function plusHandler() {
 		var pStock = $("input[name='quantity']").attr("max");
 		var quantitiyValue = parseInt($("#quantity").val());
-// 		alert(pStock)
+		// 		alert(pStock)
 		if (quantitiyValue < pStock) {
 			$("#quantity").val(quantitiyValue + 1);
 		}
@@ -182,7 +146,7 @@ if (p != null) {
 		$(this).addClass("selected");
 	}
 	function changeSizeData(theObj) {
-// 						alert($(theObj).attr("data-stock"));
+		// 						alert($(theObj).attr("data-stock"));
 		// 				alert($(theObj).attr("title"));
 		// 				alert($(theObj).attr("data-price"));
 
@@ -244,9 +208,6 @@ if (p != null) {
 	
 </script>
 <div class="productItem">
-<% if(request.getRequestURI().lastIndexOf("_ajax.")>0) {%>
-		<jsp:include page="/subviews/navbar.jsp"/>
-		<% } %>
 	<%
 	if (p == null) {
 	%>
@@ -266,7 +227,16 @@ if (p != null) {
 				<div
 					class="col-sm-12 col-md-6 col-lg-6 photo rounded order-1 order-md-1 mb-1 mainProduct">
 					<img src="<%=p.getPhotoUrl()%>" class="rounded" id="main" alt="">
+					<div class="rounded order-2 order-md-5 mt-0">
+						<div id="album" class="rounded">
+							<div class="d-flex justify-content-around">
+								<img class="rounded shadow smallPic" src="<%=p.getPhotoUrl()%>">
+								<img class="rounded shadow smallPic" src="<%=p.getPhotoUrl1()%>">
+							</div>
+						</div>
+					</div>
 				</div>
+				<div class="col-12"></div>
 				<div
 					class="col-sm-12 col-md-6 col-lg-6 order-3 order-md-3 productDetail">
 					<div class="text-center">
@@ -317,7 +287,7 @@ if (p != null) {
 									type="radio" name="size" value="<%=size.getName()%>"
 									id="<%=size.getName()%>" title='<%=size.getName()%>'
 									data-stock='<%=size.getStock()%>'
-									data-price='<%=size.getUnitPrice()%>'
+									data-price='<%=Math.round(size.getUnitPrice())%>'
 									Value="<%=size.getName()%>" onclick='changeSizeData(this)'
 									required="required"> <%=size.getName()%>
 								</label>
@@ -345,70 +315,39 @@ if (p != null) {
 							</div>
 						</div>
 					</div>
-				</div>
+					<div class="col-sm-12 col-md-12 order-8 mt-4 productInput">
+						<div class="text-center">
+							<span class="">數量:</span>
+							<div class="input-group justify-content-center">
+								<span class="input-group-addon">
+									<button class="btn btn-dark btn-lg mr-1 cartBtn" type="button"
+										id="minus">
+										<span class="cartPlusAndMinus">-</span>
+									</button>
+								</span> <input type="number"
+									class="form-control form-control-lg text-center rounded col-sm-12 col-md-4 col-lg-3"
+									aria-label="" value="0" id="quantity" name="quantity"
+									min="<%=p.getStock() > 0 ? 1 : 0%>"
+									max="<%=p.getStock() > 0 ? p.getStock() : 0%>" readonly>
+								<span class="input-group-addon">
+									<button class="btn btn-dark btn-lg ml-1 cartBtn" type="button"
+										name="plue" id="plus">
+										<span class="cartPlusAndMinus">+</span>
+									</button>
+								</span>
+							</div>
+							<!-- /input-group -->
+						</div>
 
-				<div class="col-6 col-md-6 rounded order-2 order-md-5 mt-0">
-					<div id="album"
-						class="row-6 row-sm-9 row-md-12 justify-content-center rounded ">
-						<div class="row justify-content-center">
-							<img class="rounded shadow smallPic" src="<%=p.getPhotoUrl()%>">
-							<img class="rounded shadow smallPic" src="<%=p.getPhotoUrl1()%>">
+						<!-- /.col-lg-6 -->
+						<div class="text-center" id="addToCart">
+							<br> <input class="btn btn-lg btn-dark" type="submit"
+								value="加入購物車"> <input type="submit"
+								class="btn btn-lg btn-dark" onclick='this.form.submited=true;'
+								value='直接購買'>
 						</div>
 					</div>
-					<%
-					if (p.getSizeMapSize() > 0) {
-					%>
-					<div id="album" class="row-9 rounded">
-						<%
-						for (Size size : p.getSizes()) {
-						%>
-						<div class="row row-6 row-sm-9 row-md-12 justify-content-center">
-							<img
-								src="<%=size.getPhotoURL() == null ? size.getPhotoURL() : size.getIconURL()%>"
-								class="rounded shadow smallPic" title='<%=size.getName()%>'
-								data-photo='<%=size.getPhotoURL()%>' />
-							<%
-							}
-							%>
-						</div>
-					</div>
 				</div>
-				<%
-				}
-				%>
-
-
-			</div>
-			<div class="col-sm-12 col-md-6 order-8 mt-4 productInput">
-				<div class="text-center">
-					<span class="">數量:</span>
-					<div class="input-group justify-content-center">
-						<span class="input-group-addon">
-							<button class="btn btn-dark btn-lg mr-1 cartBtn" type="button"
-								id="minus">
-								<span class="cartPlusAndMinus">-</span>
-							</button>
-						</span> 
-						<input type="number"
-							class="form-control form-control-lg text-center rounded col-sm-12 col-md-4 col-lg-3"
-							aria-label="" value="0" id="quantity" name="quantity"
-							min="<%=p.getStock()>0?1:0%>" max="<%=p.getStock()>0?p.getStock():0%>" readonly>  <span class="input-group-addon">
-							<button class="btn btn-dark btn-lg ml-1 cartBtn" type="button"
-								name="plue" id="plus">
-								<span class="cartPlusAndMinus">+</span>
-							</button>
-						</span>
-					</div>
-					<!-- /input-group -->
-				</div>
-
-				<!-- /.col-lg-6 -->
-				<div class="text-center" id="addToCart">
-					<br> <input class="btn btn-lg btn-dark" type="submit" value="加入購物車"> 
-						<input type="submit"
-						class="btn btn-lg btn-dark" onclick='this.form.submited=true;' value='直接購買'>
-				</div>
-
 			</div>
 		</form>
 	</div>

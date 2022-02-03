@@ -9,9 +9,9 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Google Font -->
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700"
-	rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
@@ -93,11 +93,11 @@ p.lead{
 								class="d-block w-100" alt="黑糖糕"></a>
 						</div>
 						<div class="carousel-item" data-interval="5000">
-							<a href="#小管片"> <img src="imgs/slide2.png"
+							<a href="#squid"> <img src="imgs/slide2.png"
 								class="d-block w-100" alt="小館片"></a>
 						</div>
 						<div class="carousel-item" data-interval="5000">
-							<a href="#XO醬"> <img src="imgs/slide3.png"
+							<a href="#xo"> <img src="imgs/slide3.png"
 								class="d-block w-100" alt="XO醬"></a>
 						</div>
 					</div>
@@ -129,13 +129,13 @@ p.lead{
 						<h2>黑糖糕</h2>
 						<img src="imgs/cakelogo.png" alt="" class="d-none d-lg-inline">
 						<p class="lead">
-							不添加防腐劑的澎湖黑糖糕！黑糖味又濃又Ｑ，真的是台灣島絕！對！找不到的美味，使用上等黑糖、麵粉製成，不僅黑糖原料本身及製作過程不添加香料、焦糖色素及防腐劑外，也不會添加提升黑糖糕Q彈的添加物。源利軒黑糖糕老店堅持讓顧客品嘗到最原始的好味道、好口感。
+							不添加防腐劑的澎湖黑糖糕！黑糖味又濃又Ｑ，真的是台灣島絕！對！找不到的美味，使用上等黑糖、麵粉製成，不僅黑糖原料本身及製作過程不添加香料、焦糖色素及防腐劑外，也不會添加提升黑糖糕Q彈的添加物。
 						</p>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row align-items-center content mt-0 mb-0">
+		<div class="row align-items-center content mt-0 mb-0"  id="squid">
 			<div class="col-md-6 text-center">
 				<div class="row justify-content-center">
 					<div class="col-10 mb-5 mb-md-0 partOne">
@@ -148,13 +148,13 @@ p.lead{
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6 col-lg-6 px-0" id="小管片">
+			<div class="col-md-6 col-lg-6 px-0">
 				<img src="imgs/小管片1000X1000.png" alt="" class="img-fluid rounded">
 			</div>
 		</div>
 
-		<div class="row align-items-center content mt-0">
-			<div class="col-md-6 order-2 order-md-1 px-0" id="XO醬">
+		<div class="row align-items-center content mt-0" id="xo">
+			<div class="col-md-6 order-2 order-md-1 px-0">
 				<img src="imgs/干貝醬1000X1000.png" alt="" class="img-fluid rounded">
 			</div>
 			<div class="col-md-6 text-center order-1 order-md-2">

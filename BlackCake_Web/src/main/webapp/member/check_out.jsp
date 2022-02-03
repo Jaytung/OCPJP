@@ -22,9 +22,9 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Google Font -->
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700"
-	rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
@@ -252,9 +252,9 @@
 									<td data-th="口味"><%=spicy%></td>
 <%-- 									<td data-th="定價"><%=item.getListPrice()%></td> --%>
 <%-- 									<td data-th="折扣"><%=item.getDiscountString()%></td> --%>
-									<td data-th="售價"><%=item.getUnitPrice()%></td>
+									<td data-th="售價"><%=Math.round(item.getUnitPrice())%></td>
 									<td data-th="數量"><%=qty%></td>
-									<td data-th="小記"><%=item.getUnitPrice() * qty%></td>
+									<td data-th="小記"><%=Math.round(item.getUnitPrice()) * qty%></td>
 								</tr>
 								<%
 								}
@@ -264,7 +264,7 @@
 								<tr class="text-center">
 									<td colspan="5"></td>
 									<td><%=cart.size() + "項" + "共" + cart.getTotalQuantity() + "件"%></td>
-									<td>總金額:<span id='totalAmount'><%=cart.getTotalAmount()%></span>元
+									<td>總金額:<span id='totalAmount'><%=Math.round(cart.getTotalAmount())%></span>元
 									</td>
 								</tr>
 							</tfoot>

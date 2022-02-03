@@ -16,8 +16,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700"
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
 	rel="stylesheet">
 
 <!-- Bootstrap CSS -->
@@ -45,12 +47,13 @@
 td>img {
 	width: 100px;
 }
-#remove{
-background:url("<%=request.getContextPath()%>/imgs/trash.png")no-repeat;
-height:30px;
-width:30px;
-border:none;
 
+#remove {
+	background: url("<%=request.getContextPath()%>/imgs/trash.png")
+		no-repeat;
+	height: 30px;
+	width: 30px;
+	border: none;
 }
 </style>
 
@@ -141,13 +144,14 @@ border:none;
 							<td><%=spicy%></td>
 							<%-- 						<td><%=item.getListPrice()%></td> --%>
 							<%-- 						<td><%=item.getDiscountString()%></td> --%>
-							<td><%=item.getUnitPrice()%></td>
-							<td><input type="number" class="form-control" name="quantity<%=item.hashCode()%>"
-								value="<%=qty%>" required min="<%=stock > 0 ? 1 : 0%>"
-								max="<%=stock%>"><input type="submit" class="btn btn-dark form-control"
-								value="修改"></td>
-							<td><%=item.getUnitPrice() * qty%></td>
-							<td><input type="submit" id="remove" name="delete<%=item.hashCode()%>" value=''></td>
+							<td><%=Math.round(item.getUnitPrice())%></td>
+							<td><input type="number" class="form-control"
+								name="quantity<%=item.hashCode()%>" value="<%=qty%>" required
+								min="<%=stock > 0 ? 1 : 0%>" max="<%=stock%>"><input
+								type="submit" class="btn btn-dark form-control" value="修改"></td>
+							<td><%=Math.round(item.getUnitPrice()) * qty%></td>
+							<td><input type="submit" id="remove"
+								name="delete<%=item.hashCode()%>" value=''></td>
 						</tr>
 						<%
 						}
@@ -162,17 +166,18 @@ border:none;
 						<tr>
 							<td colspan="5">
 							<td><%=cart.size() + "項" + "共" + cart.getTotalQuantity() + "件"%></td>
-							<td><%=cart.getTotalAmount()%>元<br><button type='submit' value='結帳'
-						class="btn btn-dark btn-lg d-flex justify-content-end"
-						name="checkout" onclick='location.href="check_out.jsp"'>結帳</button></td>
+							<td><%=Math.round(cart.getTotalAmount())%>元<br>
+							<button type='submit' value='結帳'
+									class="btn btn-dark btn-lg d-flex justify-content-end"
+									name="checkout" onclick='location.href="check_out.jsp"'>結帳</button></td>
 						</tr>
 					</tfoot>
 				</table>
-<!-- 				<div class="col d-flex justify-content-end"> -->
-<!-- 					<button type='submit' value='結帳' -->
-<!-- 						class="btn btn-dark btn-lg d-flex justify-content-end" -->
-<!-- 						name="checkout" onclick='location.href="check_out.jsp"'>結帳</button> -->
-<!-- 				</div> -->
+				<!-- 				<div class="col d-flex justify-content-end"> -->
+				<!-- 					<button type='submit' value='結帳' -->
+				<!-- 						class="btn btn-dark btn-lg d-flex justify-content-end" -->
+				<!-- 						name="checkout" onclick='location.href="check_out.jsp"'>結帳</button> -->
+				<!-- 				</div> -->
 			</form>
 			<%
 			}

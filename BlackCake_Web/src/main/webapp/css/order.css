@@ -25,10 +25,10 @@
 
 .receipt-content .invoice-wrapper .line-items .print a {
     display: inline-block;
-    border: 1px solid #9CB5D6;
+    border: 1px solid #20A720;
     padding: 13px 13px;
     border-radius: 5px;
-    color: #708DC0;
+    color: #20A720;
     font-size: 13px;
     -webkit-transition: all 0.2s linear;
     -moz-transition: all 0.2s linear;

@@ -6,7 +6,7 @@ public enum ShippingType {
 	HOME("黑貓宅急便", 100);
 	
 	private final String description;
-	private final double fee;
+	private final int fee;
 	
 	public String getShippingName() {
 		return description;
@@ -19,7 +19,7 @@ public enum ShippingType {
 		return description;
 	}
 	
-	private ShippingType(String shippingName, double fee) {
+	private ShippingType(String shippingName, int fee) {
 		this.description = shippingName;
 		this.fee = fee;
 	}

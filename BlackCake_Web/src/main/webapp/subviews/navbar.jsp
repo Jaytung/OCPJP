@@ -12,7 +12,7 @@ Customer member = (Customer) session.getAttribute("member");
 	<a href=" #" class="navbar-brand ml-1">鮮記</a>
 	<button class="navbar-toggler" data-toggle="collapse"
 		data-target="#navLinks" arir-label="Toggle navigation">
-		<span class="navbar-toggler-icon"> </span>
+		<span class="navbar-toggler-icon"></span>
 	</button>
 	<div class="collapse navbar-collapse" id="navLinks">
 		<ul class="navbar-nav mr-auto">
@@ -25,7 +25,7 @@ Customer member = (Customer) session.getAttribute("member");
 			<li class="nav-item dropdown order-7 order-md-3"><a
 				href='<%=request.getContextPath()%>/shoplist.jsp'
 				class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
-				data-toggle="dropdown" aria-expanded="false"> 商品 </a>
+				data-toggle="dropdown" aria-expanded="false">商品</a>
 				<form>
 					<div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
 					<a class="nav-link"
@@ -50,7 +50,7 @@ Customer member = (Customer) session.getAttribute("member");
 			<li class="nav-item dropdown"><span
 				class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
 				data-toggle="dropdown" aria-expanded="false"> 會員 </span>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				<div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
 	<a
 						class="nav-link"
 						href='<%=request.getContextPath()%>/register.jsp'>註冊</a> <a
