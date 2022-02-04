@@ -10,8 +10,8 @@
 <%@page import="uuu.blackcake.entity.CartItem"%>
 <%@page import="uuu.blackcake.entity.ShoppingCart"%>
 <%@page import="java.util.List"%>
-<%@ page import="uuu.blackcake.entity.Customer"%>
-<%@ page pageEncoding="UTF-8"%>
+<%@page import="uuu.blackcake.entity.Customer"%>
+<%@page pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
 
@@ -222,12 +222,11 @@
 						<table class="table table-hover table-striped table-rwd">
 							<thead class="thead-dark  text-center">
 								<tr>
-									<th scope="col">圖示</th>
 									<th scope="col">名稱</th>
 									<th scope="col">大小</th>
 									<th scope="col">口味</th>
-<!-- 									<th scope="col">定價</th> -->
-<!-- 									<th scope="col">折扣</th> -->
+									<th scope="col">定價</th>
+									<th scope="col">折扣</th>
 									<th scope="col">售價</th>
 									<th scope="col">數量</th>
 									<th scope="col">小記</th>
@@ -245,13 +244,12 @@
 									int stock = pService.getProductStock(p, size, spicy);
 								%>
 								<tr>
-									<td data-th="圖示"><img
-										src="/blackcake/<%=item.getPhotoUrl()%>"></td>
-									<td data-th="名稱"><%=p.getName()%><br> <span>庫存剩餘:<%=stock%></span></td>
+									<td data-th="名稱"><%=p.getName()%><br> <img
+								src="/blackcake/<%=item.getPhotoUrl()%>"><br> <span>庫存剩餘:<%=stock%></span></td>
 									<td data-th="大小"><%=size != null ? size.getName() : ""%></td>
 									<td data-th="口味"><%=spicy%></td>
-<%-- 									<td data-th="定價"><%=item.getListPrice()%></td> --%>
-<%-- 									<td data-th="折扣"><%=item.getDiscountString()%></td> --%>
+									<td data-th="定價"><%=item.getListPrice() == 0 ? Math.round(item.getUnitPrice()) : Math.round(item.getListPrice())%></td>
+									<td data-th="折扣"><%=item.getDiscountString()%></td>
 									<td data-th="售價"><%=Math.round(item.getUnitPrice())%></td>
 									<td data-th="數量"><%=qty%></td>
 									<td data-th="小記"><%=Math.round(item.getUnitPrice()) * qty%></td>
@@ -262,7 +260,7 @@
 							</tbody>
 							<tfoot>
 								<tr class="text-center">
-									<td colspan="5"></td>
+									<td colspan="6"></td>
 									<td><%=cart.size() + "項" + "共" + cart.getTotalQuantity() + "件"%></td>
 									<td>總金額:<span id='totalAmount'><%=Math.round(cart.getTotalAmount())%></span>元
 									</td>

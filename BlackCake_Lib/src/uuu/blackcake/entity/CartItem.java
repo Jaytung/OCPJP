@@ -39,7 +39,7 @@ public class CartItem {
 	public double getListPrice() {
 		if(size==null) {
 			if(product !=null) {
-				return product instanceof Outlet?((Outlet)product).getUnitPrice(): product.getUnitPrice();
+				return product instanceof Outlet?((Outlet)product).getListPrice(): product.getUnitPrice();
 			}else {
 				throw new DataInvalidException("明細中無產品資料");
 			}

@@ -260,7 +260,7 @@ if (p != null) {
 						if (p instanceof Outlet) {
 						%>
 						<h4>
-							定價:<span class="sizePrice"> <%=((Outlet) p).getListPrice() + ""%>
+							定價:<span class="sizePrice"> <%=Math.round(((Outlet) p).getListPrice()) + "元"%>
 							</span>
 						</h4>
 

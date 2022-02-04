@@ -32,7 +32,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/app.css">
-
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/cart.css">
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"
 	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
@@ -109,17 +109,17 @@ td>img {
 			%>
 			<h1 class="text-center">購物車</h1>
 			<form action="<%=request.getContextPath()%>/member/update_cart.do"
-				method="POST">
+				method="POST" id="cartForm">
 				<!-- 			<button type="button" class="btn btn-lg btn-dark mb-1" -->
 				<!-- 				onclick="goBackShop()">繼續購物</button> -->
-				<table class="table table-hover">
-					<thead class="thead-dark">
+				<table class="table table-hover table-striped table-rwd">
+					<thead class="thead-dark text-center">
 						<tr>
 							<th scope="col">名稱</th>
 							<th scope="col">大小</th>
 							<th scope="col">口味</th>
-							<!-- 						<th scope="col">定價</th> -->
-							<!-- 						<th scope="col">折扣</th> -->
+							<th scope="col">定價</th>
+							<th scope="col">折扣</th>
 							<th scope="col">售價</th>
 							<th scope="col">數量</th>
 							<th scope="col">小記</th>
@@ -137,20 +137,21 @@ td>img {
 							int qty = cart.getQuantity(item);
 							int stock = pService.getProductStock(p, size, spicy);
 						%>
-						<tr>
-							<td><%=p.getName()%><br> <img
+						<tr class="text-center">
+							<td data-th="名稱"><%=p.getName()%><br> <img
 								src="/blackcake/<%=item.getPhotoUrl()%>"><br> <span>庫存剩餘:<%=stock%></span></td>
-							<td><%=size != null ? size.getName() : ""%></td>
-							<td><%=spicy%></td>
-							<%-- 						<td><%=item.getListPrice()%></td> --%>
-							<%-- 						<td><%=item.getDiscountString()%></td> --%>
-							<td><%=Math.round(item.getUnitPrice())%></td>
-							<td><input type="number" class="form-control"
+							<td data-th="大小"><%=size != null ? size.getName() : ""%></td>
+							<td data-th="口味"><%=spicy%></td>
+							<td data-th="定價"><%=item.getListPrice() == 0 ? Math.round(item.getUnitPrice()) : Math.round(item.getListPrice())%></td>
+							<td data-th="折扣"><%=cart.getDiscountString(item)%></td>
+							<td data-th="售價"><%=Math.round(cart.getUnitPrice(item))%></td>
+							<td data-th="數量"><input type="number"
+								class="form-control text-center"
 								name="quantity<%=item.hashCode()%>" value="<%=qty%>" required
 								min="<%=stock > 0 ? 1 : 0%>" max="<%=stock%>"><input
 								type="submit" class="btn btn-dark form-control" value="修改"></td>
-							<td><%=Math.round(item.getUnitPrice()) * qty%></td>
-							<td><input type="submit" id="remove"
+							<td data-th="小記"><%=Math.round(cart.getUnitPrice(item)) * qty + "元"%></td>
+							<td data-th="移除商品"><input type="submit" id="remove"
 								name="delete<%=item.hashCode()%>" value=''></td>
 						</tr>
 						<%
@@ -158,26 +159,24 @@ td>img {
 						%>
 					</tbody>
 					<tfoot>
-						<tr>
-							<th colspan="5"></th>
-							<th>數量</th>
-							<th>總金額</th>
-						</tr>
-						<tr>
-							<td colspan="5">
+						<tr class="text-center">
+							<td colspan="7">
 							<td><%=cart.size() + "項" + "共" + cart.getTotalQuantity() + "件"%></td>
-							<td><%=Math.round(cart.getTotalAmount())%>元<br>
-							<button type='submit' value='結帳'
-									class="btn btn-dark btn-lg d-flex justify-content-end"
-									name="checkout" onclick='location.href="check_out.jsp"'>結帳</button></td>
+							<td>總金額:<%=Math.round(cart.getTotalAmount())%>元<br>
+							</td>
 						</tr>
 					</tfoot>
 				</table>
+				<div class="d-flex justify-content-end">
+					<button type='submit' value='結帳' class="btn btn-dark btn-lg col-lg-2 btn-block"
+						name="checkout" onclick='location.href="check_out.jsp"'>結帳</button>
+				</div>
 				<!-- 				<div class="col d-flex justify-content-end"> -->
 				<!-- 					<button type='submit' value='結帳' -->
 				<!-- 						class="btn btn-dark btn-lg d-flex justify-content-end" -->
 				<!-- 						name="checkout" onclick='location.href="check_out.jsp"'>結帳</button> -->
 				<!-- 				</div> -->
+
 			</form>
 			<%
 			}

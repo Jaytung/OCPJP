@@ -105,7 +105,7 @@ display: none;width:70%
 
 		if (list != null && list.size() > 0) {
 		%>
-		<div class="container-fulid px-0">
+		<div class="container-fulid">
 		<ul class="row text-center">
 			<%
 			for (int i = 0; i < list.size(); i++) {

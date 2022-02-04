@@ -1,9 +1,6 @@
 package uuu.blackcake.entity;
-
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -40,6 +37,23 @@ public class ShoppingCart {
 //	}
 	public Integer getQuantity(CartItem item) {
 		return cartMap.get(item);
+	}
+	public double getUnitPrice(CartItem item) {
+		if(item==null) throw new IllegalArgumentException("處理購物車時，item不得為null");
+		double price = item.getUnitPrice();
+		if(!(item.getProduct() instanceof Outlet)
+				&& member instanceof VIP && item.getListPrice()==price) {
+			price *= (100D-((VIP)member).getDiscount())/100;
+		}
+		return price;
+	}
+	public String getDiscountString(CartItem item) {
+		if(item==null) throw new IllegalArgumentException("處理購物車時，item不得為null");
+		String discountStr = item.getDiscountString();
+		if((discountStr==null || discountStr.length()==0) && member instanceof VIP) {
+			discountStr = "VIP" + ((VIP)member).getDiscountString();
+		}
+		return discountStr;
 	}
 	
 	//mutator
