@@ -327,8 +327,8 @@ if (p != null) {
 								</span> <input type="number"
 									class="form-control form-control-lg text-center rounded col-sm-12 col-md-4 col-lg-3"
 									aria-label="" value="0" id="quantity" name="quantity"
-									min="<%=p.getStock() > 0 ? 1 : 0%>"
-									max="<%=p.getStock() > 0 ? p.getStock() : 0%>" readonly>
+									min="<%=p.getStock() > 0 ? 1 : 1%>"
+									max="<%=p.getStock() > 0 ? p.getStock() : 1%>">
 								<span class="input-group-addon">
 									<button class="btn btn-dark btn-lg ml-1 cartBtn" type="button"
 										name="plue" id="plus">
