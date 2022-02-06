@@ -15,6 +15,8 @@
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+<link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
 	integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
 	crossorigin="anonymous">
@@ -30,15 +32,19 @@
 	width: 130;
 	max-width: 400px;
 }
+
+.icon-div {
+	position: relative;
+	width: 200px;
+}
+
+#togglePassword {
+	position: absolute;
+	right: 15px;
+	top: 40px;
+}
 </style>
 <script>
-	function changePwdDisplay() {
-		if (displayPwd.checked) {
-			inputPassword.type = "text";
-		} else {
-			inputPassword.type = "password";
-		}
-	}
 	function refreshCaptcha() {
 		// alert("refresh Captcha");
 		captchaImg.src = "imgs/captcha.jpg?test="
@@ -58,17 +64,18 @@
 	Customer member = (Customer) session.getAttribute("member");
 	%>
 	<div class="container">
-					<%
-				if (errors != null && errors.size() > 0) {
-					for (int i = 0; i < errors.size(); i++) {
-						String msg = (String) errors.get(i);
-				%>
+		<%
+		if (errors != null && errors.size() > 0) {
+			for (int i = 0; i < errors.size(); i++) {
+				String msg = (String) errors.get(i);
+		%>
 
-				<div class="alert alert-danger text-center" role="alert"><%=msg%>!</div>
-				<%
-				}
-				}
-				%>
+		<div class="alert alert-danger text-center" role="alert"><%=msg%>!
+		</div>
+		<%
+		}
+		}
+		%>
 		<form action="login.do" method="post"
 			class="loginForm col-md-6 ml-auto mr-auto mb-auto border rounded shadow">
 			<div class="form-row justify-content-center mt-3">
@@ -80,19 +87,20 @@
 				</div>
 				<div class="form-group col-md-6 col-lg-5">
 					<label for="inputPassword"><span>密碼</span></label> <input
-						type="password" class="form-control shadow" id="inputPassword"
-						placeholder="Password" name="password" required>
+						type="password" class="form-control shadow" id="password"
+						placeholder="請輸入密碼" name="password" required> <i
+						class="bi bi-eye-slash" id="togglePassword"></i>
 				</div>
 			</div>
-			<div class="form-row justify-content-end">
-				<div class="form-group col-md-6 col-lg-6">
-					<div class="custom-control custom-switch">
-						<input type="checkbox" class="custom-control-input"
-							id="displayPwd" onchange="changePwdDisplay()"> <label
-							class="custom-control-label" for="displayPwd">顯示密碼</label>
-					</div>
-				</div>
-			</div>
+			<!-- 			<div class="form-row justify-content-end"> -->
+			<!-- 				<div class="form-group col-md-6 col-lg-6"> -->
+			<!-- 					<div class="custom-control custom-switch"> -->
+			<!-- 						<input type="checkbox" class="custom-control-input" -->
+			<!-- 							id="displayPwd" onchange="changePwdDisplay()"> <label -->
+			<!-- 							class="custom-control-label" for="displayPwd">顯示密碼</label> -->
+			<!-- 					</div> -->
+			<!-- 				</div> -->
+			<!-- 			</div> -->
 			<div class="form-row justify-content-center">
 				<div class="form-group col-md-6 col-lg-5 ">
 					<br> <input type="text" class="form-control shadow"
@@ -117,18 +125,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="form-row justify-content-center text-center">
-				<div class=" custom-control custom-checkbox form-group col-md-3 ">
-					<div class="form-check">
-						<input class="custom-control-input" type="checkbox" id="keepLogin">
-						<label class="custom-control-label" for="keepLogin"> 保持登入
-						</label>
-					</div>
-				</div>
-			</div>
 			<div class="form-row justify-content-center mb-3">
 				<div class="col-12 col-md-10 col-lg-8 col-xl-6">
-					<button type="submit" class="btn btn-lg btn-primary btn-block">登入</button>
+					<button type="submit" class="btn btn-lg btn-dark btn-block">登入</button>
 				</div>
 			</div>
 		</form>
@@ -149,6 +148,26 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
 		integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
 		crossorigin="anonymous"></script>
+	<script>
+		const togglePassword = document.querySelector("#togglePassword");
+		const password = document.querySelector("#password");
+
+		togglePassword.addEventListener("click", function() {
+			// toggle the type attribute
+			const type = password.getAttribute("type") === "password" ? "text"
+					: "password";
+			password.setAttribute("type", type);
+
+			// toggle the icon
+			this.classList.toggle("bi-eye");
+		});
+
+		// prevent form submit
+		const form = document.querySelector("form");
+		form.addEventListener('submit', function(e) {
+			e.preventDefault();
+		});
+	</script>
 </body>
 
 </html>

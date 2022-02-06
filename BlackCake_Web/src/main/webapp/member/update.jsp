@@ -13,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
 
 <!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
 	integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
@@ -30,6 +31,16 @@
 
 #updateCaptchaImg {
 	margin-top: 28px;
+}
+.icon-div {
+  position: relative;
+  width: 200px;
+}
+
+#togglePassword {
+  position: absolute;
+  right: 15px;
+  top: 40px;
 }
 </style>
 <script src="https://code.jquery.com/jquery-3.0.0.js"
@@ -117,41 +128,36 @@ if (member != null) {%>
 	List<String> errors = (List<String>) request.getAttribute("errors");
 	%>
 	<jsp:include page="/subviews/navbar.jsp" />
-	<div class="container">
+	<div class="container-fulid px-5">
 		<div id="formBackground">
 			<div class="registerForm">
 				<form method="post" action="update.do"
-					class="col-10 col-md-10 col-lg-9 mr-auto ml-auto">
+					class="col-10 col-md-9 col-lg-6 mr-auto ml-auto">
 					<p><%=errors != null ? errors : ""%>
 					</p>
 					<h2 class="text-center">修改會員資料</h2>
 					<div class="form-row">
-						<div class="form-group col-md-4">
-							<!-- 							<input type="checkbox" value="變更密碼" id="changeMyPwd" onchange="changePWD()"> -->
-							<label for="password">原密碼</label> <input type="password"
+						<div class="form-group col-md-6">
+							<label for="password">原密碼</label> 
+							<input type="password"
 								id="password" name="password" class="form-control shadow"
 								placeholder="輸入原有的密碼">
+								<i class="bi bi-eye-slash" id="togglePassword"></i>
 							<div class="custom-control custom-switch mt-2 mb-0 d-flex justify-content-end">
 								<input type="checkbox" class="custom-control-input"
 								 id="changeMyPwd" onchange="changePWD()">
 								<label class="custom-control-label" for="changeMyPwd">更改密碼</label>
 							</div>
 						</div>
-						<!-- 						<div class="form-group col-md-4 pt-5"> -->
-						<!-- 							<div class="custom-control custom-switch"> -->
-						<!-- 								<input type="checkbox" class="custom-control-input" -->
-						<!-- 									id="displayPwd" onchange="changePwdDisplay()"> <label -->
-						<!-- 									class="custom-control-label" for="displayPwd">顯示密碼</label> -->
-						<!-- 							</div> -->
-						<!-- 						</div> -->
-						<div class="form-group col-md-4" style="display: none"
+						<div class="form-group col-md-6"></div>
+						<div class="form-group col-md-6" style="display: none"
 							id="changePWD1">
 							<label for="password1">新密碼</label> <input type="password"
 								class="form-control shadow" id="password1" placeholder="輸入新的密碼"
 								name="password1" maxlength="<%=Customer.MAX_PWD_LENGTH%>"
 								value="<%=member.getPassword()%>" required>
 						</div>
-						<div class="form-group col-md-4" style="display: none"
+						<div class="form-group col-md-6" style="display: none"
 							id="changePWD2">
 							<label for="passwordCheck">確認密碼</label> <input type="password"
 								class="form-control shadow" id="password2" placeholder="確認您的密碼"
@@ -160,39 +166,28 @@ if (member != null) {%>
 					</div>
 					<div class="border pl-1 pr-1 mb-1">
 						<div class="form-row">
-							<div class="form-group col-md-4">
+							<div class="form-group col-md-6">
 								<label for="id">身分證字號</label> <input type="text"
 									class="form-control shadow" id="id" placeholder="輸入您的身分證"
 									name="id" pattern="[A-Z][1289][0-9]{8}" required readonly>
 							</div>
-							<div class="form-group  col-md-4">
+							<div class="form-group  col-md-6">
 								<label for="email">Email</label> <input type="email"
 									class="form-control shadow" id="email" placeholder="Email"
 									name="email" required>
 							</div>
-							<div class="form-group col-md-4">
+							<div class="form-group col-md-6">
 								<label for="phone">電話</label> <input type="tel"
 									class="form-control shadow" id="phone" placeholder="請輸入電話"
 									name="phone" name="phone" required>
 							</div>
-							<!-- 							<div class="form-group col-md-4"> -->
-							<!-- 								<label for="password1">新密碼</label> <input type="password" -->
-							<!-- 									class="form-control shadow" id="password1" placeholder="輸入新的密碼" -->
-							<%-- 									name="password1" maxlength="<%=Customer.MAX_PWD_LENGTH%>" --%>
-							<!-- 									required> -->
-							<!-- 							</div> -->
-							<!-- 							<div class="form-group col-md-4"> -->
-							<!-- 								<label for="passwordCheck">確認密碼</label> <input type="password" -->
-							<!-- 									class="form-control shadow" id="password2" placeholder="確認您的密碼" -->
-							<!-- 									name="password2" required> -->
-							<!-- 							</div> -->
-							<div class="form-group col-md-4">
+							<div class="form-group col-md-6">
 								<label for="name">姓名</label> <input type="text"
 									class="form-control shadow" id="name" placeholder="輸入您的姓名"
 									name="name" required>
 							</div>
 
-							<div class="form-group col-md-4">
+							<div class="form-group col-md-6">
 								<div class="input-group-prepend">
 									<label for="gender">性別Gender</label>
 								</div>
@@ -204,19 +199,19 @@ if (member != null) {%>
 									<option value="O">其他(Other)</option>
 								</select>
 							</div>
-							<div class="form-group col-md-4">
+							<div class="form-group col-md-6">
 								<label for="birthday">生日/西元</label> <input type="date"
 									class="form-control shadow" id="birthday"
 									placeholder="eg:1990-11-25" "
 									name="birthday"
 									required>
 							</div>
-							<div class="form-group col-md-4">
+							<div class="form-group col-md-6">
 								<label for="address">地址Address</label> <input type="text"
 									class="form-control shadow" id="address" placeholder="輸入您的地址"
 									name="address" required>
 							</div>
-							<div class="form-group col-md-4">
+							<div class="form-group col-md-6">
 								<div class="input-group-prepend">
 									<label for="gender">是否訂閱電子報</label>
 								</div>
@@ -229,13 +224,13 @@ if (member != null) {%>
 							</div>
 						</div>
 						<div class="form-row">
-							<div class="form-group col-md-4 ">
+							<div class="form-group col-md-6 ">
 								<label>驗證碼:</label> <input type="text"
 									class="form-control shadow" name="captcha"
 									placeholder="依圖片輸入驗證碼" required>
 							</div>
 							<div id="updateCaptchaImg"
-								class="form-group col-md-4 text-center pr-0">
+								class="form-group col-md-6 text-center pr-0">
 								<img id="captchaImg"
 									src="<%=request.getContextPath()%>/imgs/reg_captcha.jpg"
 									alt="驗證碼圖片" class="border shadow rounded"
@@ -283,6 +278,23 @@ if (member != null) {%>
 
 
 	<script>
+    const togglePassword = document.querySelector("#togglePassword");
+    const password = document.querySelector("#password");
+
+    togglePassword.addEventListener("click", function () {
+        // toggle the type attribute
+        const type = password.getAttribute("type") === "password" ? "text" : "password";
+        password.setAttribute("type", type);
+        
+        // toggle the icon
+        this.classList.toggle("bi-eye");
+    });
+
+    // prevent form submit
+    const form = document.querySelector("form");
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+    });
 		$(function() {
 			$(document).scroll(
 					function() {
