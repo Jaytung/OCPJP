@@ -160,7 +160,7 @@
 										<div class="col-md-2"></div>
 										<div class="col-md-4 text-right">詳細/</div>
 										<div class="col-md-3 text-right">數量/</div>
-										<div class="col-md-3 text-right">小記/</div>
+										<div class="col-md-3 text-right">小計/</div>
 									</div>
 								</div>
 								<div class="items">

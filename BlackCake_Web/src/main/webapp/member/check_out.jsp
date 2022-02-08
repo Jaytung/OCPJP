@@ -229,7 +229,7 @@
 									<th scope="col">折扣</th>
 									<th scope="col">售價</th>
 									<th scope="col">數量</th>
-									<th scope="col">小記</th>
+									<th scope="col">小計</th>
 								</tr>
 							</thead>
 							<tbody class="text-center">
@@ -252,7 +252,7 @@
 									<td data-th="折扣"><%=item.getDiscountString()%></td>
 									<td data-th="售價"><%=Math.round(item.getUnitPrice())%></td>
 									<td data-th="數量"><%=qty%></td>
-									<td data-th="小記"><%=Math.round(item.getUnitPrice()) * qty%></td>
+									<td data-th="小計"><%=Math.round(item.getUnitPrice()) * qty%></td>
 								</tr>
 								<%
 								}

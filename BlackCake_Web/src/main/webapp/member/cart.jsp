@@ -122,7 +122,7 @@ td>img {
 							<th scope="col">折扣</th>
 							<th scope="col">售價</th>
 							<th scope="col">數量</th>
-							<th scope="col">小記</th>
+							<th scope="col">小計</th>
 							<th scope="col">刪除</th>
 						</tr>
 					</thead>
@@ -150,7 +150,7 @@ td>img {
 								name="quantity<%=item.hashCode()%>" value="<%=qty%>" required
 								min="<%=stock > 0 ? 1 : 0%>" max="<%=stock%>"><input
 								type="submit" class="btn btn-dark form-control" value="修改"></td>
-							<td data-th="小記"><%=Math.round(cart.getUnitPrice(item)) * qty + "元"%></td>
+							<td data-th="小計"><%=Math.round(cart.getUnitPrice(item)) * qty + "元"%></td>
 							<td data-th="移除商品"><input type="submit" id="remove"
 								name="delete<%=item.hashCode()%>" value=''></td>
 						</tr>
